@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .normalLink {
+      @apply flex px-4 relative items-center gap-1 text-[1.6rem] text-gray-700 font-medium hover:text-violet-800 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[0.2rem] after:bg-violet-800 after:transition-all after:duration-300 after:scale-x-0 hover:after:scale-x-100 origin-center;
+  }
+
+  .activeLink {
+    @apply flex px-4 relative items-center gap-1 text-[1.6rem] text-violet-800 font-medium after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[0.2rem] after:bg-violet-800 after:scale-x-100;
+  }
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+.bar::before {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 100%;
+  top: 0;
+  left: -3rem;
+  background-color: white;
+  transition: 250ms linear;
+}
+
+.burgerMenu:hover .bar::before {
+  left: 100%;
+}
+
+.bg-size {
+  background-size: 0% 0.2rem;
+}
+
+.bg-size:hover {
+  background-size: 100% 0.2rem;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hideScrollBar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hideScrollBar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
