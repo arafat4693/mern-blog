@@ -1,3 +1,9 @@
+import Trending from "../components/homePage/Trending"
+
 export default function Home() {
-  return <div>Home</div>
+  return (
+    <>
+      <Trending />
+    </>
+  )
 }

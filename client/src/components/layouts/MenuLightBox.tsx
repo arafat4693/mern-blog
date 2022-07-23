@@ -18,13 +18,13 @@ export default function MenuLightBox({ closeMenu, setCloseMenu }: Props) {
 
   return (
     <div
-      className={`lightBox w-screen h-screen fixed top-0 left-0 bg-gray-700/60 backdrop-blur-sm transition-all ease-in duration-300 ${
+      className={`lightBox z-10 w-screen h-screen fixed top-0 left-0 bg-gray-700/60 backdrop-blur-sm transition-all ease-in duration-300 ${
         closeMenu ? "opacity-0 invisible" : "opacity-100 visible"
       }`}
       onClick={closeLbx}
     >
       <div
-        className={`bg-white z-10 w-[44rem] h-screen px-8 py-12 relative transition-all ease-in duration-300 overflow-scroll hideScrollBar ${
+        className={`bg-white w-[44rem] h-screen px-8 py-12 relative transition-all ease-in duration-300 overflow-scroll hideScrollBar ${
           closeMenu ? "-translate-x-[110%]" : "translate-x-0"
         }`}
       >

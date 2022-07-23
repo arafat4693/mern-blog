@@ -6,7 +6,7 @@
 
 @layer base {
   .normalLink {
-      @apply flex px-4 relative items-center gap-1 text-[1.6rem] text-gray-700 font-medium hover:text-violet-800 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[0.2rem] after:bg-violet-800 after:transition-all after:duration-300 after:scale-x-0 hover:after:scale-x-100 origin-center;
+    @apply flex px-4 relative items-center gap-1 text-[1.6rem] text-gray-700 font-medium hover:text-violet-800 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[0.2rem] after:bg-violet-800 after:transition-all after:duration-300 after:scale-x-0 hover:after:scale-x-100 origin-center;
   }
 
   .activeLink {
@@ -63,4 +63,64 @@ html {
 .hideScrollBar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.swiper-slide:hover img {
+  transform: scale(1.1);
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 1.6rem !important;
+  font-weight: 800;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  transform: translateY(-25%) !important;
+  width: 3.2rem !important;
+  height: 9rem !important;
+  background-color: rgba(237, 237, 237, 0.6);
+  color: #1b1a1a !important;
+  border-radius: 5rem;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: background-color 0.5s ease, color 0.5s ease, left 0.3s ease,
+    right 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.swiper-button-prev {
+  left: -2rem !important;
+}
+
+.swiper-button-next {
+  right: -2rem !important;
+}
+
+.trending:hover .swiper-button-prev {
+  left: 2rem !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.trending:hover .swiper-button-next {
+  right: 2rem !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: white;
+  color: rgb(109 40 217) !important;
 }
