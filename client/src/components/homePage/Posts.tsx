@@ -1,3 +1,4 @@
+import Pagination from "./Pagination"
 import Post from "./Post"
 
 export default function Posts() {
@@ -9,6 +10,7 @@ export default function Posts() {
       <Post />
       <Post />
       <Post />
+      <Pagination />
     </div>
   )
 }

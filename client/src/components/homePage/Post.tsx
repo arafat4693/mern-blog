@@ -9,7 +9,7 @@ export default function Post() {
       <img
         src="/images/poster.jpg"
         alt="poster"
-        className="min-w-[30rem] w-[30rem] h-[30rem] object-cover rounded-lg"
+        className="min-w-[30rem] w-[30rem] h-[30rem] object-cover rounded-3xl"
       />
 
       <div className="content">
@@ -32,7 +32,7 @@ export default function Post() {
         </div>
 
         <p className="text-2xl text-gray-600 font-medium">
-          Far far away, behind the word mountains, far from the behind the...
+          Far far away, behind the word mountains, far from the...
         </p>
 
         <Link
