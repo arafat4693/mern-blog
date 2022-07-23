@@ -8,7 +8,7 @@ const blogs = ["1", "2", "3", "4", "5", "6"]
 
 export default function Trending() {
   return (
-    <section className="trending px-6 py-8 h-[57rem]">
+    <section className="trending px-6 pt-8 h-[57rem]">
       <Swiper
         spaceBetween={20}
         slidesPerView={4}
