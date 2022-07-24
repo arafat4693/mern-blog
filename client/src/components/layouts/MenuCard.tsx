@@ -1,9 +1,13 @@
 import { CalendarIcon } from "@heroicons/react/outline"
 import { Link } from "react-router-dom"
 
-export default function MenuCard() {
+interface Props {
+  last?: boolean
+}
+
+export default function MenuCard({ last }: Props) {
   return (
-    <div className="flex gap-6 items-center mb-12">
+    <div className={`flex gap-6 items-center ${last ? "mb-0" : "mb-9"}`}>
       <img
         src="/images/poster.jpg"
         alt="poster"

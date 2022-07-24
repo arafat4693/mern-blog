@@ -3,7 +3,7 @@ import Tag from "./Tag"
 
 export default function Tags() {
   return (
-    <div>
+    <div className="mb-20">
       <SideHeader title="tag cloud" />
       <Tag title="entertainment" total={15} bgColor="bg-blue-600" />
       <Tag title="health" total={10} bgColor="bg-gray-700" />

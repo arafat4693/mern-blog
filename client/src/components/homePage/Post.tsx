@@ -37,9 +37,10 @@ export default function Post() {
 
         <Link
           to="/"
-          className="relative capitalize text-gray-800 font-medium text-2xl mt-10 inline-flex items-center gap-5 after:content-[''] after:absolute after:w-0 hover:after:w-full after:h-[0.20rem] after:bg-gray-800 after:left-0 after:bottom-0 after:transition-all after:duration-1000 after:ease-in-out"
+          className="relative group capitalize text-gray-800 font-medium text-2xl mt-10 inline-flex items-center gap-5 after:content-[''] after:absolute after:w-0 hover:after:w-full after:h-[0.20rem] after:bg-gray-800 after:left-0 after:bottom-0 after:transition-all after:duration-1000 after:ease-in-out"
         >
-          read more <AiOutlineDoubleRight />
+          read more{" "}
+          <AiOutlineDoubleRight className="group-hover:ml-3 ml-0 transition-all duration-1000 ease-in-out" />
         </Link>
       </div>
     </div>

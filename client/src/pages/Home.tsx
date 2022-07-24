@@ -10,7 +10,7 @@ export default function Home() {
       <Ad />
 
       <main>
-        <div className="wrapper max-w-[1240px] h-full mx-auto rounded-xl grid grid-cols-3 gap-16">
+        <div className="wrapper max-w-[1240px] mx-auto grid grid-cols-3 gap-16">
           <Posts />
           <Sidebar />
         </div>
