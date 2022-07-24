@@ -6,11 +6,16 @@ import { AiOutlineDoubleRight } from "react-icons/ai"
 export default function Post() {
   return (
     <div className="flex items-center gap-8 mb-8">
-      <img
-        src="/images/poster.jpg"
-        alt="poster"
-        className="min-w-[30rem] w-[30rem] h-[30rem] object-cover rounded-3xl"
-      />
+      <Link
+        to="/"
+        className="min-w-[30rem] w-[30rem] h-[30rem] overflow-hidden rounded-3xl"
+      >
+        <img
+          src="/images/poster.jpg"
+          alt="poster"
+          className="w-full h-full object-cover hover:scale-110 scale-100 transition-all duration-500 ease-in-out"
+        />
+      </Link>
 
       <div className="content">
         <Link

@@ -5,7 +5,7 @@ import Layout from "./pages/Layout"
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" id="app">
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>

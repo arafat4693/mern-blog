@@ -1,6 +1,6 @@
 export default function NewsLetter() {
   return (
-    <section className="my-36">
+    <section className="my-32">
       <div className="wrapper max-w-[1240px] mx-auto bg-gray-200/60 p-28 flex items-center justify-between">
         <h3 className="text-gray-800 font-medium text-4xl max-w-[42rem] leading-snug">
           Subscribe to our newsletter and stay updated.

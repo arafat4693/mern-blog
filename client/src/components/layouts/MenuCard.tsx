@@ -8,11 +8,17 @@ interface Props {
 export default function MenuCard({ last }: Props) {
   return (
     <div className={`flex gap-6 items-center ${last ? "mb-0" : "mb-9"}`}>
-      <img
-        src="/images/poster.jpg"
-        alt="poster"
-        className="min-w-[8rem] w-32 h-32 object-cover rounded-lg"
-      />
+      <Link
+        to="/"
+        className="min-w-[8rem] w-32 h-32 overflow-hidden rounded-lg"
+      >
+        <img
+          src="/images/poster.jpg"
+          alt="poster"
+          className="w-full h-full object-cover hover:scale-110 scale-100 transition-all duration-700 ease-in-out"
+        />
+      </Link>
+
       <div className="content">
         <Link
           to="/"
