@@ -50,6 +50,11 @@ html {
   background-size: 0% 0.2rem;
 }
 
+.bg-position {
+  background-position: 50% bottom;
+  -webkit-box-decoration-break: clone;
+}
+
 .bg-size:hover {
   background-size: 100% 0.2rem;
 }

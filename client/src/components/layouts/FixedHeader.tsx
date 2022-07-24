@@ -29,7 +29,7 @@ export default function FixedHeader() {
     <section
       className={`fixed ${
         fix ? "top-0" : "-top-full"
-      } left-0 shadow-xl shadow-gray-700/10 transition-all duration-700 ease-in-out z-[2] bg-white w-full py-8`}
+      } left-0 shadow-xl shadow-gray-700/10 transition-all duration-700 ease-in-out z-[5] bg-white w-full py-8`}
     >
       <div className="wrapper max-w-[1240px] mx-auto flex items-center justify-between">
         <Logo customStyle="text-6xl" />
