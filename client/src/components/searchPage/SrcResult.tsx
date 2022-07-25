@@ -55,9 +55,9 @@ export default function SrcResult() {
           alt="user"
           className="w-16 h-16 rounded-full object-cover"
         />
-        <p className="flex gap-2 items-center text-2xl text-gray-600">
-          By Alice <span className="text-3xl font-bold mx-2">.</span> November
-          18, 2021
+        <p className="flex gap-3 items-end text-2xl text-gray-600">
+          By Alice <span className="text-3xl font-bold">.</span> November 18,
+          2021
         </p>
       </div>
 
