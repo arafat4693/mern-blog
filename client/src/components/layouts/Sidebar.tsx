@@ -1,6 +1,6 @@
-import Banner from "./Banner"
-import Featured from "./Featured"
-import Tags from "./Tags"
+import Banner from "../homePage/Banner"
+import Featured from "../homePage/Featured"
+import Tags from "../homePage/Tags"
 
 export default function Sidebar() {
   return (

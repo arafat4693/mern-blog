@@ -5,7 +5,7 @@ export default function RecentPosts() {
   return (
     <section className="mt-52">
       <OverlapHeader
-        title="recent posts"
+        title="Recent posts"
         overlapTitle="before:content-['creative']"
       />
 

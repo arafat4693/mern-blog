@@ -1,6 +1,6 @@
 import Ad from "../components/homePage/Ad"
 import Posts from "../components/homePage/Posts"
-import Sidebar from "../components/homePage/Sidebar"
+import Sidebar from "../components/layouts/Sidebar"
 import Trending from "../components/homePage/Trending"
 
 export default function Home() {
