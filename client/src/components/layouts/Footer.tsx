@@ -1,31 +1,17 @@
 import { Link } from "react-router-dom"
 import Logo from "./Logo"
 import { BsFacebook, BsTwitter, BsYoutube, BsInstagram } from "react-icons/bs"
+import UnderlineHeader from "../layouts/UnderlineHeader"
 
 interface Props {
   title: string
-  location?: string
-}
-
-function FooterHeader({ title }: Props) {
-  return (
-    <>
-      <h1 className="capitalize text-4xl text-gray-800 font-medium">{title}</h1>
-
-      <div className="divider flex items-center gap-2 mt-2">
-        <span className="w-12 h-1.5 bg-violet-800 rounded-full"></span>
-        <span className="w-2 h-2 rounded-full bg-violet-800"></span>
-        <span className="w-2 h-2 rounded-full bg-violet-800"></span>
-        <span className="w-2 h-2 rounded-full bg-violet-800"></span>
-      </div>
-    </>
-  )
+  location: string
 }
 
 function FooterLink({ title, location }: Props) {
   return (
     <Link
-      to={location!}
+      to={location}
       className="text-2xl text-gray-500 hover:text-violet-700 mt-6 block capitalize"
     >
       {title}
@@ -50,14 +36,14 @@ export default function Footer() {
         </div>
 
         <div className="quickLinks">
-          <FooterHeader title="quick links" />
+          <UnderlineHeader title="quick links" />
           <FooterLink title="Contact" location="/contact" />
           <FooterLink title="About" location="/about" />
           <FooterLink title="Search" location="/search" />
         </div>
 
         <div className="categoryLinks">
-          <FooterHeader title="category" />
+          <UnderlineHeader title="category" />
           <FooterLink title="entertainment" location="/search" />
           <FooterLink title="illustration" location="/search" />
           <FooterLink title="health" location="/search" />
@@ -65,7 +51,7 @@ export default function Footer() {
         </div>
 
         <div className="follow">
-          <FooterHeader title="follow us" />
+          <UnderlineHeader title="follow us" />
 
           <div className="flex gap-2 mt-6">
             <a
