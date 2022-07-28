@@ -6,7 +6,7 @@ export default function Categories() {
   const [categories, setCategories] = useState<string[]>([])
 
   return (
-    <div className="cats mt-12">
+    <div className="cats mt-10">
       <div className="flex gap-2">
         <UnderlineHeader title="select categories" />
         <span className="text-xl text-gray-500 mt-2">

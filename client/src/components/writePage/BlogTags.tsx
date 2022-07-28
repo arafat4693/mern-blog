@@ -22,18 +22,18 @@ export default function BlogTags() {
   }
 
   return (
-    <div className="mt-12">
-      <div className="flex gap-2">
-        <UnderlineHeader title="tags" />
-        <span className="text-xl text-gray-500 mt-2">(Maximum 5 tags)</span>
-      </div>
+    <div className="mt-10">
+      <label htmlFor="tags" className="block text-2xl text-gray-500 mb-2">
+        Tags
+      </label>
 
-      <div className="tags flex gap-2 flex-wrap mt-6 bg-gray-200/70 rounded-lg py-6 px-6">
+      <div className="tags flex gap-2 flex-wrap bg-gray-200/70 rounded-lg py-6 px-6">
         {tags.map((tag, i) => (
-          <BlogTag key={i} name={tag} />
+          <BlogTag key={i} name={tag} setTags={setTags} />
         ))}
         <input
           type="text"
+          id="tags"
           className="grow bg-transparent text-xl text-gray-800"
           onKeyUp={addTag}
         />

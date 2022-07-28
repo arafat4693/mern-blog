@@ -66,13 +66,13 @@ export default function Write() {
             />
           </div>
 
-          <Categories />
           <BlogTags />
+          <Categories />
 
           <input
             type="submit"
             value="create"
-            className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-20 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
+            className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-14 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
           />
         </form>
       </section>
