@@ -6,6 +6,7 @@ import Contact from "./pages/Contact"
 import Home from "./pages/Home"
 import Layout from "./pages/Layout"
 import Search from "./pages/Search"
+import Write from "./pages/Write"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="search" element={<Search />} />
             <Route path="author" element={<Author />} />
+            <Route path="write" element={<Write />} />
           </Route>
         </Routes>
       </Router>
