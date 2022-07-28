@@ -1,11 +1,11 @@
-import { useState } from "react"
 import OverlapHeader from "../components/layouts/OverlapHeader"
-import UnderlineHeader from "../components/layouts/UnderlineHeader"
-import Category from "../components/writePage/Category"
+import BlogTags from "../components/writePage/BlogTags"
+import Categories from "../components/writePage/Categories"
 
 export default function Write() {
-  const [categories, setCategories] = useState<string[]>([])
-
+  function createBlog(e: any) {
+    e.preventDefault()
+  }
   return (
     <main>
       <section className="wrapper max-w-[1240px] mx-auto mt-40">
@@ -13,7 +13,7 @@ export default function Write() {
           title="Write your blog"
           overlapTitle="before:content-['create']"
         />
-        <form className="w-[75rem] mx-auto mt-24">
+        <form className="w-[75rem] mx-auto mt-24" onSubmit={createBlog}>
           <div>
             <label
               htmlFor="title"
@@ -66,37 +66,8 @@ export default function Write() {
             />
           </div>
 
-          <div className="cats mt-10">
-            <div className="flex gap-2">
-              <UnderlineHeader title="select categories" />
-              <span className="text-xl text-gray-500 mt-2">
-                (At least one is required)
-              </span>
-            </div>
-
-            <div className="allCats flex gap-1.5 flex-wrap mt-6">
-              <Category
-                name="entertainment"
-                selectCategory={setCategories}
-                categories={categories}
-              />
-              <Category
-                name="health"
-                selectCategory={setCategories}
-                categories={categories}
-              />
-              <Category
-                name="life style"
-                selectCategory={setCategories}
-                categories={categories}
-              />
-              <Category
-                name="illustration"
-                selectCategory={setCategories}
-                categories={categories}
-              />
-            </div>
-          </div>
+          <Categories />
+          <BlogTags />
 
           <input
             type="submit"
