@@ -27,7 +27,7 @@ export default function Comment() {
           </p>
           <Link
             to="/"
-            className="text-gray-500 text-2xl bg-gray-200 rounded-full px-5 py-1.5 tracking-wide inline-block mt-4"
+            className="text-gray-500 text-xl bg-gray-200 rounded-full px-5 py-1.5 tracking-wide inline-block mt-4"
           >
             Article
           </Link>
