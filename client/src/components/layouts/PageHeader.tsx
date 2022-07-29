@@ -1,8 +1,10 @@
 import Logo from "./Logo"
-import { SearchIcon } from "@heroicons/react/outline"
+import { ChatAltIcon, SearchIcon } from "@heroicons/react/outline"
 import SrcLightBox from "./SrcLightBox"
 import { useState } from "react"
 import MenuLightBox from "./MenuLightBox"
+// import { MdMessage } from "react-icons/md"
+import { Link } from "react-router-dom"
 
 export default function PageHeader() {
   const [closeSrc, setCloseSrc] = useState<boolean>(true)
@@ -22,11 +24,22 @@ export default function PageHeader() {
 
         <Logo customStyle="text-6xl" />
 
-        <div
-          className="w-14 h-14 rounded-full flex items-center justify-center bg-violet-600 cursor-pointer shadow-md shadow-violet-300"
-          onClick={() => setCloseSrc(false)}
-        >
-          <SearchIcon className="w-7 h-7 stroke-gray-200" />
+        <div className="flex gap-3">
+          <div
+            className="w-14 h-14 rounded-full flex items-center justify-center bg-violet-600 cursor-pointer shadow-md shadow-violet-300"
+            onClick={() => setCloseSrc(false)}
+          >
+            <SearchIcon className="w-7 h-7 stroke-gray-200" />
+          </div>
+          <Link
+            to="/comments"
+            className="w-14 h-14 relative rounded-full flex items-center justify-center bg-violet-600 cursor-pointer shadow-md shadow-violet-300"
+          >
+            <ChatAltIcon className="w-7 h-7 stroke-gray-200" />
+            <span className="min-w-[1.5rem] h-6 p-1 flex justify-center items-center absolute -top-2.5 -right-1 rounded-full bg-yellow-300 text-gray-800 text-base font-medium">
+              10
+            </span>
+          </Link>
         </div>
 
         <SrcLightBox closeSrc={closeSrc} setCloseSrc={setCloseSrc} />

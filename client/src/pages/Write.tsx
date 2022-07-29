@@ -7,8 +7,8 @@ export default function Write() {
     e.preventDefault()
   }
   return (
-    <main>
-      <section className="wrapper max-w-[1240px] mx-auto mt-40">
+    <main className="mt-40">
+      <section className="wrapper max-w-[1240px] mx-auto">
         <OverlapHeader
           title="Write your blog"
           overlapTitle="before:content-['create']"

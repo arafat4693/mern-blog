@@ -2,8 +2,8 @@ import OverlapHeader from "../components/layouts/OverlapHeader"
 
 export default function Contact() {
   return (
-    <main>
-      <section className="wrapper max-w-[1240px] mx-auto mt-52">
+    <main className="mt-40">
+      <section className="wrapper max-w-[1240px] mx-auto">
         <OverlapHeader
           title="Get In Touch With Us"
           overlapTitle="before:content-['contact']"

@@ -1,5 +1,4 @@
 import { useState } from "react"
-import UnderlineHeader from "../layouts/UnderlineHeader"
 import BlogTag from "./BlogTag"
 
 export default function BlogTags() {
@@ -10,7 +9,7 @@ export default function BlogTags() {
       if (tags.length >= 5) {
         console.log("You can put maximum 5 tags")
       } else {
-        const tag = e.target.value.replace(/\s+/g, "")
+        const tag = e.target.value.replace(/\s+/g, " ")
         if (tags.includes(tag)) {
           console.log("Tag already exists")
         } else {

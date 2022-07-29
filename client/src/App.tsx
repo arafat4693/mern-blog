@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import About from "./pages/About"
 import Author from "./pages/Author"
+import Comments from "./pages/Comments"
 import Contact from "./pages/Contact"
 
 import Home from "./pages/Home"
@@ -20,6 +21,7 @@ function App() {
             <Route path="search" element={<Search />} />
             <Route path="author" element={<Author />} />
             <Route path="write" element={<Write />} />
+            <Route path="comments" element={<Comments />} />
           </Route>
         </Routes>
       </Router>
