@@ -39,6 +39,7 @@ export default function FixedHeader() {
           <NavItem title="Write" location="/write" />
           <NavItem title="Search" location="/search" />
           <NavItem title="Contact" location="/contact" />
+          <NavItem title="Authors" location="/authors" />
         </div>
       </div>
     </section>
