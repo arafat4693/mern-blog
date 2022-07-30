@@ -12,6 +12,9 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
     if (!lb) return
     setCloseAuth(true)
   }
+  function githubLogin() {
+    window.open("http://localhost:5000/auth/github", "_self")
+  }
   return (
     <div
       onClick={closeLbx}
@@ -32,7 +35,10 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
           <BsTwitter className="text-4xl" /> Continue with Twitter
         </button>
 
-        <button className="bg-gray-800 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-gray-300 transition-all duration-300">
+        <button
+          onClick={githubLogin}
+          className="bg-gray-800 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-gray-300 transition-all duration-300"
+        >
           <BsGithub className="text-4xl" /> Continue with Github
         </button>
       </div>
