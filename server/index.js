@@ -5,6 +5,7 @@ import session from "express-session"
 import passport from "passport"
 import authRoute from "./routes/authRoute.js"
 import "./passport.js"
+import { errorHandler } from "./middlewares/errorMiddleware.js"
 
 dotenv.config()
 
@@ -43,6 +44,8 @@ app.use("/auth", authRoute)
 app.get("/", (req, res) => {
   res.send("Hello from server")
 })
+
+app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)

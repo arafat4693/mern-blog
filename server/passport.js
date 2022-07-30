@@ -22,7 +22,7 @@ passport.use(
       callbackURL: "/auth/github/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-      console.log(profile)
+      // console.log(profile)
       done(null, profile)
     }
   )
