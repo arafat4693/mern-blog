@@ -15,6 +15,12 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
   function githubLogin() {
     window.open("http://localhost:5000/auth/github", "_self")
   }
+  function googleLogin() {
+    window.open("http://localhost:5000/auth/google", "_self")
+  }
+  function twitterLogin() {
+    window.open("http://localhost:5000/auth/twitter", "_self")
+  }
   return (
     <div
       onClick={closeLbx}
@@ -27,11 +33,17 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
           closeAuth ? "-translate-y-[10rem]" : "translate-y-0"
         }`}
       >
-        <button className="bg-red-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-red-300 transition-all duration-300">
+        <button
+          onClick={googleLogin}
+          className="bg-red-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-red-300 transition-all duration-300"
+        >
           <BsGoogle className="text-4xl" /> Continue with Google
         </button>
 
-        <button className="bg-sky-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-sky-300 transition-all duration-300">
+        <button
+          onClick={twitterLogin}
+          className="bg-sky-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-sky-300 transition-all duration-300"
+        >
           <BsTwitter className="text-4xl" /> Continue with Twitter
         </button>
 

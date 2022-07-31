@@ -33,4 +33,28 @@ router.get(
   }
 )
 
+//google auth
+router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/auth/login/failed" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect(process.env.CLIENT_ORIGIN)
+  }
+)
+
+//twitter auth
+router.get("/twitter", passport.authenticate("twitter"))
+
+router.get(
+  "/twitter/callback",
+  passport.authenticate("twitter", { failureRedirect: "/auth/login/failed" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect(process.env.CLIENT_ORIGIN)
+  }
+)
+
 export default router
