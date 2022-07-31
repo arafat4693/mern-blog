@@ -6,12 +6,22 @@ import passport from "passport"
 import authRoute from "./routes/authRoute.js"
 import "./passport.js"
 import { errorHandler } from "./middlewares/errorMiddleware.js"
+import mongoose from "mongoose"
 
 dotenv.config()
 
 const PORT = process.env.PORT || 5000
 const ORIGIN = process.env.CLIENT_ORIGIN
 const app = express()
+
+function connect() {
+  try {
+    mongoose.connect(process.env.MONGO)
+    console.log("connected to mongodb")
+  } catch (error) {
+    throw error
+  }
+}
 
 const sess = {
   secret: "some-secret",
@@ -49,4 +59,5 @@ app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
+  connect()
 })
