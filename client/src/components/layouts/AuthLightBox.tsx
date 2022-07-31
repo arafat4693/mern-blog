@@ -1,5 +1,7 @@
-import { Dispatch } from "react"
+import { Dispatch, useState } from "react"
 import { BsGithub, BsGoogle, BsTwitter } from "react-icons/bs"
+import Login from "./Login"
+import Register from "./Register"
 
 interface Props {
   closeAuth: boolean
@@ -7,6 +9,8 @@ interface Props {
 }
 
 export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
+  const [move, setMove] = useState<boolean>(false)
+
   function closeLbx(e: any): void {
     const lb = e.target.classList.contains("lightBox")
     if (!lb) return
@@ -29,30 +33,45 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
       }`}
     >
       <div
-        className={`bg-white flex flex-col gap-4 w-[40rem] p-8 rounded-lg relative transition-all ease-in-out duration-500 overflow-scroll hideScrollBar ${
+        className={`bg-white h-auto max-h-[95vh] w-[40rem] rounded-lg transition-all ease-in-out duration-500 overflow-scroll hideScrollBar p-7 ${
           closeAuth ? "-translate-y-[10rem]" : "translate-y-0"
         }`}
       >
-        <button
-          onClick={googleLogin}
-          className="bg-red-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-red-300 transition-all duration-300"
-        >
-          <BsGoogle className="text-4xl" /> Continue with Google
-        </button>
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={googleLogin}
+            className="bg-red-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-red-300 transition-all duration-300"
+          >
+            <BsGoogle className="text-4xl" /> Continue with Google
+          </button>
 
-        <button
-          onClick={twitterLogin}
-          className="bg-sky-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-sky-300 transition-all duration-300"
-        >
-          <BsTwitter className="text-4xl" /> Continue with Twitter
-        </button>
+          <button
+            onClick={twitterLogin}
+            className="bg-sky-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-sky-300 transition-all duration-300"
+          >
+            <BsTwitter className="text-4xl" /> Continue with Twitter
+          </button>
 
-        <button
-          onClick={githubLogin}
-          className="bg-gray-800 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-gray-300 transition-all duration-300"
+          <button
+            onClick={githubLogin}
+            className="bg-gray-800 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-gray-300 transition-all duration-300"
+          >
+            <BsGithub className="text-4xl" /> Continue with Github
+          </button>
+        </div>
+
+        <h3 className="text-xl mt-6 mb-3 flex items-center gap-2 uppercase text-gray-800 font-medium tracking-wide before:content-[''] before:w-full before:h-1 before:rounded-lg before:bg-gray-700 after:content-[''] after:w-full after:h-1 after:rounded-lg after:bg-gray-700">
+          or
+        </h3>
+
+        <form
+          className={`flex overflow-hidden translate-all duration-300 ${
+            move ? "h-[38.65rem]" : "h-[22.65rem]"
+          }`}
         >
-          <BsGithub className="text-4xl" /> Continue with Github
-        </button>
+          <Login move={move} setMove={setMove} />
+          <Register move={move} setMove={setMove} />
+        </form>
       </div>
     </div>
   )
