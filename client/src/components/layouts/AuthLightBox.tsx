@@ -2,6 +2,11 @@ import { Dispatch, useState } from "react"
 import { BsGithub, BsGoogle, BsTwitter } from "react-icons/bs"
 import Login from "./Login"
 import Register from "./Register"
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { RootState } from "../../redux/store"
+import { toast } from "react-toastify"
+import { resetState } from "../../redux/userSlice"
 
 interface Props {
   closeAuth: boolean
@@ -10,6 +15,17 @@ interface Props {
 
 export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
   const [move, setMove] = useState<boolean>(false)
+  const { userSuccess, userError, userMessage, userRedirect } = useSelector(
+    (state: RootState) => state.user
+  )
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (userSuccess) toast(userMessage, { type: "success", autoClose: 2300 })
+    if (userError) toast(userMessage, { type: "error", autoClose: 2300 })
+    if (userRedirect) setMove(false)
+    dispatch(resetState())
+  }, [userSuccess, userError, userMessage, userRedirect, dispatch, setMove])
 
   function closeLbx(e: any): void {
     const lb = e.target.classList.contains("lightBox")
@@ -64,14 +80,14 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
           or
         </h3>
 
-        <form
+        <div
           className={`flex overflow-hidden translate-all duration-300 ${
             move ? "h-[38.65rem]" : "h-[22.65rem]"
           }`}
         >
           <Login move={move} setMove={setMove} />
           <Register move={move} setMove={setMove} />
-        </form>
+        </div>
       </div>
     </div>
   )

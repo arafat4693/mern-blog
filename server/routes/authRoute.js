@@ -1,5 +1,6 @@
 import express from "express"
 import passport from "passport"
+import { registerUser } from "../controllers/authController.js"
 
 const router = express.Router()
 
@@ -56,5 +57,8 @@ router.get(
     res.redirect(process.env.CLIENT_ORIGIN)
   }
 )
+
+//email and password auth
+router.post("/register", registerUser)
 
 export default router

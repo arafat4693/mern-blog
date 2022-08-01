@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux"
 import axios from "./utils/axiosConfig"
 import { addUser } from "./redux/userSlice"
 import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   const dispatch = useDispatch()

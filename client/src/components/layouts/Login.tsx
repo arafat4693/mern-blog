@@ -7,7 +7,7 @@ interface Props {
 
 export default function Login({ move, setMove }: Props) {
   return (
-    <div
+    <form
       className={`min-w-full transition-all duration-300 ${
         move ? "-translate-x-[36.5rem]" : "translate-x-0"
       }`}
@@ -18,7 +18,7 @@ export default function Login({ move, setMove }: Props) {
         </label>
         <input
           type="email"
-          id="email"
+          id="email1"
           className="w-full bg-gray-300/70 px-6 py-4 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
         />
       </div>
@@ -29,7 +29,7 @@ export default function Login({ move, setMove }: Props) {
         </label>
         <input
           type="password"
-          id="pass"
+          id="pass1"
           className="w-full bg-gray-300/70 px-6 py-4 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
         />
       </div>
@@ -49,6 +49,6 @@ export default function Login({ move, setMove }: Props) {
           Register
         </span>
       </p>
-    </div>
+    </form>
   )
 }
