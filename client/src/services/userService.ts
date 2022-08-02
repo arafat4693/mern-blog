@@ -1,5 +1,5 @@
 import axios from "../utils/axiosConfig"
-import { UserData } from "../utils/types"
+import { LoginData, UserData } from "../utils/types"
 import { v4 } from "uuid"
 import imgUpload from "../utils/imgUpload"
 
@@ -15,5 +15,10 @@ async function register(url: string, userData: UserData) {
   return res.data
 }
 
-const userServices = { register }
+async function login(url: string, loginData: LoginData) {
+  const res = await axios.post(url, loginData)
+  return res.data
+}
+
+const userServices = { register, login }
 export default userServices

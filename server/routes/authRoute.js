@@ -17,7 +17,8 @@ router.get("/logout", (req, res, next) => {
   if (req.user) {
     req.logout(function (err) {
       if (err) return next(err)
-      res.redirect(process.env.CLIENT_ORIGIN)
+      res.status(200).json({ message: "successfully logged out" })
+      // res.redirect(process.env.CLIENT_ORIGIN)
     })
   }
 })
@@ -60,5 +61,12 @@ router.get(
 
 //email and password auth
 router.post("/register", registerUser)
+router.post(
+  "/login",
+  passport.authenticate("local", { failureRedirect: "/auth/login/failed" }),
+  function (req, res) {
+    res.status(200).json({ user: req.user, message: "successfully logged in" })
+  }
+)
 
 export default router

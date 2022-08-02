@@ -5,6 +5,11 @@ export interface UserData {
   imageFile: [object]
 }
 
+export interface LoginData {
+  email: string
+  password: string
+}
+
 export interface MongoUser {
   _id: string
   __v: number

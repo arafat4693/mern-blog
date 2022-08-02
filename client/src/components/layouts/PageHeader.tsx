@@ -10,17 +10,32 @@ import { useState } from "react"
 import MenuLightBox from "./MenuLightBox"
 import { Link } from "react-router-dom"
 import AuthLightBox from "./AuthLightBox"
-import type { RootState } from "../../redux/store"
-import { useSelector } from "react-redux"
+import type { AppDispatch, RootState } from "../../redux/store"
+import { useDispatch, useSelector } from "react-redux"
+import axios from "../../utils/axiosConfig"
+import { toast } from "react-toastify"
+import { addUser } from "../../redux/userSlice"
 
 export default function PageHeader() {
   const [closeSrc, setCloseSrc] = useState<boolean>(true)
   const [closeMenu, setCloseMenu] = useState<boolean>(true)
   const [closeAuth, setCloseAuth] = useState<boolean>(true)
   const { user } = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch<AppDispatch>()
 
   async function logout() {
-    window.open("http://localhost:5000/auth/logout", "_self")
+    // window.open("http://localhost:5000/auth/logout", "_self")
+    try {
+      const res = await axios.get("/auth/logout")
+      toast(res.data.message, { type: "success", autoClose: 2300 })
+      dispatch(addUser(null))
+    } catch (err: any) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString()
+      toast(message, { type: "error", autoClose: 2300 })
+    }
   }
 
   return (

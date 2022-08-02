@@ -1,4 +1,10 @@
-import { Dispatch } from "react"
+import { Dispatch, useEffect } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "../../redux/store"
+import { LoginData } from "../../utils/types"
+import { loginUser } from "../../redux/userSlice"
+import Loader from "./Loader"
 
 interface Props {
   move: boolean
@@ -6,17 +12,33 @@ interface Props {
 }
 
 export default function Login({ move, setMove }: Props) {
+  const { register, handleSubmit, reset } = useForm<LoginData>()
+  const { userSuccess, userLoading } = useSelector(
+    (state: RootState) => state.user
+  )
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    if (userSuccess) reset()
+  }, [userSuccess, dispatch, reset])
+
+  const login: SubmitHandler<LoginData> = (data) => {
+    dispatch(loginUser(data))
+  }
+
   return (
     <form
+      onSubmit={handleSubmit(login)}
       className={`min-w-full transition-all duration-300 ${
         move ? "-translate-x-[36.5rem]" : "translate-x-0"
       }`}
     >
       <div>
-        <label htmlFor="email" className="block text-2xl text-gray-500 mb-2">
+        <label htmlFor="email1" className="block text-2xl text-gray-500 mb-2">
           E-mail
         </label>
         <input
+          {...register("email", { required: true })}
           type="email"
           id="email1"
           className="w-full bg-gray-300/70 px-6 py-4 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
@@ -24,21 +46,26 @@ export default function Login({ move, setMove }: Props) {
       </div>
 
       <div className="mt-5">
-        <label htmlFor="pass" className="block text-2xl text-gray-500 mb-2">
+        <label htmlFor="pass1" className="block text-2xl text-gray-500 mb-2">
           Password
         </label>
         <input
+          {...register("password", { required: true })}
           type="password"
           id="pass1"
           className="w-full bg-gray-300/70 px-6 py-4 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
         />
       </div>
 
-      <input
-        type="submit"
-        value="Login"
-        className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-6 cursor-pointer rounded-lg py-4 w-full text-2xl uppercase font-semibold"
-      />
+      {userLoading ? (
+        <Loader />
+      ) : (
+        <input
+          type="submit"
+          value="Login"
+          className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-6 cursor-pointer rounded-lg py-4 w-full text-2xl uppercase font-semibold"
+        />
+      )}
 
       <p className="text-xl text-gray-700 mt-3">
         Don't have an account?{" "}

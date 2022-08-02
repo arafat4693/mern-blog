@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import userServices from "../services/userService"
-import { UserData, MongoUser } from "../utils/types"
+import { UserData, MongoUser, LoginData } from "../utils/types"
 
 interface State {
   user: MongoUser | null
@@ -23,10 +23,26 @@ const initialState: State = {
 
 //register a user
 export const registerUser = createAsyncThunk(
-  "userSlice",
+  "userSlice/register",
   async (userData: UserData, thunkApi) => {
     try {
       return await userServices.register("/auth/register", userData)
+    } catch (err: any) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString()
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+)
+
+//login a user
+export const loginUser = createAsyncThunk(
+  "userSlice/login",
+  async (loginData: LoginData, thunkApi) => {
+    try {
+      return await userServices.login("/auth/login", loginData)
     } catch (err: any) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -45,7 +61,6 @@ const userSlice = createSlice({
       state.user = action.payload
     },
     resetState: (state) => {
-      state.user = null
       state.userSuccess = false
       state.userError = false
       state.userLoading = false
@@ -65,6 +80,20 @@ const userSlice = createSlice({
         state.userRedirect = true
       })
       .addCase(registerUser.rejected, (state, action: PayloadAction<any>) => {
+        state.userError = true
+        state.userLoading = false
+        state.userMessage = action.payload
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.userLoading = true
+      })
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<any>) => {
+        state.userLoading = false
+        state.userSuccess = true
+        state.user = action.payload.user
+        state.userMessage = action.payload.message
+      })
+      .addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
         state.userError = true
         state.userLoading = false
         state.userMessage = action.payload
