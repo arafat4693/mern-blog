@@ -1,5 +1,5 @@
 export interface UserData {
-  username: string
+  displayName: string
   email: string
   password: string
   imageFile: [object]
@@ -14,10 +14,15 @@ export interface MongoUser {
   _id: string
   __v: number
   username: string
-  email: string
+  email?: string
   password?: string
   imgName?: string
   imgUrl?: string
+  googleId?: string
+  twitterId?: string
+  githubId?: string
+  followers?: [string]
+  following?: [string]
   createdAt: Date
   updatedAt: Date
 }

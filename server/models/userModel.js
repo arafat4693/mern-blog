@@ -2,15 +2,12 @@ import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    displayName: {
       type: String,
-      unique: true,
       required: true,
     },
     email: {
       type: String,
-      unique: true,
-      required: true,
       lowercase: true,
     },
     password: {
@@ -19,6 +16,11 @@ const userSchema = new mongoose.Schema(
     },
     imgName: String,
     imgUrl: String,
+    googleId: String,
+    twitterId: String,
+    githubId: String,
+    followers: [mongoose.SchemaTypes.ObjectId],
+    following: [mongoose.SchemaTypes.ObjectId],
   },
   { timestamps: true }
 )

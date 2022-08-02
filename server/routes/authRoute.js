@@ -65,7 +65,8 @@ router.post(
   "/login",
   passport.authenticate("local", { failureRedirect: "/auth/login/failed" }),
   function (req, res) {
-    res.status(200).json({ user: req.user, message: "successfully logged in" })
+    const { password, ...other } = req.user._doc
+    res.status(200).json({ user: other, message: "successfully logged in" })
   }
 )
 

@@ -15,11 +15,14 @@ const Twitter = twitterStrategy.Strategy
 const Local = localStrategy.Strategy
 
 passport.serializeUser(function (user, done) {
-  done(null, user)
+  done(null, user._id)
 })
 
-passport.deserializeUser(function (user, done) {
-  done(null, user)
+passport.deserializeUser(function (id, done) {
+  UserModel.findById(id, (err, doc) => {
+    if (err) return done(err, null)
+    return done(null, doc)
+  })
 })
 
 passport.use(
@@ -30,8 +33,19 @@ passport.use(
       callbackURL: "/auth/github/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-      // console.log(profile)
-      done(null, profile)
+      UserModel.findOne({ githubId: profile.id }, async (err, user) => {
+        if (err) return done(err, null)
+        if (!user) {
+          let newUser = new UserModel({
+            displayName: profile.username,
+            imgUrl: profile.photos[0].value,
+            githubId: profile.id,
+          })
+          newUser = await newUser.save()
+          return done(null, newUser)
+        }
+        done(null, user)
+      })
     }
   )
 )
@@ -44,7 +58,19 @@ passport.use(
       callbackURL: "/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, cb) {
-      cb(null, profile)
+      UserModel.findOne({ googleId: profile.id }, async (err, user) => {
+        if (err) return cb(err, null)
+        if (!user) {
+          let newUser = new UserModel({
+            displayName: profile.displayName,
+            imgUrl: profile.photos[0].value,
+            googleId: profile.id,
+          })
+          newUser = await newUser.save()
+          return cb(null, newUser)
+        }
+        cb(null, user)
+      })
     }
   )
 )
@@ -57,7 +83,20 @@ passport.use(
       callbackURL: "/auth/twitter/callback",
     },
     function (token, tokenSecret, profile, cb) {
-      cb(null, profile)
+      UserModel.findOne({ twitterId: profile.id }, async (err, user) => {
+        if (err) return cb(err, null)
+        if (!user) {
+          let newUser = new UserModel({
+            displayName: profile.displayName,
+            imgUrl: profile.photos[0].value,
+            twitterId: profile.id,
+          })
+          newUser = await newUser.save()
+          return cb(null, newUser)
+        }
+        cb(null, user)
+      })
+      // cb(null, profile)
     }
   )
 )

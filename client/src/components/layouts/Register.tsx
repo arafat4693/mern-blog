@@ -40,13 +40,16 @@ export default function Register({ move, setMove }: Props) {
       }`}
     >
       <div>
-        <label htmlFor="username" className="block text-2xl text-gray-500 mb-2">
-          Username
+        <label
+          htmlFor="displayName"
+          className="block text-2xl text-gray-500 mb-2"
+        >
+          Display name
         </label>
         <input
-          {...register("username", { required: true })}
+          {...register("displayName", { required: true })}
           type="text"
-          id="username"
+          id="displayName"
           className="w-full bg-gray-300/70 px-6 py-4 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
         />
       </div>

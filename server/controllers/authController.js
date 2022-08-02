@@ -6,28 +6,24 @@ import bcrypt from "bcrypt"
 // @route  POST auth/register
 // @access Public
 export const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password, imgName, imgUrl } = req.body
+  const { displayName, email, password, imgName, imgUrl } = req.body
 
-  if (!username || !email || !password) {
+  if (!displayName || !email || !password) {
     res.status(400)
     throw new Error("Please fill out all the input fields")
   }
 
-  const checkUser = await UserModel.findOne({ $or: [{ email }, { username }] })
-  if (checkUser && checkUser.email === email) {
+  const checkUser = await UserModel.countDocuments({ email })
+  if (checkUser) {
     res.status(403)
     throw new Error("User already exists")
-  }
-  if (checkUser && checkUser.username === username) {
-    res.status(403)
-    throw new Error("Username already exists")
   }
 
   const salt = bcrypt.genSaltSync(10)
   const hash = bcrypt.hashSync(password, salt)
 
   const createUser = {
-    username,
+    displayName,
     email,
     password: hash,
   }
