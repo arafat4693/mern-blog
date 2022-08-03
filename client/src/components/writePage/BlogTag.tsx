@@ -3,7 +3,7 @@ import { MdOutlineClose } from "react-icons/md"
 
 interface Props {
   name: string
-  setTags: Dispatch<string[] | ((prev: string[]) => string[])>
+  setTags: Dispatch<(prev: string[]) => string[]>
 }
 
 export default function BlogTag({ name, setTags }: Props) {

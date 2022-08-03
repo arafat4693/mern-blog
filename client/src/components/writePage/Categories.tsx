@@ -1,10 +1,13 @@
 import UnderlineHeader from "../layouts/UnderlineHeader"
 import Category from "./Category"
-import { useState } from "react"
+import { Dispatch } from "react"
 
-export default function Categories() {
-  const [categories, setCategories] = useState<string[]>([])
+interface Props {
+  categories: string[]
+  setCategories: Dispatch<(prev: string[]) => string[]>
+}
 
+export default function Categories({ categories, setCategories }: Props) {
   return (
     <div className="cats mt-10">
       <div className="flex gap-2">

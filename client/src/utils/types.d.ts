@@ -26,3 +26,30 @@ export interface MongoUser {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface MongoArticle {
+  _id: string
+  __v: number
+  writerId: string
+  title: string
+  description: string
+  thumbnailImg: string
+  thumbnailImgName: string
+  markdown: string
+  tags: string[] | []
+  categories: string[]
+  slug: string
+  convertedHtml: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface ArticleData {
+  writerId: string
+  title: string
+  description: string
+  thumbnail: [object]
+  markdown: string
+  tags: string[] | []
+  categories: string[]
+}

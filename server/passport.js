@@ -18,10 +18,10 @@ passport.serializeUser(function (user, done) {
   done(null, user._id)
 })
 
-passport.deserializeUser(function (id, done) {
-  UserModel.findById(id, (err, doc) => {
+passport.deserializeUser(async function (id, done) {
+  UserModel.findById(id, (err, user) => {
     if (err) return done(err, null)
-    return done(null, doc)
+    return done(null, user)
   })
 })
 

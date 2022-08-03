@@ -4,6 +4,7 @@ import cors from "cors"
 import session from "express-session"
 import passport from "passport"
 import authRoute from "./routes/authRoute.js"
+import articleRoute from "./routes/articleRoute.js"
 import "./passport.js"
 import { errorHandler } from "./middlewares/errorMiddleware.js"
 import mongoose from "mongoose"
@@ -50,6 +51,7 @@ app.use(passport.initialize())
 app.use(passport.session()) //important because deserializeUser has to decode the information from the session id
 
 app.use("/auth", authRoute)
+app.use("/article", articleRoute)
 
 app.get("/", (req, res) => {
   res.send("Hello from server")
