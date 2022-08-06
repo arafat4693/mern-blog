@@ -44,7 +44,7 @@ passport.use(
           newUser = await newUser.save()
           return done(null, newUser)
         }
-        done(null, user)
+        return done(null, user)
       })
     }
   )
@@ -69,7 +69,7 @@ passport.use(
           newUser = await newUser.save()
           return cb(null, newUser)
         }
-        cb(null, user)
+        return cb(null, user)
       })
     }
   )
@@ -94,9 +94,8 @@ passport.use(
           newUser = await newUser.save()
           return cb(null, newUser)
         }
-        cb(null, user)
+        return cb(null, user)
       })
-      // cb(null, profile)
     }
   )
 )

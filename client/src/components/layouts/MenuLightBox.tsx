@@ -35,10 +35,10 @@ export default function MenuLightBox({ closeMenu, setCloseMenu }: Props) {
 
         <Logo customStyle="text-6xl pb-10" />
 
+        {/* <MenuCard />
         <MenuCard />
         <MenuCard />
-        <MenuCard />
-        <MenuCard />
+        <MenuCard /> */}
 
         <div className="flex gap-2 mt-20">
           <a

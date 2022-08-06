@@ -12,9 +12,9 @@ const router = express.Router()
 router
   .route("/:userId")
   .post(verifyUser, createArticle)
-  .get(verifyUser, getArticles)
   .put(verifyUser, updateArticle)
 
-router.route("/:userId/:articleId").delete(verifyUser, deleteArticle)
+router.get("/", getArticles)
+router.delete("/:userId/:articleId", verifyUser, deleteArticle)
 
 export default router

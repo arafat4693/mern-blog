@@ -57,8 +57,7 @@ export const getArticles = createAsyncThunk(
   "articleSlice/all",
   async (_, thunkApi: any) => {
     try {
-      const userId = thunkApi.getState().user.user._id
-      return await articleServices.allArticles(`/article/${userId}`)
+      return await articleServices.allArticles("/article/")
     } catch (err: any) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||

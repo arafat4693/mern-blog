@@ -14,17 +14,25 @@ import axios from "./utils/axiosConfig"
 import { addUser } from "./redux/userSlice"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { getArticles } from "./redux/articleSlice"
+import { AppDispatch } from "./redux/store"
+import Article from "./pages/Article"
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     async function getUser() {
-      const res = await axios.get("/auth/login/success")
-      if (res.data) dispatch(addUser(res.data))
+      try {
+        const res = await axios.get("/auth/login/success")
+        if (res.data) dispatch(addUser(res.data))
+      } catch (err) {
+        console.log(err)
+      }
     }
 
     getUser()
+    dispatch(getArticles())
   }, [dispatch])
 
   return (
@@ -40,6 +48,7 @@ function App() {
             <Route path="write" element={<Write />} />
             <Route path="comments" element={<Comments />} />
             <Route path="authors" element={<Authors />} />
+            <Route path="article/:slug" element={<Article />} />
           </Route>
         </Routes>
       </Router>

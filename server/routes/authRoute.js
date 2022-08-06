@@ -10,7 +10,11 @@ router.get("/login/failed", (req, res) => {
 })
 
 router.get("/login/success", (req, res) => {
-  res.send(req.user)
+  if (req.user) {
+    res.send(req.user)
+  } else {
+    res.sendStatus(400)
+  }
 })
 
 router.get("/logout", (req, res, next) => {
