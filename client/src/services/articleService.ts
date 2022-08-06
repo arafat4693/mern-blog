@@ -1,5 +1,5 @@
 import axios from "../utils/axiosConfig"
-import { ArticleData } from "../utils/types"
+import { ArticleData, UpdateArticle } from "../utils/types"
 import { v4 } from "uuid"
 import imgUpload from "../utils/imgUpload"
 
@@ -18,5 +18,38 @@ async function createArticle(url: string, articleData: ArticleData) {
   return res.data
 }
 
-const articleServices = { createArticle }
+async function allArticles(url: string) {
+  const res = await axios.get(url)
+  return res.data
+}
+
+async function deleteArticle(url: string) {
+  const res = await axios.delete(url)
+  return res.data
+}
+
+async function updateArticle(url: string, articleData: UpdateArticle) {
+  let thumbnailImg = articleData.thumbnailImg
+
+  if (articleData.thumbnail[0]) {
+    thumbnailImg = (await imgUpload(
+      articleData.thumbnail[0],
+      articleData.thumbnailImgName
+    )) as string
+  }
+
+  const { thumbnail, ...other } = articleData
+  const res = await axios.put(url, {
+    ...other,
+    thumbnailImg,
+  })
+  return res.data
+}
+
+const articleServices = {
+  createArticle,
+  allArticles,
+  deleteArticle,
+  updateArticle,
+}
 export default articleServices

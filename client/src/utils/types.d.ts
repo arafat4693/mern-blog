@@ -53,3 +53,15 @@ export interface ArticleData {
   tags: string[] | []
   categories: string[]
 }
+
+export interface UpdateArticle {
+  articleId: string
+  title: string
+  description: string
+  markdown: string
+  tags: string[] | []
+  categories: string[]
+  thumbnail: object[] | []
+  thumbnailImg: string
+  thumbnailImgName: string
+}
