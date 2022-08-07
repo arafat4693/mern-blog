@@ -3,12 +3,15 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { ArticleData } from "../utils/types"
 import BlogTags from "../components/writePage/BlogTags"
 import Categories from "../components/writePage/Categories"
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { useSelector, useDispatch } from "react-redux"
+import { AppDispatch, RootState } from "../redux/store"
 import ReactLoading from "react-loading"
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Loader from "../components/layouts/Loader"
+import { toast } from "react-toastify"
+import { updateArticle } from "../redux/articleSlice"
+import { resetState } from "../redux/articleSlice"
 
 export default function EditArticle() {
   const {
@@ -21,19 +24,66 @@ export default function EditArticle() {
     articleSlug,
   } = useSelector((state: RootState) => state.article)
   const { slug } = useParams()
-  const article = articles.find((a) => a.slug === slug)
-  const { register, handleSubmit, reset } = useForm<ArticleData>()
-  const [categories, setCategories] = useState<string[]>(
-    article?.categories || []
+  const dispatch = useDispatch<AppDispatch>()
+  const article = useMemo(
+    () => articles.find((a) => a.slug === slug),
+    [slug, articles]
   )
-  const [tags, setTags] = useState<string[]>(article?.tags || [])
+  const { register, handleSubmit, setValue } = useForm<ArticleData>()
+  const [categories, setCategories] = useState<string[]>([])
+  const [tags, setTags] = useState<string[]>([])
   const navigate = useNavigate()
 
-  const onArticleUpdate: SubmitHandler<ArticleData> = (data) => {
-    console.log(data)
-  }
+  useEffect(() => {
+    if (article) {
+      setTags(article.tags)
+      setCategories(article.categories)
+      setValue("title", article.title)
+      setValue("description", article.description)
+      setValue("markdown", article.markdown)
+    }
+  }, [article, setValue])
 
-  console.log(article)
+  useEffect(() => {
+    if (articleAction === "UPDATE") {
+      if (articleSuccess) {
+        toast(articleMessage, { type: "success", autoClose: 2300 })
+        navigate(`/article/${articleSlug}`)
+        dispatch(resetState())
+      }
+      if (articleError) {
+        dispatch(resetState())
+        toast(articleMessage, { type: "error", autoClose: 2300 })
+      }
+    }
+  }, [
+    articleSuccess,
+    articleError,
+    articleMessage,
+    articleAction,
+    dispatch,
+    navigate,
+    articleSlug,
+  ])
+
+  const onArticleUpdate: SubmitHandler<ArticleData> = (data) => {
+    if (!article) return
+    if (!categories.length)
+      return toast("At least one category is required", {
+        type: "info",
+        autoClose: 2300,
+      })
+    dispatch(
+      updateArticle({
+        ...data,
+        tags,
+        categories,
+        articleId: article._id,
+        thumbnailImg: article.thumbnailImg,
+        thumbnailImgName: article.thumbnailImgName,
+      })
+    )
+  }
 
   return (
     <>
@@ -61,7 +111,6 @@ export default function EditArticle() {
                   {...register("title", { required: true })}
                   type="text"
                   id="title"
-                  //   defaultValue={article?.title}
                   className="w-full bg-gray-200/70 px-8 py-5 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
                 />
               </div>
@@ -75,7 +124,6 @@ export default function EditArticle() {
                 </label>
                 <input
                   {...register("description", { required: true })}
-                  //   defaultValue={article?.description}
                   type="text"
                   id="desc"
                   className="w-full bg-gray-200/70 px-8 py-5 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
@@ -90,7 +138,7 @@ export default function EditArticle() {
                   Blog thumbnail
                 </label>
                 <input
-                  {...register("thumbnail", { required: true })}
+                  {...register("thumbnail")}
                   type="file"
                   id="thumbnail"
                   className="w-full bg-gray-200/70 px-6 py-4 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
@@ -106,7 +154,6 @@ export default function EditArticle() {
                 </label>
                 <textarea
                   {...register("markdown", { required: true })}
-                  //   defaultValue={article?.markdown}
                   id="markdown"
                   className="w-full resize-y h-96 bg-gray-200/70 px-8 py-5 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
                 />
@@ -131,10 +178,11 @@ export default function EditArticle() {
                 <div className="flex gap-4">
                   <input
                     type="submit"
-                    // defaultValue="create"
+                    value="update"
                     className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-14 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
                   />
                   <button
+                    type="button"
                     onClick={() => navigate(`/article/${slug}`)}
                     className="text-white bg-green-600 hover:bg-gray-700 transition-all duration-300 mt-14 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
                   >

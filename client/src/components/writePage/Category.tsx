@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
+// import { useSelector } from "react-redux"
+// import { RootState } from "../../redux/store"
 
 interface Props {
   name: string
@@ -9,12 +9,18 @@ interface Props {
 }
 
 export default function Category({ name, selectCategory, categories }: Props) {
-  const [active, setActive] = useState<boolean>(categories.includes(name))
-  const { articleSuccess } = useSelector((state: RootState) => state.article)
+  const [active, setActive] = useState<boolean>(false)
+  // const { articleSuccess } = useSelector((state: RootState) => state.article)
 
   useEffect(() => {
-    if (articleSuccess) setActive(false)
-  }, [articleSuccess, setActive])
+    if (categories) {
+      setActive(categories.includes(name))
+    }
+  }, [categories, setActive, name])
+
+  // useEffect(() => {
+  //   if (articleSuccess) setActive(false)
+  // }, [articleSuccess, setActive])
 
   function selectOrUnselect(value: string) {
     if (categories.includes(value)) {
