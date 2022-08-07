@@ -30,7 +30,7 @@ export default function MenuCard({ last, article }: Props) {
         </Link>
         <p className="flex gap-2 items-center text-2xl text-gray-500 mt-4">
           <CalendarIcon className="w-6 h-6 stroke-gray-500" />
-          {new Date(article.createdAt).toLocaleDateString("en-us", {
+          {new Date(article.createdAt).toLocaleDateString(undefined, {
             year: "numeric",
             month: "long",
             day: "numeric",

@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css"
 import { getArticles } from "./redux/articleSlice"
 import { AppDispatch } from "./redux/store"
 import Article from "./pages/Article"
+import EditArticle from "./pages/EditArticle"
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -49,6 +50,7 @@ function App() {
             <Route path="comments" element={<Comments />} />
             <Route path="authors" element={<Authors />} />
             <Route path="article/:slug" element={<Article />} />
+            <Route path="edit/:slug" element={<EditArticle />} />
           </Route>
         </Routes>
       </Router>

@@ -1,7 +1,8 @@
 import axios from "../utils/axiosConfig"
-import { ArticleData, UpdateArticle } from "../utils/types"
+import { ArticleData, MongoArticle, UpdateArticle } from "../utils/types"
 import { v4 } from "uuid"
 import imgUpload from "../utils/imgUpload"
+import deleteImage from "../utils/deleteImg"
 
 async function createArticle(url: string, articleData: ArticleData) {
   const thumbnailImgName = v4()
@@ -23,7 +24,8 @@ async function allArticles(url: string) {
   return res.data
 }
 
-async function deleteArticle(url: string) {
+async function deleteArticle(url: string, article: MongoArticle) {
+  await deleteImage(article.thumbnailImgName)
   const res = await axios.delete(url)
   return res.data
 }

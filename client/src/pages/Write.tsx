@@ -9,6 +9,7 @@ import Categories from "../components/writePage/Categories"
 import { createArticle, resetState } from "../redux/articleSlice"
 import { AppDispatch, RootState } from "../redux/store"
 import { ArticleData } from "../utils/types"
+import { useNavigate } from "react-router-dom"
 
 export default function Write() {
   const { register, handleSubmit, reset } = useForm<ArticleData>()
@@ -16,22 +17,36 @@ export default function Write() {
   const [tags, setTags] = useState<string[]>([])
   const dispatch = useDispatch<AppDispatch>()
   const { user } = useSelector((state: RootState) => state.user)
-  const { articleSuccess, articleError, articleMessage, articleLoading } =
-    useSelector((state: RootState) => state.article)
+  const {
+    articleSuccess,
+    articleError,
+    articleMessage,
+    articleLoading,
+    articleAction,
+    articleSlug,
+  } = useSelector((state: RootState) => state.article)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (articleSuccess) {
-      toast(articleMessage, { type: "success", autoClose: 2300 })
-      setTags([])
-      setCategories([])
-      reset()
+    if (articleAction === "CREATE") {
+      if (articleSuccess) {
+        toast(articleMessage, { type: "success", autoClose: 2300 })
+        navigate(`/article/${articleSlug}`)
+        setTags([])
+        setCategories([])
+        reset()
+        dispatch(resetState())
+      }
+      if (articleError) {
+        toast(articleMessage, { type: "error", autoClose: 2300 })
+        dispatch(resetState())
+      }
     }
-    if (articleError) toast(articleMessage, { type: "error", autoClose: 2300 })
-    dispatch(resetState())
   }, [
     articleSuccess,
     articleError,
     articleMessage,
+    articleAction,
     dispatch,
     reset,
     setTags,
@@ -119,7 +134,7 @@ export default function Write() {
           <BlogTags tags={tags} setTags={setTags} />
           <Categories categories={categories} setCategories={setCategories} />
 
-          {articleLoading ? (
+          {articleAction === "CREATE" && articleLoading ? (
             <div className={`mt-8`}>
               <ReactLoading
                 type={"bubbles"}

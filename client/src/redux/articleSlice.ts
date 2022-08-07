@@ -8,7 +8,7 @@ interface State {
   articleError: boolean
   articleLoading: boolean
   articleMessage: string
-  articleAction: "DELETE" | "UPDATE" | "CREATE" | ""
+  articleAction: "DELETE" | "UPDATE" | "CREATE" | "GET" | ""
   articleSlug: string
 }
 
@@ -71,11 +71,12 @@ export const getArticles = createAsyncThunk(
 //delete article
 export const deleteArticle = createAsyncThunk(
   "articleSlice/delete",
-  async (articleId: string, thunkApi: any) => {
+  async (article: MongoArticle, thunkApi: any) => {
     try {
       const userId = thunkApi.getState().user.user._id
       return await articleServices.deleteArticle(
-        `/article/${userId}/${articleId}`
+        `/article/${userId}/${article._id}`,
+        article
       )
     } catch (err: any) {
       const message =
@@ -132,6 +133,7 @@ const articleSlice = createSlice({
           state.articleLoading = false
           state.articleSuccess = true
           state.articleAction = "CREATE"
+          state.articleSlug = action.payload.article.slug
           state.articleMessage = action.payload.message
           state.articles = [...state.articles, action.payload.article]
         }
@@ -142,10 +144,16 @@ const articleSlice = createSlice({
         state.articleAction = "CREATE"
         state.articleMessage = action.payload
       })
+      .addCase(getArticles.pending, (state) => {
+        state.articleAction = "GET"
+        state.articleLoading = true
+      })
       .addCase(
         getArticles.fulfilled,
         (state, action: PayloadAction<MongoArticle[]>) => {
           state.articles = action.payload
+          state.articleAction = ""
+          state.articleLoading = false
         }
       )
       .addCase(deleteArticle.pending, (state) => {

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function Category({ name, selectCategory, categories }: Props) {
-  const [active, setActive] = useState<boolean>(false)
+  const [active, setActive] = useState<boolean>(categories.includes(name))
   const { articleSuccess } = useSelector((state: RootState) => state.article)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Category({ name, selectCategory, categories }: Props) {
   return (
     <h1
       onClick={(e: any) => selectOrUnselect(e.target.textContent.toLowerCase())}
-      className={`h-16 rounded-lg cursor-pointer px-8 flex items-center text-2xl capitalize font-medium transition-all duration-300 ${
+      className={`h-16 rounded-lg cursor-pointer px-8 flex items-center text-2xl font-medium transition-all duration-300 ${
         active
           ? "bg-violet-800 text-white"
           : "bg-gray-200/70 text-gray-800 hover:bg-violet-800 hover:text-white"
