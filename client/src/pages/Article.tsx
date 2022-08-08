@@ -9,6 +9,7 @@ import { deleteArticle } from "../redux/articleSlice"
 import { toast } from "react-toastify"
 import { resetState } from "../redux/articleSlice"
 import Loader from "../components/layouts/Loader"
+import Share from "../components/articlePage/Share"
 
 export default function Article() {
   const { slug } = useParams()
@@ -20,6 +21,7 @@ export default function Article() {
     articleLoading,
     articleAction,
   } = useSelector((state: RootState) => state.article)
+  const { user } = useSelector((state: RootState) => state.user)
   const article = articles.find((a) => a.slug === slug)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
@@ -63,10 +65,14 @@ export default function Article() {
               <img
                 src={article?.thumbnailImg}
                 alt="thumbnail"
-                className="h-[55rem] w-full object-cover"
+                className="h-[60rem] w-full object-cover"
               />
               <div className="overlay absolute top-0 left-0 right-0 bottom-0 bg-[#0000004b]"></div>
-              <div className="bg-violet-700 top-6 right-6 absolute flex gap-4 items-center py-2.5 px-4 rounded-full shadow-sm shadow-violet-500">
+              <div
+                className={`${
+                  user && article?.writerId === user._id ? "block" : "hidden"
+                } bg-violet-700 top-6 right-6 absolute flex gap-4 items-center py-2.5 px-4 rounded-full shadow-sm shadow-violet-500`}
+              >
                 <Link
                   to={`/edit/${slug}`}
                   className="text-3xl text-white text-medium cursor-pointer hover:text-green-300 transition-all"
@@ -126,6 +132,23 @@ export default function Article() {
               className="markdown-body"
               dangerouslySetInnerHTML={{ __html: article?.convertedHtml || "" }}
             />
+
+            <div className="mt-12 pb-16">
+              <h1 className="text-gray-800 text-3xl font-semibold">Tags:</h1>
+              <div className="tags flex gap-4 mt-6">
+                {article?.tags.map((t, i) => (
+                  <Link
+                    key={i}
+                    to="/"
+                    className="border border-solid border-gray-400 rounded-xl text-xl text-gray-600 px-4 py-2 transition-all duration-300 hover:border-gray-800 hover:text-gray-800"
+                  >
+                    {t}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <Share article={article} />
           </section>
         </main>
       )}

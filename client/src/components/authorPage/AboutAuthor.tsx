@@ -1,12 +1,4 @@
-import TooltipIcon from "./TooltipIcon"
-import {
-  FaGlobeEurope,
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-} from "react-icons/fa"
-import { IoLogoWhatsapp } from "react-icons/io"
-import { AiFillInstagram } from "react-icons/ai"
+import TooltipIcons from "../layouts/TooltipIcons"
 
 export default function AboutAuthor() {
   return (
@@ -28,38 +20,7 @@ export default function AboutAuthor() {
           moment; and yet I feel that I never was a greater artist than now.
         </p>
         <div className="flex justify-between items-center">
-          <div className="icons flex gap-8 items-center">
-            <TooltipIcon
-              Icon={FaGlobeEurope}
-              tooltip="Website: https://themeforest.net/user/rivaxstudio"
-              link="https://www.themeforest.net"
-            />
-            <TooltipIcon
-              Icon={FaFacebookF}
-              tooltip="Follow me on facebook"
-              link="https://www.facebook.com"
-            />
-            <TooltipIcon
-              Icon={FaTwitter}
-              tooltip="Follow me on twitter"
-              link="https://www.twitter.com"
-            />
-            <TooltipIcon
-              Icon={FaLinkedinIn}
-              tooltip="Follow me on linkedin"
-              link="https://www.linkedin.in"
-            />
-            <TooltipIcon
-              Icon={IoLogoWhatsapp}
-              tooltip="Follow me on whatsapp"
-              link="https://www.whatsapp.com"
-            />
-            <TooltipIcon
-              Icon={AiFillInstagram}
-              tooltip="Follow me on instagram"
-              link="https://www.instagram.com"
-            />
-          </div>
+          <TooltipIcons />
           <span className="block text-right text-xl text-gray-500 capitalize">
             15 articles
           </span>
