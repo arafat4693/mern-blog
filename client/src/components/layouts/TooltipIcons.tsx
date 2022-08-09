@@ -10,7 +10,7 @@ import { AiFillInstagram } from "react-icons/ai"
 
 export default function TooltipIcons() {
   return (
-    <div className="icons flex gap-8 items-center bg-gray-200/40 rounded-full px-10 py-4">
+    <div className="icons flex gap-8 items-center bg-gray-200/40 rounded-full px-10 py-4 w-fit">
       <TooltipIcon
         Icon={FaGlobeEurope}
         tooltip="Website: https://themeforest.net/user/rivaxstudio"

@@ -10,6 +10,10 @@ import { toast } from "react-toastify"
 import { resetState } from "../redux/articleSlice"
 import Loader from "../components/layouts/Loader"
 import Share from "../components/articlePage/Share"
+import Writer from "../components/articlePage/Writer"
+import UnderlineHeader from "../components/layouts/UnderlineHeader"
+import RelatedPost from "../components/articlePage/RelatedPost"
+import CommentBox from "../components/articlePage/CommentBox"
 
 export default function Article() {
   const { slug } = useParams()
@@ -149,6 +153,60 @@ export default function Article() {
             </div>
 
             <Share article={article} />
+            <Writer />
+
+            <div className="border-0 border-y border-solid border-gray-300 py-20">
+              <h2 className="text-4xl mb-8 text-gray-800 capitalize font-semibold">
+                other articles
+              </h2>
+              <div className="flex justify-between flex-wrap gap-6">
+                <figure className="flex items-center gap-4">
+                  <img
+                    src="/images/user.jpg"
+                    alt="user"
+                    className="w-48 h-48 object-cover rounded-xl"
+                  />
+                  <figcaption>
+                    <p className="text-2xl text-gray-500 mb-3">Recommended</p>
+                    <Link
+                      to="/"
+                      className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-3xl text-gray-800 font-semibold"
+                    >
+                      How Good Deeds Can Benefit Your Local Business
+                    </Link>
+                  </figcaption>
+                </figure>
+
+                <figure className="flex items-center gap-4">
+                  <img
+                    src="/images/user.jpg"
+                    alt="user"
+                    className="w-48 h-48 object-cover rounded-xl"
+                  />
+                  <figcaption>
+                    <p className="text-2xl text-gray-500 mb-3">Recommended</p>
+                    <Link
+                      to="/"
+                      className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-3xl text-gray-800 font-semibold"
+                    >
+                      How Good Deeds Can Benefit Your Local Business
+                    </Link>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <CommentBox />
+
+            <div>
+              <UnderlineHeader title="related posts" />
+              <div className="grid grid-cols-4 gap-4 mt-8">
+                <RelatedPost />
+                <RelatedPost />
+                <RelatedPost />
+                <RelatedPost />
+              </div>
+            </div>
           </section>
         </main>
       )}
