@@ -18,6 +18,7 @@ import { getArticles } from "./redux/articleSlice"
 import { AppDispatch } from "./redux/store"
 import Article from "./pages/Article"
 import EditArticle from "./pages/EditArticle"
+import { getMessages } from "./redux/messageSlice"
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -34,6 +35,7 @@ function App() {
 
     getUser()
     dispatch(getArticles())
+    dispatch(getMessages())
   }, [dispatch])
 
   return (

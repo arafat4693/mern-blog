@@ -160,7 +160,7 @@ export default function Article() {
                 other articles
               </h2>
               <div className="flex justify-between flex-wrap gap-6">
-                <figure className="flex items-center gap-4">
+                <figure className="flex items-center gap-6">
                   <img
                     src="/images/user.jpg"
                     alt="user"
@@ -177,7 +177,7 @@ export default function Article() {
                   </figcaption>
                 </figure>
 
-                <figure className="flex items-center gap-4">
+                <figure className="flex items-center gap-6">
                   <img
                     src="/images/user.jpg"
                     alt="user"
