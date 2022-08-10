@@ -65,3 +65,26 @@ export interface UpdateArticle {
   thumbnailImg: string
   thumbnailImgName: string
 }
+
+export interface MongoMessage {
+  _id: string
+  __v: number
+  articleId: string
+  senderId: string
+  parentId?: string
+  message: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface MessageData {
+  articleId: string
+  senderId: string
+  parentId?: string
+  message: string
+}
+
+export interface UpdateMessage {
+  message: string
+  messageId: string
+}

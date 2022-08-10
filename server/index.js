@@ -5,6 +5,7 @@ import session from "express-session"
 import passport from "passport"
 import authRoute from "./routes/authRoute.js"
 import articleRoute from "./routes/articleRoute.js"
+import messageRoute from "./routes/messageRoute.js"
 import "./passport.js"
 import { errorHandler } from "./middlewares/errorMiddleware.js"
 import mongoose from "mongoose"
@@ -52,6 +53,7 @@ app.use(passport.session()) //important because deserializeUser has to decode th
 
 app.use("/auth", authRoute)
 app.use("/article", articleRoute)
+app.use("/message", messageRoute)
 
 app.get("/", (req, res) => {
   res.send("Hello from server")
