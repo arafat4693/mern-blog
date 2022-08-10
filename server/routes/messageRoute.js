@@ -9,7 +9,7 @@ import { verifyUser } from "../middlewares/authMiddleware.js"
 
 const router = express.Router()
 
-router.get("/:articleId", articleMessages)
+router.get("/", articleMessages)
 
 router
   .route("/:userId")
