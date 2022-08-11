@@ -1,9 +1,12 @@
 import { MongoArticle, MongoUser } from "../../utils/types"
 import { useRef } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, RootState } from "../../redux/store"
 import { useParams } from "react-router-dom"
 import { createMessage } from "../../redux/messageSlice"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { resetState } from "../../redux/messageSlice"
+import { AppDispatch, RootState } from "../../redux/store"
+import { toast } from "react-toastify"
 
 interface Props {
   user: MongoUser | null
@@ -15,6 +18,26 @@ export default function CommentForm({ user }: Props) {
   const { slug } = useParams()
   const { articles } = useSelector((state: RootState) => state.article)
   const article = articles.find((a: MongoArticle) => a.slug === slug)
+  const {
+    messageLoading,
+    messageAction,
+    messageSuccess,
+    messageError,
+    messageMsg,
+  } = useSelector((state: RootState) => state.message)
+
+  useEffect(() => {
+    if (messageAction === "ROOT") {
+      if (messageSuccess) {
+        dispatch(resetState())
+        textareaRef.current.value = ""
+      }
+      if (messageError) {
+        toast(messageMsg, { type: "error", autoClose: 2300 })
+        dispatch(resetState())
+      }
+    }
+  }, [messageAction, messageSuccess, messageError, messageMsg, dispatch])
 
   function createComment(e: any) {
     e.preventDefault()
@@ -44,7 +67,11 @@ export default function CommentForm({ user }: Props) {
         onClick={createComment}
         type="submit"
         value="SEND"
-        className="bg-violet-700 rounded-xl shadow-lg shadow-violet-300 hover:shadow-none hover:bg-gray-800 transition-all duration-300 text-white text-2xl capitalize font-medium py-6 px-16 cursor-pointer tracking-wider"
+        className={`${
+          messageAction === "ROOT" && messageLoading
+            ? "bg-violet-500 pointer-events-none"
+            : "bg-violet-700 shadow-lg shadow-violet-300 hover:shadow-none hover:bg-gray-800"
+        } rounded-xl transition-all duration-300 text-white text-2xl capitalize font-medium py-6 px-16 cursor-pointer tracking-wider`}
       />
     </form>
   )

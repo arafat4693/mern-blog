@@ -1,18 +1,11 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { resetState } from "../../redux/messageSlice"
-import { AppDispatch, RootState } from "../../redux/store"
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
 import CommentForm from "./CommentForm"
 import Comments from "./Comments"
 
 export default function CommentBox() {
   const { user } = useSelector((state: RootState) => state.user)
   const { messages } = useSelector((state: RootState) => state.message)
-  const dispatch = useDispatch<AppDispatch>()
-
-  // useEffect(() => {
-  //   if (messageReset) dispatch(resetState())
-  // }, [dispatch, messageReset])
 
   return (
     <div className="py-20">
@@ -31,7 +24,13 @@ export default function CommentBox() {
           Login to comment
         </h1>
       )}
-      {messages.length && <Comments messages={messages} />}
+      {messages.length ? (
+        <Comments messages={messages} />
+      ) : (
+        <h3 className="w-[45rem] mx-auto py-5 rounded-xl text-center bg-violet-200/60 text-gray-800 text-2xl font-medium mt-6">
+          No comments yet
+        </h3>
+      )}
     </div>
   )
 }

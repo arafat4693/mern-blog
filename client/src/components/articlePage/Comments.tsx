@@ -9,7 +9,7 @@ export default function Comments({ messages }: Props) {
   return (
     <div>
       {messages.map((m) => (
-        <Comment comment={m} />
+        <Comment key={m._id} comment={m} />
       ))}
     </div>
   )

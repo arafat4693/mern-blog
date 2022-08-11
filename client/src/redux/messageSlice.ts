@@ -8,7 +8,7 @@ interface State {
   messageSuccess: boolean
   messageError: boolean
   messageMsg: string
-  messageAction: "ROOT" | "REPLY" | "DELETE" | "EDIT" | ""
+  messageAction: "ROOT" | "DELETE" | "EDIT" | ""
 }
 
 const initialState: State = {

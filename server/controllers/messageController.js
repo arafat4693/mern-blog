@@ -2,11 +2,10 @@ import asyncHandler from "express-async-handler"
 import MessageModel from "../models/messageModel.js"
 
 // @desc   article messages
-// @route  GET message/:articleId
+// @route  GET message/
 // @access Public
 export const articleMessages = asyncHandler(async (req, res) => {
-  const { articleId } = req.params
-  const articleMessages = await MessageModel.find({ articleId }).sort({
+  const articleMessages = await MessageModel.find().sort({
     createdAt: "desc",
   })
   res.status(200).json(articleMessages)
@@ -17,7 +16,7 @@ export const articleMessages = asyncHandler(async (req, res) => {
 // @access Private
 export const newMessage = asyncHandler(async (req, res) => {
   let newMessage = new MessageModel(req.body)
-  newMessage = await MessageModel.save()
+  newMessage = await newMessage.save()
   res.status(201).json(newMessage)
 })
 
@@ -26,8 +25,8 @@ export const newMessage = asyncHandler(async (req, res) => {
 // @access Private
 export const updateMessage = asyncHandler(async (req, res) => {
   const { messageId, message } = req.body
-  const updatedMessage = await MessageModel.updateOne(
-    { _id: messageId },
+  const updatedMessage = await MessageModel.findByIdAndUpdate(
+    messageId,
     { $set: { message } },
     { new: true }
   )
