@@ -18,7 +18,7 @@ export default function CommentBox() {
         </h1>
       )}
       {user ? (
-        <CommentForm user={user} />
+        <CommentForm user={user} actionType="ROOT" />
       ) : (
         <h1 className="bg-violet-700 mt-8 text-white text-4xl capitalize font-semibold text-center py-16">
           Login to comment

@@ -8,7 +8,7 @@ interface State {
   messageSuccess: boolean
   messageError: boolean
   messageMsg: string
-  messageAction: "ROOT" | "DELETE" | "EDIT" | ""
+  messageAction: "ROOT" | "DELETE" | "EDIT" | "REPLY" | ""
 }
 
 const initialState: State = {
@@ -39,6 +39,23 @@ export const getMessages = createAsyncThunk(
 //create a message
 export const createMessage = createAsyncThunk(
   "messageSlice/new",
+  async (messageData: MessageData, thunkApi: any) => {
+    try {
+      const userId = thunkApi.getState().user.user._id
+      return await messageService.newMessage(`/message/${userId}`, messageData)
+    } catch (err: any) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString()
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+)
+
+//reply message
+export const replyMessage = createAsyncThunk(
+  "messageSlice/reply",
   async (messageData: MessageData, thunkApi: any) => {
     try {
       const userId = thunkApi.getState().user.user._id
@@ -129,6 +146,25 @@ const messageSlice = createSlice({
         state.messageLoading = false
         state.messageError = true
         state.messageAction = "ROOT"
+        state.messageMsg = action.payload
+      })
+      .addCase(replyMessage.pending, (state) => {
+        state.messageLoading = true
+        state.messageAction = "REPLY"
+      })
+      .addCase(
+        replyMessage.fulfilled,
+        (state, action: PayloadAction<MongoMessage>) => {
+          state.messageLoading = false
+          state.messageSuccess = true
+          state.messageAction = "REPLY"
+          state.messages = [action.payload, ...state.messages]
+        }
+      )
+      .addCase(replyMessage.rejected, (state, action: PayloadAction<any>) => {
+        state.messageLoading = false
+        state.messageError = true
+        state.messageAction = "REPLY"
         state.messageMsg = action.payload
       })
       .addCase(editMessage.pending, (state) => {

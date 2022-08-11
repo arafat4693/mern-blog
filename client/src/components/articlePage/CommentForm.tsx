@@ -1,4 +1,4 @@
-import { MongoArticle, MongoUser } from "../../utils/types"
+import { MessageData, MongoArticle, MongoUser } from "../../utils/types"
 import { useRef } from "react"
 import { useParams } from "react-router-dom"
 import { createMessage } from "../../redux/messageSlice"
@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux"
 import { resetState } from "../../redux/messageSlice"
 import { AppDispatch, RootState } from "../../redux/store"
 import { toast } from "react-toastify"
+import { AsyncThunkAction } from "@reduxjs/toolkit"
 
 interface Props {
   user: MongoUser | null
+  actionType: string
+  // actionFn: AsyncThunkAction<any, MessageData, {}>
 }
 
-export default function CommentForm({ user }: Props) {
+export default function CommentForm({ user, actionType }: Props) {
   const textareaRef = useRef<any>()
   const dispatch = useDispatch<AppDispatch>()
   const { slug } = useParams()
@@ -27,7 +30,7 @@ export default function CommentForm({ user }: Props) {
   } = useSelector((state: RootState) => state.message)
 
   useEffect(() => {
-    if (messageAction === "ROOT") {
+    if (messageAction === actionType) {
       if (messageSuccess) {
         dispatch(resetState())
         textareaRef.current.value = ""
@@ -37,7 +40,14 @@ export default function CommentForm({ user }: Props) {
         dispatch(resetState())
       }
     }
-  }, [messageAction, messageSuccess, messageError, messageMsg, dispatch])
+  }, [
+    messageAction,
+    messageSuccess,
+    messageError,
+    messageMsg,
+    actionType,
+    dispatch,
+  ])
 
   function createComment(e: any) {
     e.preventDefault()
@@ -52,7 +62,7 @@ export default function CommentForm({ user }: Props) {
   }
 
   return (
-    <form className="flex mt-8 gap-6 p-10 rounded-xl justify-between items-start bg-[#f6f6f6]">
+    <form className="flex mt-4 gap-6 p-10 rounded-xl justify-between items-start bg-[#f6f6f6]">
       <img
         src={user?.imgUrl}
         alt="user"
@@ -68,7 +78,7 @@ export default function CommentForm({ user }: Props) {
         type="submit"
         value="SEND"
         className={`${
-          messageAction === "ROOT" && messageLoading
+          messageAction === actionType && messageLoading
             ? "bg-violet-500 pointer-events-none"
             : "bg-violet-700 shadow-lg shadow-violet-300 hover:shadow-none hover:bg-gray-800"
         } rounded-xl transition-all duration-300 text-white text-2xl capitalize font-medium py-6 px-16 cursor-pointer tracking-wider`}
