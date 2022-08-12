@@ -12,6 +12,7 @@ import Loader from "../components/layouts/Loader"
 import { toast } from "react-toastify"
 import { updateArticle } from "../redux/articleSlice"
 import { resetState } from "../redux/articleSlice"
+import ErrMsg from "../components/layouts/ErrMsg"
 
 export default function EditArticle() {
   const {
@@ -89,7 +90,7 @@ export default function EditArticle() {
     <>
       {articleAction === "GET" && articleLoading ? (
         <Loader />
-      ) : (
+      ) : article ? (
         <main className="mt-40">
           <section className="wrapper max-w-[1240px] mx-auto">
             <OverlapHeader
@@ -193,6 +194,8 @@ export default function EditArticle() {
             </form>
           </section>
         </main>
+      ) : (
+        <ErrMsg msg="article couldn't found" />
       )}
     </>
   )

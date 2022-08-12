@@ -10,6 +10,8 @@ interface Props {
   edit: boolean
   message: string
   comment: MongoMessage
+  messageAction: "ROOT" | "DELETE" | "EDIT" | "REPLY" | ""
+  messageLoading: boolean
 }
 
 export default function EditComment({
@@ -18,6 +20,8 @@ export default function EditComment({
   edit,
   message,
   comment,
+  messageLoading,
+  messageAction,
 }: Props) {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -44,12 +48,20 @@ export default function EditComment({
           onClick={updateComment}
           type="submit"
           value="update"
-          className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-4 cursor-pointer rounded-lg py-4 px-12 text-2xl capitalize font-semibold"
+          className={`${
+            messageAction === "EDIT" && messageLoading
+              ? "bg-violet-400 pointer-events-none"
+              : "bg-violet-700 hover:bg-gray-700"
+          } text-white transition-all duration-300 mt-4 cursor-pointer rounded-lg py-4 px-12 text-2xl capitalize font-semibold`}
         />
         <button
           type="button"
           onClick={() => setEdit(false)}
-          className="text-white bg-red-600 hover:bg-gray-700 transition-all duration-300 mt-4 cursor-pointer rounded-lg py-4 px-12 text-2xl capitalize font-semibold"
+          className={`${
+            messageAction === "EDIT" && messageLoading
+              ? "bg-red-400 pointer-events-none"
+              : "bg-red-600 hover:bg-gray-700"
+          } text-white transition-all duration-300 mt-4 cursor-pointer rounded-lg py-4 px-12 text-2xl capitalize font-semibold`}
         >
           cancel
         </button>

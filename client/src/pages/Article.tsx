@@ -14,6 +14,7 @@ import Writer from "../components/articlePage/Writer"
 import UnderlineHeader from "../components/layouts/UnderlineHeader"
 import RelatedPost from "../components/articlePage/RelatedPost"
 import CommentBox from "../components/articlePage/CommentBox"
+import ErrMsg from "../components/layouts/ErrMsg"
 
 export default function Article() {
   const { slug } = useParams()
@@ -62,19 +63,19 @@ export default function Article() {
     <>
       {articleAction === "GET" && articleLoading ? (
         <Loader />
-      ) : (
+      ) : article ? (
         <main className="mt-24">
           <section className="wrapper max-w-[1240px] mx-auto">
             <figure className="shadow-xl rounded-[2rem] overflow-hidden mb-20 relative">
               <img
-                src={article?.thumbnailImg}
+                src={article.thumbnailImg}
                 alt="thumbnail"
                 className="h-[60rem] w-full object-cover"
               />
               <div className="overlay absolute top-0 left-0 right-0 bottom-0 bg-[#0000004b]"></div>
               <div
                 className={`${
-                  user && article?.writerId === user._id ? "block" : "hidden"
+                  user && article.writerId === user._id ? "block" : "hidden"
                 } bg-violet-700 top-6 right-6 absolute flex gap-4 items-center py-2.5 px-4 rounded-full shadow-sm shadow-violet-500`}
               >
                 <Link
@@ -93,7 +94,7 @@ export default function Article() {
               </div>
               <figcaption className="content absolute bottom-0 left-0 w-full mb-20">
                 <div className="categories flex gap-4 items-center justify-center">
-                  {article?.categories.map((c, i) => (
+                  {article.categories.map((c, i) => (
                     <span
                       key={i}
                       className="text-white pb-1 border-0 border-b-2 border-solid border-white text-2xl tracking-wide"
@@ -103,7 +104,7 @@ export default function Article() {
                   ))}
                 </div>
                 <h1 className="text-5xl font-semibold text-white mt-12 mb-9 text-center">
-                  {article?.title}
+                  {article.title}
                 </h1>
                 <div className="flex justify-center">
                   <figure className="flex items-center gap-3">
@@ -116,7 +117,7 @@ export default function Article() {
                       <span className="text-white text-xl">Alice</span>
                       <span className="text-white text-base mx-4">/</span>
                       <span className="text-white text-xl">
-                        {new Date(article?.createdAt || "").toLocaleDateString(
+                        {new Date(article.createdAt).toLocaleDateString(
                           undefined,
                           {
                             year: "numeric",
@@ -134,13 +135,13 @@ export default function Article() {
             </figure>
             <div
               className="markdown-body"
-              dangerouslySetInnerHTML={{ __html: article?.convertedHtml || "" }}
+              dangerouslySetInnerHTML={{ __html: article.convertedHtml }}
             />
 
             <div className="mt-12 pb-16">
               <h1 className="text-gray-800 text-3xl font-semibold">Tags:</h1>
               <div className="tags flex gap-4 mt-6">
-                {article?.tags.map((t, i) => (
+                {article.tags.map((t, i) => (
                   <Link
                     key={i}
                     to="/"
@@ -196,7 +197,7 @@ export default function Article() {
               </div>
             </div>
 
-            <CommentBox />
+            <CommentBox articleId={article._id} />
 
             <div>
               <UnderlineHeader title="related posts" />
@@ -209,6 +210,8 @@ export default function Article() {
             </div>
           </section>
         </main>
+      ) : (
+        <ErrMsg msg="article doesn't exists" />
       )}
     </>
   )

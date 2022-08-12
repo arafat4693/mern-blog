@@ -53,7 +53,7 @@ export default function CommentForm({
     dispatch,
   ])
 
-  function createComment(e: any) {
+  async function createComment(e: any) {
     e.preventDefault()
     const comment = textareaRef.current.value
     if (!comment || !user || !article) return

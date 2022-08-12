@@ -24,6 +24,7 @@ export default function Comment({ comment, replies }: Props) {
   const { user } = useSelector((state: RootState) => state.user)
   const [edit, setEdit] = useState<boolean>(false)
   const [reply, setReply] = useState<boolean>(false)
+  const [showReplies, setShowReplies] = useState<boolean>(false)
   const [message, setMessage] = useState<string>(comment.message)
   const dispatch = useDispatch<AppDispatch>()
   const {
@@ -47,7 +48,10 @@ export default function Comment({ comment, replies }: Props) {
         toast(messageMsg, { type: "error", autoClose: 2300 })
       }
     }
-    if (messageAction === "REPLY") setReply(false)
+    if (messageAction === "REPLY") {
+      setReply(false)
+      setShowReplies(true)
+    }
   }, [messageAction, messageSuccess, messageError, messageMsg, dispatch])
 
   function deleteComment(): void {
@@ -79,12 +83,21 @@ export default function Comment({ comment, replies }: Props) {
             <p className="text-xl text-gray-400">1 month ago</p>
           </div>
           <div className="buttons flex items-center gap-5">
+            {replies[comment._id] && (
+              <button
+                onClick={() => setShowReplies((prev) => !prev)}
+                className="text-gray-500 text-xl bg-gray-200 rounded-full px-5 py-1.5 tracking-wide"
+              >
+                {showReplies ? "hide replies" : "show replies"}
+              </button>
+            )}
             {user && user._id === comment.senderId ? (
               <>
                 <button
                   onClick={deleteComment}
                   className={`${
-                    messageAction === "DELETE" && messageLoading
+                    (messageAction === "DELETE" || messageAction === "EDIT") &&
+                    messageLoading
                       ? "text-red-400 pointer-events-none"
                       : "text-red-600 hover:text-red-400"
                   } flex items-center gap-1.5 text-2xl font-semibold transition-all`}
@@ -129,6 +142,8 @@ export default function Comment({ comment, replies }: Props) {
             message={message}
             setMessage={setMessage}
             comment={comment}
+            messageLoading={messageLoading}
+            messageAction={messageAction}
           />
         ) : (
           <div className="text-2xl text-gray-500 font-medium mt-6">
@@ -149,6 +164,7 @@ export default function Comment({ comment, replies }: Props) {
           messages={replies[comment._id]}
           indentation
           replies={replies}
+          showReplies={showReplies}
         />
       )}
     </>
