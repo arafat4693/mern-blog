@@ -4,17 +4,23 @@ import { IoMdClose } from "react-icons/io"
 import { MdDelete, MdEdit } from "react-icons/md"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
-import { removeMessage, resetState } from "../../redux/messageSlice"
+import {
+  removeMessage,
+  replyMessage,
+  resetState,
+} from "../../redux/messageSlice"
 import { AppDispatch, RootState } from "../../redux/store"
 import { MongoMessage } from "../../utils/types"
 import CommentForm from "./CommentForm"
+import Comments from "./Comments"
 import EditComment from "./EditComment"
 
 interface Props {
   comment: MongoMessage
+  replies: any
 }
 
-export default function Comment({ comment }: Props) {
+export default function Comment({ comment, replies }: Props) {
   const { user } = useSelector((state: RootState) => state.user)
   const [edit, setEdit] = useState<boolean>(false)
   const [reply, setReply] = useState<boolean>(false)
@@ -29,10 +35,7 @@ export default function Comment({ comment }: Props) {
   } = useSelector((state: RootState) => state.message)
 
   useEffect(() => {
-    if (
-      messageAction &&
-      (messageAction === "EDIT" || messageAction === "DELETE")
-    ) {
+    if (messageAction === "EDIT" || messageAction === "DELETE") {
       if (messageSuccess) {
         dispatch(resetState())
         if (messageAction === "EDIT") {
@@ -44,6 +47,7 @@ export default function Comment({ comment }: Props) {
         toast(messageMsg, { type: "error", autoClose: 2300 })
       }
     }
+    if (messageAction === "REPLY") setReply(false)
   }, [messageAction, messageSuccess, messageError, messageMsg, dispatch])
 
   function deleteComment(): void {
@@ -56,7 +60,7 @@ export default function Comment({ comment }: Props) {
 
   return (
     <>
-      <div className="mt-8 py-8 px-12 rounded-xl bg-[#f3f3f3]">
+      <div className="mt-6 py-8 px-12 rounded-xl bg-[#f3f3f3]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img
@@ -132,7 +136,21 @@ export default function Comment({ comment }: Props) {
           </div>
         )}
       </div>
-      {reply && <CommentForm user={user} actionType="REPLY" />}
+      {reply && (
+        <CommentForm
+          user={user}
+          actionType="REPLY"
+          actionFn={replyMessage}
+          parentId={comment._id}
+        />
+      )}
+      {replies[comment._id] && (
+        <Comments
+          messages={replies[comment._id]}
+          indentation
+          replies={replies}
+        />
+      )}
     </>
   )
 }

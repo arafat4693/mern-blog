@@ -1,4 +1,6 @@
+import { useMemo } from "react"
 import { useSelector } from "react-redux"
+import { createMessage } from "../../redux/messageSlice"
 import { RootState } from "../../redux/store"
 import CommentForm from "./CommentForm"
 import Comments from "./Comments"
@@ -6,6 +8,24 @@ import Comments from "./Comments"
 export default function CommentBox() {
   const { user } = useSelector((state: RootState) => state.user)
   const { messages } = useSelector((state: RootState) => state.message)
+
+  const commentsByParentId = useMemo(() => {
+    const group: any = { root: [] }
+    messages.forEach((m) => {
+      if (m.parentId) {
+        if (!group[m.parentId]) group[m.parentId] = []
+        group[m.parentId] = [m, ...group[m.parentId]]
+      } else {
+        group["root"] = [m, ...group["root"]]
+      }
+    })
+    return group
+  }, [messages])
+
+  const getReplies = () => {
+    const { root, ...replies } = commentsByParentId
+    return replies
+  }
 
   return (
     <div className="py-20">
@@ -18,14 +38,14 @@ export default function CommentBox() {
         </h1>
       )}
       {user ? (
-        <CommentForm user={user} actionType="ROOT" />
+        <CommentForm user={user} actionType="ROOT" actionFn={createMessage} />
       ) : (
         <h1 className="bg-violet-700 mt-8 text-white text-4xl capitalize font-semibold text-center py-16">
           Login to comment
         </h1>
       )}
       {messages.length ? (
-        <Comments messages={messages} />
+        <Comments messages={commentsByParentId.root} replies={getReplies()} />
       ) : (
         <h3 className="w-[45rem] mx-auto py-5 rounded-xl text-center bg-violet-200/60 text-gray-800 text-2xl font-medium mt-6">
           No comments yet

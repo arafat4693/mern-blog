@@ -1,21 +1,25 @@
 import { MessageData, MongoArticle, MongoUser } from "../../utils/types"
 import { useRef } from "react"
 import { useParams } from "react-router-dom"
-import { createMessage } from "../../redux/messageSlice"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { resetState } from "../../redux/messageSlice"
 import { AppDispatch, RootState } from "../../redux/store"
 import { toast } from "react-toastify"
-import { AsyncThunkAction } from "@reduxjs/toolkit"
 
 interface Props {
   user: MongoUser | null
   actionType: string
-  // actionFn: AsyncThunkAction<any, MessageData, {}>
+  actionFn: any
+  parentId?: string
 }
 
-export default function CommentForm({ user, actionType }: Props) {
+export default function CommentForm({
+  user,
+  actionType,
+  actionFn,
+  parentId,
+}: Props) {
   const textareaRef = useRef<any>()
   const dispatch = useDispatch<AppDispatch>()
   const { slug } = useParams()
@@ -53,12 +57,13 @@ export default function CommentForm({ user, actionType }: Props) {
     e.preventDefault()
     const comment = textareaRef.current.value
     if (!comment || !user || !article) return
-    const messageData = {
+    const messageData: MessageData = {
       message: comment,
       senderId: user._id,
       articleId: article._id,
     }
-    dispatch(createMessage(messageData))
+    if (parentId) messageData.parentId = parentId
+    dispatch(actionFn(messageData))
   }
 
   return (
