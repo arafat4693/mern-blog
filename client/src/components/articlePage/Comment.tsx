@@ -14,6 +14,7 @@ import { MongoMessage } from "../../utils/types"
 import CommentForm from "./CommentForm"
 import Comments from "./Comments"
 import EditComment from "./EditComment"
+import moment from "moment"
 
 interface Props {
   comment: MongoMessage
@@ -80,7 +81,9 @@ export default function Comment({ comment, replies }: Props) {
                 you
               </span>
             )}
-            <p className="text-xl text-gray-400">1 month ago</p>
+            <p className="text-xl text-gray-400">
+              {moment(comment.createdAt).fromNow()}
+            </p>
           </div>
           <div className="buttons flex items-center gap-5">
             {replies[comment._id] && (

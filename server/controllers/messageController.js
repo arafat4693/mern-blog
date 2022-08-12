@@ -38,6 +38,9 @@ export const updateMessage = asyncHandler(async (req, res) => {
 // @access Private
 export const deleteMessage = asyncHandler(async (req, res) => {
   const { messageId } = req.params
-  await MessageModel.deleteOne({ _id: messageId })
+  await Promise.all([
+    MessageModel.deleteOne({ _id: messageId }),
+    MessageModel.deleteMany({ parentId: messageId }),
+  ])
   res.status(200).json(messageId)
 })

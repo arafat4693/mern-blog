@@ -200,7 +200,7 @@ const messageSlice = createSlice({
           state.messageSuccess = true
           state.messageAction = "DELETE"
           state.messages = state.messages.filter(
-            (m) => m._id !== action.payload
+            (m) => m._id !== action.payload && m.parentId !== action.payload
           )
         }
       )
