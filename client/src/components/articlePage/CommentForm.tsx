@@ -31,13 +31,18 @@ export default function CommentForm({
     messageSuccess,
     messageError,
     messageMsg,
+    currentMessageId,
   } = useSelector((state: RootState) => state.message)
 
   useEffect(() => {
     if (messageAction === actionType) {
       if (messageSuccess) {
         dispatch(resetState())
-        textareaRef.current.value = ""
+        if (
+          (messageAction === "REPLY" && parentId === currentMessageId) ||
+          messageAction === "ROOT"
+        )
+          textareaRef.current.value = ""
       }
       if (messageError) {
         toast(messageMsg, { type: "error", autoClose: 2300 })
@@ -50,6 +55,8 @@ export default function CommentForm({
     messageError,
     messageMsg,
     actionType,
+    currentMessageId,
+    parentId,
     dispatch,
   ])
 

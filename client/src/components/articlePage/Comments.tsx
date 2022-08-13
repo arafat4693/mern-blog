@@ -1,4 +1,4 @@
-import { MongoMessage } from "../../utils/types"
+import { MongoArticle, MongoMessage } from "../../utils/types"
 import Comment from "./Comment"
 
 interface Props {
@@ -6,12 +6,14 @@ interface Props {
   replies: any
   indentation?: boolean
   showReplies?: boolean
+  article: MongoArticle
 }
 
 export default function Comments({
   messages,
   indentation,
   replies,
+  article,
   showReplies = true,
 }: Props) {
   return (
@@ -22,7 +24,7 @@ export default function Comments({
       } ${showReplies ? "block" : "hidden"}`}
     >
       {messages.map((m) => (
-        <Comment key={m._id} comment={m} replies={replies} />
+        <Comment key={m._id} comment={m} replies={replies} article={article} />
       ))}
     </div>
   )

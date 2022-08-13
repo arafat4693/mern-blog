@@ -8,6 +8,7 @@ interface State {
   messageSuccess: boolean
   messageError: boolean
   messageMsg: string
+  currentMessageId: string
   messageAction: "ROOT" | "DELETE" | "EDIT" | "REPLY" | ""
 }
 
@@ -18,6 +19,7 @@ const initialState: State = {
   messageError: false,
   messageMsg: "",
   messageAction: "",
+  currentMessageId: "",
 }
 
 //get all messages
@@ -120,6 +122,9 @@ const messageSlice = createSlice({
       state.messageMsg = ""
       state.messageAction = ""
     },
+    resetCurrentMessage: (state) => {
+      state.currentMessageId = ""
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -158,6 +163,7 @@ const messageSlice = createSlice({
           state.messageLoading = false
           state.messageSuccess = true
           state.messageAction = "REPLY"
+          state.currentMessageId = action.payload.parentId as string
           state.messages = [action.payload, ...state.messages]
         }
       )
@@ -213,5 +219,5 @@ const messageSlice = createSlice({
   },
 })
 
-export const { resetState } = messageSlice.actions
+export const { resetState, resetCurrentMessage } = messageSlice.actions
 export default messageSlice.reducer

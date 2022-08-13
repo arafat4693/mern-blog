@@ -47,10 +47,12 @@ export default function Write() {
     articleError,
     articleMessage,
     articleAction,
+    articleSlug,
     dispatch,
     reset,
     setTags,
     setCategories,
+    navigate,
   ])
 
   const createBlog: SubmitHandler<ArticleData> = (data) => {

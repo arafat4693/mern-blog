@@ -7,10 +7,11 @@ import { toast } from "react-toastify"
 import {
   removeMessage,
   replyMessage,
+  resetCurrentMessage,
   resetState,
 } from "../../redux/messageSlice"
 import { AppDispatch, RootState } from "../../redux/store"
-import { MongoMessage } from "../../utils/types"
+import { MongoArticle, MongoMessage } from "../../utils/types"
 import CommentForm from "./CommentForm"
 import Comments from "./Comments"
 import EditComment from "./EditComment"
@@ -18,10 +19,11 @@ import moment from "moment"
 
 interface Props {
   comment: MongoMessage
+  article: MongoArticle
   replies: any
 }
 
-export default function Comment({ comment, replies }: Props) {
+export default function Comment({ comment, replies, article }: Props) {
   const { user } = useSelector((state: RootState) => state.user)
   const [edit, setEdit] = useState<boolean>(false)
   const [reply, setReply] = useState<boolean>(false)
@@ -34,6 +36,7 @@ export default function Comment({ comment, replies }: Props) {
     messageSuccess,
     messageError,
     messageMsg,
+    currentMessageId,
   } = useSelector((state: RootState) => state.message)
 
   useEffect(() => {
@@ -49,11 +52,19 @@ export default function Comment({ comment, replies }: Props) {
         toast(messageMsg, { type: "error", autoClose: 2300 })
       }
     }
-    if (messageAction === "REPLY") {
+  }, [messageAction, messageSuccess, messageError, messageMsg, dispatch])
+
+  useEffect(() => {
+    if (
+      messageAction === "REPLY" &&
+      messageSuccess &&
+      currentMessageId === comment._id
+    ) {
       setReply(false)
       setShowReplies(true)
+      dispatch(resetCurrentMessage())
     }
-  }, [messageAction, messageSuccess, messageError, messageMsg, dispatch])
+  }, [messageAction, messageSuccess, currentMessageId, comment._id, dispatch])
 
   function deleteComment(): void {
     const confirm = window.confirm(
@@ -94,8 +105,9 @@ export default function Comment({ comment, replies }: Props) {
                 {showReplies ? "hide replies" : "show replies"}
               </button>
             )}
-            {user && user._id === comment.senderId ? (
-              <>
+            {user &&
+              (user._id === comment.senderId ||
+                article.writerId === user._id) && (
                 <button
                   onClick={deleteComment}
                   className={`${
@@ -108,15 +120,15 @@ export default function Comment({ comment, replies }: Props) {
                   <MdDelete />
                   Delete
                 </button>
-
-                <button
-                  onClick={() => setEdit(true)}
-                  className="flex items-center gap-1.5 text-2xl font-semibold text-violet-700 hover:text-violet-400 transition-all"
-                >
-                  <MdEdit />
-                  Edit
-                </button>
-              </>
+              )}
+            {user && user._id === comment.senderId ? (
+              <button
+                onClick={() => setEdit(true)}
+                className="flex items-center gap-1.5 text-2xl font-semibold text-violet-700 hover:text-violet-400 transition-all"
+              >
+                <MdEdit />
+                Edit
+              </button>
             ) : user && user._id !== comment.senderId ? (
               reply ? (
                 <button
@@ -168,6 +180,7 @@ export default function Comment({ comment, replies }: Props) {
           indentation
           replies={replies}
           showReplies={showReplies}
+          article={article}
         />
       )}
     </>

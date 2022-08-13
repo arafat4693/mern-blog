@@ -197,7 +197,7 @@ export default function Article() {
               </div>
             </div>
 
-            <CommentBox articleId={article._id} />
+            <CommentBox article={article} />
 
             <div>
               <UnderlineHeader title="related posts" />
