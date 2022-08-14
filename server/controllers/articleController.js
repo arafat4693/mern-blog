@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
 import ArticleModel from "../models/articleModel.js"
+import MessageModel from "../models/messageModel.js"
 
 // @desc   get articles
 // @route  GET article/:userId
@@ -51,6 +52,10 @@ export const updateArticle = asyncHandler(async (req, res) => {
 // @access Private
 export const deleteArticle = asyncHandler(async (req, res) => {
   const { articleId } = req.params
-  await ArticleModel.deleteOne({ _id: articleId })
+  // await ArticleModel.deleteOne({ _id: articleId })
+  await Promise.all([
+    ArticleModel.deleteOne({ _id: articleId }),
+    MessageModel.deleteMany({ articleId }),
+  ])
   res.status(200).json({ articleId, message: "Successfully deleted" })
 })

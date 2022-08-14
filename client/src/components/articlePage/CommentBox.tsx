@@ -14,8 +14,7 @@ interface Props {
 export default function CommentBox({ article }: Props) {
   const { user } = useSelector((state: RootState) => state.user)
   const { messages } = useSelector((state: RootState) => state.message)
-  const [showComments, setShowComments] = useState<boolean>(false)
-
+  const [showComments, setShowComments] = useState<boolean>(true)
   const commentsByParentId = useMemo(() => {
     const group: any = { root: [] }
     messages.forEach((m) => {

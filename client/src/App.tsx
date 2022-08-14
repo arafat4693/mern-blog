@@ -11,7 +11,7 @@ import Search from "./pages/Search"
 import Write from "./pages/Write"
 import { useDispatch } from "react-redux"
 import axios from "./utils/axiosConfig"
-import { addUser } from "./redux/userSlice"
+import { addUser, getUsers } from "./redux/userSlice"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { getArticles } from "./redux/articleSlice"
@@ -34,6 +34,7 @@ function App() {
     }
 
     getUser()
+    dispatch(getUsers())
     dispatch(getArticles())
     dispatch(getMessages())
   }, [dispatch])

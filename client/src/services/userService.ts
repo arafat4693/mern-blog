@@ -20,5 +20,10 @@ async function login(url: string, loginData: LoginData) {
   return res.data
 }
 
-const userServices = { register, login }
+async function allUsers(url: string) {
+  const res = await axios.get(url)
+  return res.data
+}
+
+const userServices = { register, login, allUsers }
 export default userServices

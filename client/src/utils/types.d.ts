@@ -13,7 +13,7 @@ export interface LoginData {
 export interface MongoUser {
   _id: string
   __v: number
-  username: string
+  displayName: string
   email?: string
   password?: string
   imgName?: string
@@ -21,8 +21,8 @@ export interface MongoUser {
   googleId?: string
   twitterId?: string
   githubId?: string
-  followers?: [string]
-  following?: [string]
+  followers: string[] | []
+  following: string[] | []
   createdAt: Date
   updatedAt: Date
 }

@@ -26,8 +26,9 @@ export default function Article() {
     articleLoading,
     articleAction,
   } = useSelector((state: RootState) => state.article)
-  const { user } = useSelector((state: RootState) => state.user)
+  const { user, users } = useSelector((state: RootState) => state.user)
   const article = articles.find((a) => a.slug === slug)
+  const articleUser = users.find((u) => u._id === article?.writerId)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
@@ -109,12 +110,18 @@ export default function Article() {
                 <div className="flex justify-center">
                   <figure className="flex items-center gap-3">
                     <img
-                      src="/images/user.jpg"
+                      src={
+                        articleUser?.imgUrl
+                          ? articleUser?.imgUrl
+                          : "/images/guest.jpg"
+                      }
                       alt="user"
                       className="w-16 h-16 object-cover rounded-full"
                     />
                     <div className="content">
-                      <span className="text-white text-xl">Alice</span>
+                      <span className="text-white text-xl">
+                        {articleUser?.displayName}
+                      </span>
                       <span className="text-white text-base mx-4">/</span>
                       <span className="text-white text-xl">
                         {new Date(article.createdAt).toLocaleDateString(
@@ -138,23 +145,25 @@ export default function Article() {
               dangerouslySetInnerHTML={{ __html: article.convertedHtml }}
             />
 
-            <div className="mt-12 pb-16">
-              <h1 className="text-gray-800 text-3xl font-semibold">Tags:</h1>
-              <div className="tags flex gap-4 mt-6">
-                {article.tags.map((t, i) => (
-                  <Link
-                    key={i}
-                    to="/"
-                    className="border border-solid border-gray-400 rounded-xl text-xl text-gray-600 px-4 py-2 transition-all duration-300 hover:border-gray-800 hover:text-gray-800"
-                  >
-                    {t}
-                  </Link>
-                ))}
+            {article.tags.length ? (
+              <div className="mt-12 pb-16">
+                <h1 className="text-gray-800 text-3xl font-semibold">Tags:</h1>
+                <div className="tags flex gap-4 mt-6">
+                  {article.tags.map((t, i) => (
+                    <Link
+                      key={i}
+                      to="/"
+                      className="border border-solid border-gray-400 rounded-xl text-xl text-gray-600 px-4 py-2 transition-all duration-300 hover:border-gray-800 hover:text-gray-800"
+                    >
+                      {t}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
 
             <Share article={article} />
-            <Writer />
+            <Writer articleUser={articleUser} />
 
             <div className="border-0 border-y border-solid border-gray-300 py-20">
               <h2 className="text-4xl mb-8 text-gray-800 capitalize font-semibold">

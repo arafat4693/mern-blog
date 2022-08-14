@@ -5,6 +5,7 @@ import { UserData, MongoUser, LoginData } from "../utils/types"
 
 interface State {
   user: MongoUser | null
+  users: MongoUser[] | []
   userSuccess: boolean
   userError: boolean
   userLoading: boolean
@@ -14,6 +15,7 @@ interface State {
 
 const initialState: State = {
   user: null,
+  users: [],
   userSuccess: false,
   userError: false,
   userLoading: false,
@@ -53,6 +55,22 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+//get all users
+export const getUsers = createAsyncThunk(
+  "userSlice/users",
+  async (_, thunkApi) => {
+    try {
+      return await userServices.allUsers("/user/")
+    } catch (err: any) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString()
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -70,15 +88,28 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getUsers.pending, (state) => {
+        state.userLoading = true
+      })
+      .addCase(
+        getUsers.fulfilled,
+        (state, action: PayloadAction<MongoUser[]>) => {
+          state.userLoading = false
+          state.users = action.payload
+        }
+      )
       .addCase(registerUser.pending, (state) => {
         state.userLoading = true
       })
-      .addCase(registerUser.fulfilled, (state, action: PayloadAction<any>) => {
-        state.userLoading = false
-        state.userSuccess = true
-        state.userMessage = action.payload.message
-        state.userRedirect = true
-      })
+      .addCase(
+        registerUser.fulfilled,
+        (state, action: PayloadAction<{ message: string }>) => {
+          state.userLoading = false
+          state.userSuccess = true
+          state.userMessage = action.payload.message
+          state.userRedirect = true
+        }
+      )
       .addCase(registerUser.rejected, (state, action: PayloadAction<any>) => {
         state.userError = true
         state.userLoading = false

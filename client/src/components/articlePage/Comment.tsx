@@ -24,7 +24,8 @@ interface Props {
 }
 
 export default function Comment({ comment, replies, article }: Props) {
-  const { user } = useSelector((state: RootState) => state.user)
+  const { user, users } = useSelector((state: RootState) => state.user)
+  const commentUser = users.find((u) => u._id === comment.senderId)
   const [edit, setEdit] = useState<boolean>(false)
   const [reply, setReply] = useState<boolean>(false)
   const [showReplies, setShowReplies] = useState<boolean>(false)
@@ -80,12 +81,14 @@ export default function Comment({ comment, replies, article }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img
-              src="/images/user.jpg"
+              src={
+                commentUser?.imgUrl ? commentUser?.imgUrl : "/images/guest.jpg"
+              }
               alt="user"
               className="w-16 min-w-[4rem] h-16 object-cover rounded-full"
             />
             <h3 className="text-2xl text-gray-800 font-semibold">
-              Sunny Islam
+              {commentUser?.displayName}
             </h3>
             {user?._id === comment.senderId && (
               <span className="bg-violet-700 px-4 py-1 rounded-lg text-white text-xl font-medium">

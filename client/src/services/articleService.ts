@@ -25,9 +25,13 @@ async function allArticles(url: string) {
 }
 
 async function deleteArticle(url: string, article: MongoArticle) {
-  await deleteImage(article.thumbnailImgName)
-  const res = await axios.delete(url)
-  return res.data
+  // await deleteImage(article.thumbnailImgName)
+  // const res = await axios.delete(url)
+  const res = await Promise.all([
+    axios.delete(url),
+    deleteImage(article.thumbnailImgName),
+  ])
+  return res[0].data
 }
 
 async function updateArticle(url: string, articleData: UpdateArticle) {
