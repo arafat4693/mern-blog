@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { editMessage } from "../../redux/messageSlice"
 import { AppDispatch } from "../../redux/store"
 import { MongoMessage } from "../../utils/types"
+import { formatComment } from "../../utils/utilFunctions"
 
 interface Props {
   setMessage: Dispatch<string>
@@ -12,6 +13,7 @@ interface Props {
   comment: MongoMessage
   messageAction: "ROOT" | "DELETE" | "EDIT" | "REPLY" | ""
   messageLoading: boolean
+  initialValue: string
 }
 
 export default function EditComment({
@@ -22,16 +24,18 @@ export default function EditComment({
   comment,
   messageLoading,
   messageAction,
+  initialValue,
 }: Props) {
   const dispatch = useDispatch<AppDispatch>()
 
   function updateComment(e: any) {
     e.preventDefault()
-    const messageData = {
-      messageId: comment._id,
-      message,
-    }
-    dispatch(editMessage(messageData))
+    console.log(initialValue)
+    // const messageData = {
+    //   messageId: comment._id,
+    //   message: formatComment(message, initialValue),
+    // }
+    // dispatch(editMessage(messageData))
   }
 
   return (
