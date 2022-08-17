@@ -26,7 +26,6 @@ interface Props {
 export default function Comment({ comment, replies, article }: Props) {
   const { user, users } = useSelector((state: RootState) => state.user)
   const commentUser = users.find((u) => u._id === comment.senderId)
-  const parentUser = users.find((u) => u._id === comment.parentId)
   const msgArr = comment.message.split(" ")
   const [edit, setEdit] = useState<boolean>(false)
   const [reply, setReply] = useState<boolean>(false)
@@ -41,8 +40,6 @@ export default function Comment({ comment, replies, article }: Props) {
     messageMsg,
     currentMessageId,
   } = useSelector((state: RootState) => state.message)
-
-  console.log(parentUser)
 
   useEffect(() => {
     if (messageAction === "EDIT" || messageAction === "DELETE") {
@@ -166,9 +163,7 @@ export default function Comment({ comment, replies, article }: Props) {
             comment={comment}
             messageLoading={messageLoading}
             messageAction={messageAction}
-            initialValue={
-              parentUser ? `@${parentUser.displayName.toLowerCase()}` : ""
-            }
+            initialValue={comment.parentId ? `${msgArr[0]} ` : ""}
           />
         ) : (
           <div className="text-2xl text-gray-500 font-medium mt-6">
@@ -189,7 +184,7 @@ export default function Comment({ comment, replies, article }: Props) {
           actionType="REPLY"
           actionFn={replyMessage}
           parentId={comment._id}
-          initialValue={`@${commentUser?.displayName.toLowerCase()}`}
+          initialValue={`@${commentUser?.displayName.toLowerCase()} `}
         />
       )}
       {replies[comment._id] && (

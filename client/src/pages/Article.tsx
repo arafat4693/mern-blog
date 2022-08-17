@@ -27,6 +27,9 @@ export default function Article() {
     articleAction,
   } = useSelector((state: RootState) => state.article)
   const { user, users } = useSelector((state: RootState) => state.user)
+  const totalComments = useSelector(
+    (state: RootState) => state.message.messages.length
+  )
   const article = articles.find((a) => a.slug === slug)
   const articleUser = users.find((u) => u._id === article?.writerId)
   const dispatch = useDispatch<AppDispatch>()
@@ -134,7 +137,9 @@ export default function Article() {
                         )}
                       </span>
                       <span className="text-white text-base mx-4">/</span>
-                      <span className="text-white text-xl">0 Comments</span>
+                      <span className="text-white text-xl">
+                        {totalComments} Comments
+                      </span>
                     </div>
                   </figure>
                 </div>

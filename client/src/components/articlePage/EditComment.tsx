@@ -30,12 +30,11 @@ export default function EditComment({
 
   function updateComment(e: any) {
     e.preventDefault()
-    console.log(initialValue)
-    // const messageData = {
-    //   messageId: comment._id,
-    //   message: formatComment(message, initialValue),
-    // }
-    // dispatch(editMessage(messageData))
+    const messageData = {
+      messageId: comment._id,
+      message: formatComment(message, initialValue),
+    }
+    dispatch(editMessage(messageData))
   }
 
   return (
