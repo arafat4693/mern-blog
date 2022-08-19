@@ -41,6 +41,10 @@ export default function Comment({ comment, replies, article }: Props) {
     currentMessageId,
   } = useSelector((state: RootState) => state.message)
 
+  const tagName = `@${commentUser?.displayName
+    .toLowerCase()
+    .replace(/\s+/g, "")} `
+
   useEffect(() => {
     if (messageAction === "EDIT" || messageAction === "DELETE") {
       if (messageSuccess) {
@@ -184,7 +188,7 @@ export default function Comment({ comment, replies, article }: Props) {
           actionType="REPLY"
           actionFn={replyMessage}
           parentId={comment._id}
-          initialValue={`@${commentUser?.displayName.toLowerCase()} `}
+          initialValue={tagName}
         />
       )}
       {replies[comment._id] && (

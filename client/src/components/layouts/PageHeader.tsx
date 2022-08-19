@@ -1,5 +1,6 @@
 import Logo from "./Logo"
 import {
+  BookmarkAltIcon,
   ChatAltIcon,
   LoginIcon,
   LogoutIcon,
@@ -66,12 +67,19 @@ export default function PageHeader() {
               <Link
                 to="/comments"
                 data-title="Pending comments"
-                className="tooltip w-14 h-14 relative rounded-full flex items-center justify-center bg-violet-600 cursor-pointer shadow-md shadow-violet-300"
+                className="tooltip hidden w-14 h-14 relative rounded-full items-center justify-center bg-violet-600 cursor-pointer shadow-md shadow-violet-300"
               >
                 <ChatAltIcon className="w-7 h-7 stroke-gray-200" />
                 <span className="min-w-[1.5rem] h-6 p-1 flex justify-center items-center absolute -top-2.5 -right-1 rounded-full bg-yellow-300 text-gray-800 text-base font-medium">
                   10
                 </span>
+              </Link>
+              <Link
+                to="/bookmark"
+                data-title="Your bookmarked"
+                className="tooltip flex w-14 h-14 relative rounded-full items-center justify-center bg-violet-600 cursor-pointer shadow-md shadow-violet-300"
+              >
+                <BookmarkAltIcon className="w-7 h-7 stroke-gray-200" />
               </Link>
               <button
                 data-title="Logout"

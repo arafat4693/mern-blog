@@ -19,3 +19,23 @@ export const allUsers = asyncHandler(async (req, res) => {
   )
   res.status(200).json(allUsers)
 })
+
+// @desc   bookmark or unbookmark article
+// @route  PUT user/:userId/bookmark
+// @access Private
+export const bookmarkArticle = asyncHandler(async (req, res) => {
+  const { articleId, isBookmark } = req.body
+  const { userId } = req.params
+  if (isBookmark) {
+    await UserModel.updateOne(
+      { _id: userId },
+      { $pull: { bookmarked: articleId } }
+    )
+  } else {
+    await UserModel.updateOne(
+      { _id: userId },
+      { $push: { bookmarked: articleId } }
+    )
+  }
+  res.status(200).json(req.body)
+})

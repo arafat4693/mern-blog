@@ -85,6 +85,22 @@ const userSlice = createSlice({
       state.userMessage = ""
       state.userRedirect = false
     },
+    bookmarkArticle: (
+      state,
+      action: PayloadAction<{ articleId: string; isBookmark: boolean }>
+    ) => {
+      if (!state.user) return
+      if (action.payload.isBookmark) {
+        state.user.bookmarked = state.user.bookmarked.filter(
+          (b) => b !== action.payload.articleId
+        )
+      } else {
+        state.user.bookmarked = [
+          ...state.user.bookmarked,
+          action.payload.articleId,
+        ]
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -132,5 +148,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { addUser, resetState } = userSlice.actions
+export const { addUser, resetState, bookmarkArticle } = userSlice.actions
 export default userSlice.reducer

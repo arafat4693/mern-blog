@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
@@ -15,6 +15,9 @@ import UnderlineHeader from "../components/layouts/UnderlineHeader"
 import RelatedPost from "../components/articlePage/RelatedPost"
 import CommentBox from "../components/articlePage/CommentBox"
 import ErrMsg from "../components/layouts/ErrMsg"
+import { BsFillBookmarkFill } from "react-icons/bs"
+import axios from "../utils/axiosConfig"
+import { bookmarkArticle } from "../redux/userSlice"
 
 export default function Article() {
   const { slug } = useParams()
@@ -34,6 +37,10 @@ export default function Article() {
   const articleUser = users.find((u) => u._id === article?.writerId)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+  const usersBookmarked = useMemo(
+    () => new Set(user?.bookmarked),
+    [user?.bookmarked]
+  )
 
   useEffect(() => {
     if (articleAction === "DELETE") {
@@ -62,6 +69,41 @@ export default function Article() {
     if (!makeSure) return
     dispatch(deleteArticle(article))
   }, [article, dispatch])
+
+  const onArticleBookmark = useCallback(async () => {
+    if (user === null || article === undefined) return
+    try {
+      const res = await axios(`/user/${user._id}/bookmark`, {
+        method: "PUT",
+        data: {
+          articleId: article._id,
+          isBookmark: usersBookmarked.has(article._id),
+        },
+      })
+      dispatch(
+        bookmarkArticle({
+          articleId: res.data.articleId,
+          isBookmark: res.data.isBookmark,
+        })
+      )
+      toast(
+        `${
+          res.data.isBookmark
+            ? "Removed article from your bookmark"
+            : "Added article to your bookmark"
+        }`,
+        { type: "success", autoClose: 2300 }
+      )
+    } catch (err: any) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString()
+      toast(message, { type: "error", autoClose: 2300 })
+    }
+  }, [user, article, dispatch, usersBookmarked])
+
+  // 5eBnYp spelprogrammering.nu/koda
 
   return (
     <>
@@ -121,7 +163,7 @@ export default function Article() {
                       alt="user"
                       className="w-16 h-16 object-cover rounded-full"
                     />
-                    <div className="content">
+                    <div className="content flex items-center">
                       <span className="text-white text-xl">
                         {articleUser?.displayName}
                       </span>
@@ -140,6 +182,16 @@ export default function Article() {
                       <span className="text-white text-xl">
                         {totalComments} Comments
                       </span>
+                      <BsFillBookmarkFill
+                        onClick={onArticleBookmark}
+                        className={`text-3xl cursor-pointer ml-4 ${
+                          user ? "block" : "hidden"
+                        } ${
+                          usersBookmarked.has(article._id)
+                            ? "text-yellow-400"
+                            : "text-white"
+                        }`}
+                      />
                     </div>
                   </figure>
                 </div>

@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import About from "./pages/About"
+import Bookmark from "./pages/Bookmark"
 import Author from "./pages/Author"
 import Authors from "./pages/Authors"
 import Comments from "./pages/Comments"
@@ -51,6 +52,7 @@ function App() {
             <Route path="author" element={<Author />} />
             <Route path="write" element={<Write />} />
             <Route path="comments" element={<Comments />} />
+            <Route path="bookmark" element={<Bookmark />} />
             <Route path="authors" element={<Authors />} />
             <Route path="article/:slug" element={<Article />} />
             <Route path="edit/:slug" element={<EditArticle />} />

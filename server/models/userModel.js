@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
     githubId: String,
     followers: [mongoose.SchemaTypes.ObjectId],
     following: [mongoose.SchemaTypes.ObjectId],
+    bookmarked: [mongoose.SchemaTypes.ObjectId],
   },
   { timestamps: true }
 )

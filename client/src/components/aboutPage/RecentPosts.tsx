@@ -1,5 +1,5 @@
 import OverlapHeader from "../layouts/OverlapHeader"
-import RecentPost from "./RecentPost"
+import RecentPost from "../layouts/PostCard"
 
 export default function RecentPosts() {
   return (
@@ -10,12 +10,12 @@ export default function RecentPosts() {
       />
 
       <div className="posts grid grid-cols-3 gap-8 mt-28">
+        {/* <RecentPost />
         <RecentPost />
         <RecentPost />
         <RecentPost />
         <RecentPost />
-        <RecentPost />
-        <RecentPost />
+        <RecentPost /> */}
       </div>
     </section>
   )
