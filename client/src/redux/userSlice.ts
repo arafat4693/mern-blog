@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import userServices from "../services/userService"
 import { UserData, MongoUser, LoginData } from "../utils/types"
+import { getErrMsg } from "../utils/utilFunctions"
 
 interface State {
   user: MongoUser | null
@@ -30,10 +31,7 @@ export const registerUser = createAsyncThunk(
     try {
       return await userServices.register("/auth/register", userData)
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -46,10 +44,7 @@ export const loginUser = createAsyncThunk(
     try {
       return await userServices.login("/auth/login", loginData)
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -62,10 +57,7 @@ export const getUsers = createAsyncThunk(
     try {
       return await userServices.allUsers("/user/")
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -89,17 +81,23 @@ const userSlice = createSlice({
       state,
       action: PayloadAction<{ articleId: string; isBookmark: boolean }>
     ) => {
-      if (!state.user) return
-      if (action.payload.isBookmark) {
-        state.user.bookmarked = state.user.bookmarked.filter(
-          (b) => b !== action.payload.articleId
-        )
-      } else {
-        state.user.bookmarked = [
-          ...state.user.bookmarked,
-          action.payload.articleId,
-        ]
-      }
+      userServices.PushOrPull(
+        action.payload.articleId,
+        action.payload.isBookmark,
+        state.user,
+        "bookmarked"
+      )
+    },
+    followAuthor: (
+      state,
+      action: PayloadAction<{ authorId: string; isFollowing: boolean }>
+    ) => {
+      userServices.PushOrPull(
+        action.payload.authorId,
+        action.payload.isFollowing,
+        state.user,
+        "following"
+      )
     },
   },
   extraReducers: (builder) => {
@@ -148,5 +146,6 @@ const userSlice = createSlice({
   },
 })
 
-export const { addUser, resetState, bookmarkArticle } = userSlice.actions
+export const { addUser, resetState, bookmarkArticle, followAuthor } =
+  userSlice.actions
 export default userSlice.reducer

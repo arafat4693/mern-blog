@@ -7,3 +7,11 @@ export function formatComment(c: string, initialValue: string): string {
     return c
   }
 }
+
+export function getErrMsg(err: any) {
+  return (
+    (err.response && err.response.data && err.response.data.message) ||
+    err.message ||
+    err.toString()
+  )
+}

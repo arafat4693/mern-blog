@@ -39,3 +39,38 @@ export const bookmarkArticle = asyncHandler(async (req, res) => {
   }
   res.status(200).json(req.body)
 })
+
+// @desc   follow an author
+// @route  PUT user/:userId/follow
+// @access Private
+export const followAuthor = asyncHandler(async (req, res) => {
+  const { authorId, isFollowing } = req.body
+  const { userId } = req.params
+
+  let followingAuthor
+  let authorsFollowers
+
+  if (isFollowing) {
+    followingAuthor = UserModel.updateOne(
+      { _id: userId },
+      { $pull: { following: authorId } }
+    )
+    authorsFollowers = UserModel.updateOne(
+      { _id: authorId },
+      { $pull: { followers: userId } }
+    )
+  } else {
+    followingAuthor = UserModel.updateOne(
+      { _id: userId },
+      { $push: { following: authorId } }
+    )
+    authorsFollowers = UserModel.updateOne(
+      { _id: authorId },
+      { $push: { followers: userId } }
+    )
+  }
+
+  await Promise.all([followingAuthor, authorsFollowers])
+
+  res.status(200).json(req.body)
+})

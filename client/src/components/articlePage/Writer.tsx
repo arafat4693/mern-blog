@@ -1,11 +1,51 @@
-import { MongoUser } from "../../utils/types"
+import { useCallback, useMemo } from "react"
+import { useDispatch } from "react-redux"
+import { toast } from "react-toastify"
+import { AppDispatch } from "../../redux/store"
+import { followAuthor } from "../../redux/userSlice"
+import axios from "../../utils/axiosConfig"
+import { MongoArticle, MongoUser } from "../../utils/types"
+import { getErrMsg } from "../../utils/utilFunctions"
 import TooltipIcons from "../layouts/TooltipIcons"
 
 interface Props {
   articleUser: undefined | MongoUser
+  user: null | MongoUser
+  article: undefined | MongoArticle
 }
 
-export default function Writer({ articleUser }: Props) {
+export default function Writer({ articleUser, user, article }: Props) {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const userFollowing = useMemo(
+    () => new Set(user?.following),
+    [user?.following]
+  )
+
+  const isFollowing = userFollowing.has(article?.writerId as string)
+
+  const onFollow = useCallback(async () => {
+    if (user === null || article === undefined) return
+    try {
+      const res = await axios(`/user/${user._id}/follow`, {
+        method: "PUT",
+        data: {
+          authorId: article.writerId,
+          isFollowing: userFollowing.has(article.writerId),
+        },
+      })
+      dispatch(
+        followAuthor({
+          authorId: res.data.authorId,
+          isFollowing: res.data.isFollowing,
+        })
+      )
+    } catch (err: any) {
+      const message = getErrMsg(err)
+      toast(message, { type: "error", autoClose: 2300 })
+    }
+  }, [user, article, dispatch, userFollowing])
+
   return (
     <div className="py-20 flex items-center gap-16">
       <img
@@ -23,8 +63,15 @@ export default function Writer({ articleUser }: Props) {
               {articleUser?.displayName}
             </h2>
           </div>
-          <button className="py-3 px-6 bg-violet-700 text-white capitalize text-xl tracking-wide rounded-full">
-            follow me
+          <button
+            onClick={onFollow}
+            className={`py-3 px-6 border-2 border-solid ${
+              isFollowing
+                ? "border-violet-700 text-violet-700"
+                : "bg-violet-700 text-white"
+            } capitalize text-xl font-medium tracking-wide rounded-full`}
+          >
+            {isFollowing ? "following" : "follow"}
           </button>
         </div>
         <p className="my-8 text-2xl text-gray-500 leading-relaxed">

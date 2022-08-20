@@ -18,6 +18,7 @@ import ErrMsg from "../components/layouts/ErrMsg"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import axios from "../utils/axiosConfig"
 import { bookmarkArticle } from "../redux/userSlice"
+import { getErrMsg } from "../utils/utilFunctions"
 
 export default function Article() {
   const { slug } = useParams()
@@ -95,10 +96,7 @@ export default function Article() {
         { type: "success", autoClose: 2300 }
       )
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       toast(message, { type: "error", autoClose: 2300 })
     }
   }, [user, article, dispatch, usersBookmarked])
@@ -220,7 +218,7 @@ export default function Article() {
             ) : null}
 
             <Share article={article} />
-            <Writer articleUser={articleUser} />
+            <Writer articleUser={articleUser} user={user} article={article} />
 
             <div className="border-0 border-y border-solid border-gray-300 py-20">
               <h2 className="text-4xl mb-8 text-gray-800 capitalize font-semibold">

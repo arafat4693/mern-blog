@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import messageService from "../services/messageService"
 import { MessageData, MongoMessage, UpdateMessage } from "../utils/types"
+import { getErrMsg } from "../utils/utilFunctions"
 
 interface State {
   messages: MongoMessage[] | []
@@ -29,10 +30,7 @@ export const getMessages = createAsyncThunk(
     try {
       return await messageService.allMessages("/message/")
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -46,10 +44,7 @@ export const createMessage = createAsyncThunk(
       const userId = thunkApi.getState().user.user._id
       return await messageService.newMessage(`/message/${userId}`, messageData)
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -63,10 +58,7 @@ export const replyMessage = createAsyncThunk(
       const userId = thunkApi.getState().user.user._id
       return await messageService.newMessage(`/message/${userId}`, messageData)
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -83,10 +75,7 @@ export const editMessage = createAsyncThunk(
         messageData
       )
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -102,10 +91,7 @@ export const removeMessage = createAsyncThunk(
         `/message/${userId}/${messageId}`
       )
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }

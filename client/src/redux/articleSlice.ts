@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import articleServices from "../services/articleService"
 import { ArticleData, MongoArticle, UpdateArticle } from "../utils/types"
+import { getErrMsg } from "../utils/utilFunctions"
 
 interface State {
   articles: MongoArticle[] | []
@@ -43,10 +44,7 @@ export const createArticle = createAsyncThunk(
         articleData
       )
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -59,10 +57,7 @@ export const getArticles = createAsyncThunk(
     try {
       return await articleServices.allArticles("/article/")
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -79,10 +74,7 @@ export const deleteArticle = createAsyncThunk(
         article
       )
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }
@@ -99,10 +91,7 @@ export const updateArticle = createAsyncThunk(
         articleData
       )
     } catch (err: any) {
-      const message =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
+      const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
     }
   }

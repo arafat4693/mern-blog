@@ -1,5 +1,5 @@
 import axios from "../utils/axiosConfig"
-import { LoginData, UserData } from "../utils/types"
+import { LoginData, MongoUser, UserData } from "../utils/types"
 import { v4 } from "uuid"
 import imgUpload from "../utils/imgUpload"
 
@@ -25,5 +25,19 @@ async function allUsers(url: string) {
   return res.data
 }
 
-const userServices = { register, login, allUsers }
+function PushOrPull(
+  id: string,
+  check: boolean,
+  user: MongoUser | null,
+  field: "bookmarked" | "following"
+) {
+  if (!user) return
+  if (check) {
+    user[field] = user[field].filter((b) => b !== id)
+  } else {
+    user[field] = [...user[field], id]
+  }
+}
+
+const userServices = { register, login, allUsers, PushOrPull }
 export default userServices
