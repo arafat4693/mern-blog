@@ -63,16 +63,18 @@ export default function Writer({ articleUser, user, article }: Props) {
               {articleUser?.displayName}
             </h2>
           </div>
-          <button
-            onClick={onFollow}
-            className={`py-3 px-6 border-2 border-solid ${
-              isFollowing
-                ? "border-violet-700 text-violet-700"
-                : "bg-violet-700 text-white"
-            } capitalize text-xl font-medium tracking-wide rounded-full`}
-          >
-            {isFollowing ? "following" : "follow"}
-          </button>
+          {user && user._id !== (article?.writerId as string) && (
+            <button
+              onClick={onFollow}
+              className={`py-3 px-6 border-2 border-solid ${
+                isFollowing
+                  ? "border-violet-700 text-violet-700"
+                  : "bg-violet-700 text-white"
+              } capitalize text-xl font-medium tracking-wide rounded-full`}
+            >
+              {isFollowing ? "following" : "follow"}
+            </button>
+          )}
         </div>
         <p className="my-8 text-2xl text-gray-500 leading-relaxed">
           My name is {articleUser?.displayName}, I am so happy, my dear friend,

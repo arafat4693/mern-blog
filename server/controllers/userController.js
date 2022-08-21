@@ -47,6 +47,11 @@ export const followAuthor = asyncHandler(async (req, res) => {
   const { authorId, isFollowing } = req.body
   const { userId } = req.params
 
+  if (userId === authorId) {
+    res.status(400)
+    throw new Error("You can't follow yourself")
+  }
+
   let followingAuthor
   let authorsFollowers
 
