@@ -89,3 +89,9 @@ export interface UpdateMessage {
   message: string
   messageId: string
 }
+
+export interface ContactData {
+  name: string
+  email: string
+  message: string
+}

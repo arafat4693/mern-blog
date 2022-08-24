@@ -73,6 +73,7 @@ export default function Authors() {
   const searchAuthor = useCallback(
     (e: any) => {
       e.preventDefault()
+      if (!search) return
       const searchedUsers = allAuthors.filter(
         (u) =>
           u.displayName.toLowerCase().includes(search) &&

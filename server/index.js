@@ -7,6 +7,7 @@ import authRoute from "./routes/authRoute.js"
 import articleRoute from "./routes/articleRoute.js"
 import messageRoute from "./routes/messageRoute.js"
 import userRoute from "./routes/userRoute.js"
+import contactRoute from "./routes/contactRoute.js"
 import "./passport.js"
 import { errorHandler } from "./middlewares/errorMiddleware.js"
 import mongoose from "mongoose"
@@ -56,6 +57,7 @@ app.use("/auth", authRoute)
 app.use("/article", articleRoute)
 app.use("/message", messageRoute)
 app.use("/user", userRoute)
+app.use("/contact", contactRoute)
 
 app.get("/", (req, res) => {
   res.send("Hello from server")
