@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react"
-import { useSelector } from "react-redux"
-import { createMessage } from "../../redux/messageSlice"
-import { RootState } from "../../redux/store"
+import { useEffect, useMemo, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { createMessage, getMessages } from "../../redux/messageSlice"
+import { AppDispatch, RootState } from "../../redux/store"
 import { MongoArticle } from "../../utils/types"
 import ErrMsg from "../layouts/ErrMsg"
 import CommentForm from "./CommentForm"
@@ -15,6 +15,12 @@ export default function CommentBox({ article }: Props) {
   const { user } = useSelector((state: RootState) => state.user)
   const { messages } = useSelector((state: RootState) => state.message)
   const [showComments, setShowComments] = useState<boolean>(true)
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(getMessages(article._id))
+  }, [dispatch])
+
   const commentsByParentId = useMemo(() => {
     const group: any = { root: [] }
     messages.forEach((m) => {

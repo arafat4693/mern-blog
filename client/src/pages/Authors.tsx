@@ -76,7 +76,7 @@ export default function Authors() {
       if (!search) return
       const searchedUsers = allAuthors.filter(
         (u) =>
-          u.displayName.toLowerCase().includes(search) &&
+          u.displayName.toLowerCase().includes(search.toLowerCase()) &&
           ((currentTab === "following" && userFollowing.has(u._id)) ||
             (currentTab === "followers" && userFollowers.has(u._id)) ||
             currentTab === "all")
@@ -126,7 +126,7 @@ export default function Authors() {
                     type="text"
                     placeholder="Search author"
                     value={search}
-                    onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                    onChange={(e) => setSearch(e.target.value)}
                     className="text-xl bg-gray-200/70 text-gray-700 p-4 w-[25rem]"
                   />
                   <input

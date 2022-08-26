@@ -10,7 +10,7 @@ export default function Featured() {
     <div>
       {/* **last** will get implemented soon */}
       <SideHeader title="featured posts" />
-      {articles.map((a: MongoArticle) => (
+      {articles.slice(0, 5).map((a: MongoArticle) => (
         <MenuCard key={a._id} article={a} />
       ))}
     </div>

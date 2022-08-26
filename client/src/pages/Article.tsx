@@ -31,10 +31,10 @@ export default function Article() {
     articleAction,
   } = useSelector((state: RootState) => state.article)
   const { user, users } = useSelector((state: RootState) => state.user)
+  const article = articles.find((a) => a.slug === slug)
   const totalComments = useSelector(
     (state: RootState) => state.message.messages.length
   )
-  const article = articles.find((a) => a.slug === slug)
   const articleUser = users.find((u) => u._id === article?.writerId)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()

@@ -2,10 +2,11 @@ import asyncHandler from "express-async-handler"
 import MessageModel from "../models/messageModel.js"
 
 // @desc   article messages
-// @route  GET message/
+// @route  GET message/:articleId
 // @access Public
 export const articleMessages = asyncHandler(async (req, res) => {
-  const articleMessages = await MessageModel.find().sort({
+  const { articleId } = req.params
+  const articleMessages = await MessageModel.find({ articleId }).sort({
     createdAt: "desc",
   })
   res.status(200).json(articleMessages)

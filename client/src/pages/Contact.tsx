@@ -14,8 +14,8 @@ export default function Contact() {
   const { user } = useSelector((state: RootState) => state.user)
 
   const contact: SubmitHandler<ContactData> = async (contactData) => {
-    if (user === null) return
-    console.log(contactData)
+    if (user === null)
+      return toast("please login first!!!", { type: "info", autoClose: 2300 })
     try {
       setLoading(true)
       const { data } = await axios.post(`/contact/${user._id}`, contactData)

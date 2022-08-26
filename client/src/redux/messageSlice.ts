@@ -26,9 +26,9 @@ const initialState: State = {
 //get all messages
 export const getMessages = createAsyncThunk(
   "messageSlice/all",
-  async (_, thunkApi) => {
+  async (articleId: string, thunkApi) => {
     try {
-      return await messageService.allMessages("/message/")
+      return await messageService.allMessages(`/message/${articleId}`)
     } catch (err: any) {
       const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
