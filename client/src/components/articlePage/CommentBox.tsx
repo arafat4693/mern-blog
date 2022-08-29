@@ -19,7 +19,7 @@ export default function CommentBox({ article }: Props) {
 
   useEffect(() => {
     dispatch(getMessages(article._id))
-  }, [dispatch])
+  }, [dispatch, article._id])
 
   const commentsByParentId = useMemo(() => {
     const group: any = { root: [] }

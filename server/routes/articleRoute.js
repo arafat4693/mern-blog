@@ -2,6 +2,7 @@ import express from "express"
 import {
   createArticle,
   deleteArticle,
+  getArticle,
   getArticles,
   updateArticle,
 } from "../controllers/articleController.js"
@@ -15,6 +16,7 @@ router
   .put(verifyUser, updateArticle)
 
 router.get("/", getArticles)
+router.get("/:slug", getArticle)
 router.delete("/:userId/:articleId", verifyUser, deleteArticle)
 
 export default router

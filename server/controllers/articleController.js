@@ -3,11 +3,20 @@ import ArticleModel from "../models/articleModel.js"
 import MessageModel from "../models/messageModel.js"
 
 // @desc   get articles
-// @route  GET article/:userId
-// @access Private
+// @route  GET article/
+// @access Public
 export const getArticles = asyncHandler(async (req, res) => {
   const allArticles = await ArticleModel.find()
   res.status(200).json(allArticles)
+})
+
+// @desc   get one article
+// @route  GET article/:slug
+// @access Public
+export const getArticle = asyncHandler(async (req, res) => {
+  const { slug } = req.params
+  const article = await ArticleModel.findOne({ slug })
+  res.status(200).json(article)
 })
 
 // @desc   create article

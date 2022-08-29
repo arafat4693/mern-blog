@@ -19,19 +19,14 @@ import { BsFillBookmarkFill } from "react-icons/bs"
 import axios from "../utils/axiosConfig"
 import { bookmarkArticle } from "../redux/userSlice"
 import { getErrMsg } from "../utils/utilFunctions"
+import useGet from "../hooks/useGet"
 
 export default function Article() {
   const { slug } = useParams()
-  const {
-    articles,
-    articleSuccess,
-    articleError,
-    articleMessage,
-    articleLoading,
-    articleAction,
-  } = useSelector((state: RootState) => state.article)
+  const { data: article, loading } = useGet(`/article/${slug}`)
+  const { articleSuccess, articleError, articleMessage, articleAction } =
+    useSelector((state: RootState) => state.article)
   const { user, users } = useSelector((state: RootState) => state.user)
-  const article = articles.find((a) => a.slug === slug)
   const totalComments = useSelector(
     (state: RootState) => state.message.messages.length
   )
@@ -105,7 +100,7 @@ export default function Article() {
 
   return (
     <>
-      {articleAction === "GET" && articleLoading ? (
+      {loading ? (
         <Loader />
       ) : article ? (
         <main className="mt-24">
