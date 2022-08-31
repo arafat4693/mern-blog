@@ -1,9 +1,11 @@
 import express from "express"
 import {
+  bookmarkArticle,
   createArticle,
   deleteArticle,
   getArticle,
   getArticles,
+  getBookmarked,
   updateArticle,
 } from "../controllers/articleController.js"
 import { verifyUser } from "../middlewares/authMiddleware.js"
@@ -17,6 +19,8 @@ router
 
 router.get("/", getArticles)
 router.get("/:slug", getArticle)
+router.get("/:userId/usersBookmarked", verifyUser, getBookmarked)
 router.delete("/:userId/:articleId", verifyUser, deleteArticle)
+router.put("/:userId/bookmark", verifyUser, bookmarkArticle)
 
 export default router

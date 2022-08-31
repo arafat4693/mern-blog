@@ -23,7 +23,6 @@ export interface MongoUser {
   githubId?: string
   followers: string[] | []
   following: string[] | []
-  bookmarked: string[] | []
   createdAt: Date
   updatedAt: Date
 }
@@ -39,6 +38,7 @@ export interface MongoArticle {
   markdown: string
   tags: string[] | []
   categories: string[]
+  bookmarkedBy: string[] | []
   slug: string
   convertedHtml: string
   createdAt: Date

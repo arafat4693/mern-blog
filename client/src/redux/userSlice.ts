@@ -77,17 +77,6 @@ const userSlice = createSlice({
       state.userMessage = ""
       state.userRedirect = false
     },
-    bookmarkArticle: (
-      state,
-      action: PayloadAction<{ articleId: string; isBookmark: boolean }>
-    ) => {
-      userServices.PushOrPull(
-        action.payload.articleId,
-        action.payload.isBookmark,
-        state.user,
-        "bookmarked"
-      )
-    },
     followAuthor: (
       state,
       action: PayloadAction<{ authorId: string; isFollowing: boolean }>
@@ -146,6 +135,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { addUser, resetState, bookmarkArticle, followAuthor } =
-  userSlice.actions
+export const { addUser, resetState, followAuthor } = userSlice.actions
 export default userSlice.reducer

@@ -6,6 +6,9 @@ import MessageModel from "../models/messageModel.js"
 // @route  GET article/
 // @access Public
 export const getArticles = asyncHandler(async (req, res) => {
+  // const recent = ArticleModel.find().sort({'createdAt': 'desc'}).limit(8)
+  // const random = ArticleModel.aggregate([{$sample: {size: 30}}])
+  // const mostBookmarked = ArticleModel.find().sort({''})
   const allArticles = await ArticleModel.find()
   res.status(200).json(allArticles)
 })
@@ -67,4 +70,41 @@ export const deleteArticle = asyncHandler(async (req, res) => {
     MessageModel.deleteMany({ articleId }),
   ])
   res.status(200).json({ articleId, message: "Successfully deleted" })
+})
+
+// @desc   bookmark article
+// @route  PUT article/:userId/bookmark
+// @access Private
+export const bookmarkArticle = asyncHandler(async (req, res) => {
+  const { articleId, isBookmark } = req.body
+  const { userId } = req.params
+  if (isBookmark) {
+    await ArticleModel.updateOne(
+      { _id: articleId },
+      { $pull: { bookmarkedBy: userId } }
+    )
+  } else {
+    await ArticleModel.updateOne(
+      { _id: articleId },
+      { $push: { bookmarkedBy: userId } }
+    )
+  }
+  // res.status(200).json(req.body)
+  res
+    .status(200)
+    .json(
+      isBookmark
+        ? "Removed article from your bookmark"
+        : "Added article to your bookmark"
+    )
+})
+
+// @desc   get bookmarked articles
+// @route  GET article/:userId/usersBookmarked
+// @access Private
+export const getBookmarked = asyncHandler(async (req, res) => {
+  const articles = await ArticleModel.find({
+    bookmarkedBy: { $in: [req.params.userId] },
+  })
+  res.status(200).json(articles)
 })

@@ -11,6 +11,7 @@ const articleSchema = new mongoose.Schema(
   {
     writerId: {
       type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
       required: true,
     },
     title: {
@@ -45,6 +46,10 @@ const articleSchema = new mongoose.Schema(
     convertedHtml: {
       type: String,
       required: true,
+    },
+    bookmarkedBy: {
+      type: [mongoose.SchemaTypes.ObjectId],
+      ref: "User",
     },
   },
   { timestamps: true }

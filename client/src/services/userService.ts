@@ -29,7 +29,7 @@ function PushOrPull(
   id: string,
   check: boolean,
   user: MongoUser | null,
-  field: "bookmarked" | "following"
+  field: "following"
 ) {
   if (!user) return
   if (check) {

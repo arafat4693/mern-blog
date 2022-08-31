@@ -17,13 +17,16 @@ import CommentBox from "../components/articlePage/CommentBox"
 import ErrMsg from "../components/layouts/ErrMsg"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import axios from "../utils/axiosConfig"
-import { bookmarkArticle } from "../redux/userSlice"
 import { getErrMsg } from "../utils/utilFunctions"
 import useGet from "../hooks/useGet"
+import { MongoArticle } from "../utils/types"
 
 export default function Article() {
   const { slug } = useParams()
-  const { data: article, loading } = useGet(`/article/${slug}`)
+  const { data: article, loading } = useGet<undefined | MongoArticle>(
+    `/article/${slug}`,
+    undefined
+  )
   const { articleSuccess, articleError, articleMessage, articleAction } =
     useSelector((state: RootState) => state.article)
   const { user, users } = useSelector((state: RootState) => state.user)
@@ -33,9 +36,9 @@ export default function Article() {
   const articleUser = users.find((u) => u._id === article?.writerId)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const usersBookmarked = useMemo(
-    () => new Set(user?.bookmarked),
-    [user?.bookmarked]
+  const bookmarkedUsers = useMemo(
+    () => new Set(article?.bookmarkedBy),
+    [article?.bookmarkedBy]
   )
 
   useEffect(() => {
@@ -69,32 +72,16 @@ export default function Article() {
   const onArticleBookmark = useCallback(async () => {
     if (user === null || article === undefined) return
     try {
-      const res = await axios(`/user/${user._id}/bookmark`, {
-        method: "PUT",
-        data: {
-          articleId: article._id,
-          isBookmark: usersBookmarked.has(article._id),
-        },
+      const res = await axios.put(`/article/${user._id}/bookmark`, {
+        articleId: article._id,
+        isBookmark: bookmarkedUsers.has(user._id),
       })
-      dispatch(
-        bookmarkArticle({
-          articleId: res.data.articleId,
-          isBookmark: res.data.isBookmark,
-        })
-      )
-      toast(
-        `${
-          res.data.isBookmark
-            ? "Removed article from your bookmark"
-            : "Added article to your bookmark"
-        }`,
-        { type: "success", autoClose: 2300 }
-      )
+      toast(res.data, { type: "success", autoClose: 2300 })
     } catch (err: any) {
       const message = getErrMsg(err)
       toast(message, { type: "error", autoClose: 2300 })
     }
-  }, [user, article, dispatch, usersBookmarked])
+  }, [user, article, bookmarkedUsers])
 
   // 5eBnYp spelprogrammering.nu/koda
 
@@ -175,16 +162,16 @@ export default function Article() {
                       <span className="text-white text-xl">
                         {totalComments} Comments
                       </span>
-                      <BsFillBookmarkFill
-                        onClick={onArticleBookmark}
-                        className={`text-3xl cursor-pointer ml-4 ${
-                          user ? "block" : "hidden"
-                        } ${
-                          usersBookmarked.has(article._id)
-                            ? "text-yellow-400"
-                            : "text-white"
-                        }`}
-                      />
+                      {user && (
+                        <BsFillBookmarkFill
+                          onClick={onArticleBookmark}
+                          className={`text-3xl cursor-pointer ml-4 ${
+                            bookmarkedUsers.has(user._id)
+                              ? "text-yellow-400"
+                              : "text-white"
+                          }`}
+                        />
+                      )}
                     </div>
                   </figure>
                 </div>

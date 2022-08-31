@@ -2,27 +2,24 @@ import { useSelector } from "react-redux"
 import OverlapHeader from "../components/layouts/OverlapHeader"
 import ErrMsg from "../components/layouts/ErrMsg"
 import { RootState } from "../redux/store"
-import { useMemo } from "react"
 import Loader from "../components/layouts/Loader"
 import BookmarkPost from "../components/layouts/PostCard"
+import useGet from "../hooks/useGet"
+import { MongoArticle } from "../utils/types"
 
-export default function Comments() {
+export default function Bookmark() {
   const { user } = useSelector((state: RootState) => state.user)
-  const { articles, articleAction, articleLoading } = useSelector(
-    (state: RootState) => state.article
+  const { data: bookmarkedArticles, loading } = useGet<[] | MongoArticle[]>(
+    `/article/${user?._id}/usersBookmarked`,
+    [],
+    true
   )
-
-  const bookmarkedArticles = useMemo(() => {
-    if (user === null || articles.length === 0) return []
-    const userBookmarked = new Set(user.bookmarked)
-    return articles.filter((a) => userBookmarked.has(a._id))
-  }, [user, articles])
 
   if (!user) return <ErrMsg msg="Login to see your bookmarked" />
 
   return (
     <>
-      {articleAction === "GET" && articleLoading ? (
+      {loading ? (
         <Loader />
       ) : bookmarkedArticles.length ? (
         <main className="mt-40">
