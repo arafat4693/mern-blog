@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
@@ -18,28 +18,32 @@ import ErrMsg from "../components/layouts/ErrMsg"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import axios from "../utils/axiosConfig"
 import { getErrMsg } from "../utils/utilFunctions"
-import useGet from "../hooks/useGet"
+import { useGet } from "../hooks/useGet"
 import { MongoArticle } from "../utils/types"
 
 export default function Article() {
   const { slug } = useParams()
+  const { user, users } = useSelector((state: RootState) => state.user)
+
   const { data: article, loading } = useGet<undefined | MongoArticle>(
     `/article/${slug}`,
     undefined
   )
+
   const { articleSuccess, articleError, articleMessage, articleAction } =
     useSelector((state: RootState) => state.article)
-  const { user, users } = useSelector((state: RootState) => state.user)
   const totalComments = useSelector(
     (state: RootState) => state.message.messages.length
   )
   const articleUser = users.find((u) => u._id === article?.writerId)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const bookmarkedUsers = useMemo(
-    () => new Set(article?.bookmarkedBy),
-    [article?.bookmarkedBy]
-  )
+  const [bookmarkedUsers, setBookmarkedUsers] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    if (article === undefined) return
+    setBookmarkedUsers(new Set(article.bookmarkedBy))
+  }, [article])
 
   useEffect(() => {
     if (articleAction === "DELETE") {
@@ -72,10 +76,19 @@ export default function Article() {
   const onArticleBookmark = useCallback(async () => {
     if (user === null || article === undefined) return
     try {
+      const isBookmark = bookmarkedUsers.has(user._id)
       const res = await axios.put(`/article/${user._id}/bookmark`, {
         articleId: article._id,
-        isBookmark: bookmarkedUsers.has(user._id),
+        isBookmark,
       })
+      if (isBookmark) {
+        setBookmarkedUsers((prev) => {
+          prev.delete(user._id)
+          return new Set(prev)
+        })
+      } else {
+        setBookmarkedUsers((prev) => new Set(Array.from(prev.add(user._id))))
+      }
       toast(res.data, { type: "success", autoClose: 2300 })
     } catch (err: any) {
       const message = getErrMsg(err)

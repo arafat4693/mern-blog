@@ -1,16 +1,31 @@
 import asyncHandler from "express-async-handler"
 import ArticleModel from "../models/articleModel.js"
 import MessageModel from "../models/messageModel.js"
+import slugify from "slugify"
 
 // @desc   get articles
 // @route  GET article/
 // @access Public
 export const getArticles = asyncHandler(async (req, res) => {
-  // const recent = ArticleModel.find().sort({'createdAt': 'desc'}).limit(8)
-  // const random = ArticleModel.aggregate([{$sample: {size: 30}}])
-  // const mostBookmarked = ArticleModel.find().sort({''})
+  // const recent = ArticleModel.find().sort({ createdAt: "desc" }).limit(8)
+  // const random = ArticleModel.aggregate([{ $sample: { size: 30 } }])
+  // const mostBookmarked = ArticleModel.aggregate([
+  //   { $unwind: "$bookmarkedBy" },
+  //   {
+  //     $group: {
+  //       _id: "$_id",
+  //       slug: { $first: "$slug" },
+  //       thumbnailImg: { $first: "$thumbnailImg" },
+  //       title: { $first: "$title" },
+  //       createdAt: { $first: "$createdAt" },
+  //       count: { $sum: 1 },
+  //     },
+  //   },
+  //   { $sort: { count: -1 } },
+  // ])
   const allArticles = await ArticleModel.find()
   res.status(200).json(allArticles)
+  // res.status(200).json(random)
 })
 
 // @desc   get one article
@@ -26,6 +41,12 @@ export const getArticle = asyncHandler(async (req, res) => {
 // @route  POST article/:userId
 // @access Private
 export const createArticle = asyncHandler(async (req, res) => {
+  const slug = slugify(req.body.title, { strict: true, lower: true })
+  const check = await ArticleModel.countDocuments({ slug })
+  if (check) {
+    res.status(401)
+    throw new Error("Title already exits. Name your article unique")
+  }
   let article = new ArticleModel(req.body)
   article = await article.save()
   res.status(201).json({ article, message: "Successfully created" })

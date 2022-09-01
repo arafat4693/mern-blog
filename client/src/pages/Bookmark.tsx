@@ -4,15 +4,15 @@ import ErrMsg from "../components/layouts/ErrMsg"
 import { RootState } from "../redux/store"
 import Loader from "../components/layouts/Loader"
 import BookmarkPost from "../components/layouts/PostCard"
-import useGet from "../hooks/useGet"
+import { useAuthGet } from "../hooks/useGet"
 import { MongoArticle } from "../utils/types"
 
 export default function Bookmark() {
   const { user } = useSelector((state: RootState) => state.user)
-  const { data: bookmarkedArticles, loading } = useGet<[] | MongoArticle[]>(
+  const { data: bookmarkedArticles, loading } = useAuthGet<[] | MongoArticle[]>(
     `/article/${user?._id}/usersBookmarked`,
     [],
-    true
+    user
   )
 
   if (!user) return <ErrMsg msg="Login to see your bookmarked" />

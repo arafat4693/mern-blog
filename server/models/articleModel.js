@@ -42,6 +42,7 @@ const articleSchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
+      unique: true,
     },
     convertedHtml: {
       type: String,

@@ -24,11 +24,11 @@ export default function MenuCard({ last, article }: Props) {
       <div className="content">
         <Link
           to={`/article/${article.slug}`}
-          className="bg-size text-gray-700 text-3xl font-medium capitalize leading-snug hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom"
+          className="bg-size text-gray-700 text-2xl font-medium capitalize leading-snug hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom"
         >
           {article.title}
         </Link>
-        <p className="flex gap-2 items-center text-2xl text-gray-500 mt-4">
+        <p className="flex gap-2 items-center text-xl text-gray-500 mt-4">
           <CalendarIcon className="w-6 h-6 stroke-gray-500" />
           {new Date(article.createdAt).toLocaleDateString(undefined, {
             year: "numeric",
