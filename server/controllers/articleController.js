@@ -7,25 +7,25 @@ import slugify from "slugify"
 // @route  GET article/
 // @access Public
 export const getArticles = asyncHandler(async (req, res) => {
-  // const recent = ArticleModel.find().sort({ createdAt: "desc" }).limit(8)
-  // const random = ArticleModel.aggregate([{ $sample: { size: 30 } }])
-  // const mostBookmarked = ArticleModel.aggregate([
-  //   { $unwind: "$bookmarkedBy" },
-  //   {
-  //     $group: {
-  //       _id: "$_id",
-  //       slug: { $first: "$slug" },
-  //       thumbnailImg: { $first: "$thumbnailImg" },
-  //       title: { $first: "$title" },
-  //       createdAt: { $first: "$createdAt" },
-  //       count: { $sum: 1 },
-  //     },
-  //   },
-  //   { $sort: { count: -1 } },
-  // ])
-  const allArticles = await ArticleModel.find()
-  res.status(200).json(allArticles)
-  // res.status(200).json(random)
+  const recent = ArticleModel.find().sort({ createdAt: "desc" }).limit(8)
+  const random = ArticleModel.aggregate([{ $sample: { size: 30 } }])
+  const mostBookmarked = ArticleModel.aggregate([
+    { $unwind: "$bookmarkedBy" },
+    {
+      $group: {
+        _id: "$_id",
+        slug: { $first: "$slug" },
+        thumbnailImg: { $first: "$thumbnailImg" },
+        title: { $first: "$title" },
+        createdAt: { $first: "$createdAt" },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { count: -1, createdAt: -1 } },
+    { $limit: 5 },
+  ])
+  const articles = await Promise.all([recent, random, mostBookmarked])
+  res.status(200).json([...articles[0], ...articles[1], ...articles[2]])
 })
 
 // @desc   get one article
@@ -85,7 +85,6 @@ export const updateArticle = asyncHandler(async (req, res) => {
 // @access Private
 export const deleteArticle = asyncHandler(async (req, res) => {
   const { articleId } = req.params
-  // await ArticleModel.deleteOne({ _id: articleId })
   await Promise.all([
     ArticleModel.deleteOne({ _id: articleId }),
     MessageModel.deleteMany({ articleId }),
@@ -110,7 +109,6 @@ export const bookmarkArticle = asyncHandler(async (req, res) => {
       { $push: { bookmarkedBy: userId } }
     )
   }
-  // res.status(200).json(req.body)
   res
     .status(200)
     .json(
