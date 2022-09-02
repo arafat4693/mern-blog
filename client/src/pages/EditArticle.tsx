@@ -1,22 +1,22 @@
 import OverlapHeader from "../components/layouts/OverlapHeader"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { ArticleData } from "../utils/types"
+import { ArticleData, MongoArticle } from "../utils/types"
 import BlogTags from "../components/writePage/BlogTags"
 import Categories from "../components/writePage/Categories"
 import { useSelector, useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "../redux/store"
 import ReactLoading from "react-loading"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Loader from "../components/layouts/Loader"
 import { toast } from "react-toastify"
 import { updateArticle } from "../redux/articleSlice"
 import { resetState } from "../redux/articleSlice"
 import ErrMsg from "../components/layouts/ErrMsg"
+import { useGet } from "../hooks/useGet"
 
 export default function EditArticle() {
   const {
-    articles,
     articleSuccess,
     articleError,
     articleMessage,
@@ -26,9 +26,9 @@ export default function EditArticle() {
   } = useSelector((state: RootState) => state.article)
   const { slug } = useParams()
   const dispatch = useDispatch<AppDispatch>()
-  const article = useMemo(
-    () => articles.find((a) => a.slug === slug),
-    [slug, articles]
+  const { data: article, loading } = useGet<undefined | MongoArticle>(
+    `/article/${slug}`,
+    undefined
   )
   const { register, handleSubmit, setValue } = useForm<ArticleData>()
   const [categories, setCategories] = useState<string[]>([])
@@ -88,7 +88,7 @@ export default function EditArticle() {
 
   return (
     <>
-      {articleAction === "GET" && articleLoading ? (
+      {loading ? (
         <Loader />
       ) : article ? (
         <main className="mt-40">

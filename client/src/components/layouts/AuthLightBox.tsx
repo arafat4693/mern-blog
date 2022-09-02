@@ -41,6 +41,7 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
   function twitterLogin() {
     window.open("http://localhost:5000/auth/twitter", "_self")
   }
+
   return (
     <div
       onClick={closeLbx}
@@ -85,8 +86,13 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
             move ? "h-[38.65rem]" : "h-[22.65rem]"
           }`}
         >
-          <Login move={move} setMove={setMove} />
-          <Register move={move} setMove={setMove} />
+          <Login
+            move={move}
+            setMove={setMove}
+            setCloseAuth={setCloseAuth}
+            closeAuth={closeAuth}
+          />
+          <Register move={move} setMove={setMove} closeAuth={closeAuth} />
         </div>
       </div>
     </div>

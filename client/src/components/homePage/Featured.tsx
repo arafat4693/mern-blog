@@ -2,7 +2,6 @@ import SideHeader from "./SideHeader"
 import MenuCard from "../layouts/MenuCard"
 import { RootState } from "../../redux/store"
 import { useSelector } from "react-redux"
-import { MongoArticle } from "../../utils/types"
 
 export default function Featured() {
   const { articles } = useSelector((state: RootState) => state.article)
@@ -10,8 +9,8 @@ export default function Featured() {
     <div>
       {/* **last** will get implemented soon */}
       <SideHeader title="featured posts" />
-      {articles.slice(0, 5).map((a: MongoArticle) => (
-        <MenuCard key={a._id} article={a} />
+      {articles.slice(-5).map((a, idx) => (
+        <MenuCard key={a._id} article={a} last={idx === 4} />
       ))}
     </div>
   )

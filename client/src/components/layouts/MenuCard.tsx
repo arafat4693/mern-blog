@@ -1,18 +1,26 @@
 import { CalendarIcon } from "@heroicons/react/outline"
 import { Link } from "react-router-dom"
 import { MongoArticle } from "../../utils/types"
+import { Dispatch } from "react"
 
 interface Props {
   last?: boolean
   article: MongoArticle
+  setCloseMenu?: Dispatch<boolean>
 }
 
-export default function MenuCard({ last, article }: Props) {
+export default function MenuCard({ last, article, setCloseMenu }: Props) {
+  function closeMenu() {
+    if (!setCloseMenu) return
+    setCloseMenu(true)
+  }
+
   return (
     <div className={`flex gap-6 items-center ${last ? "mb-0" : "mb-9"}`}>
       <Link
         to={`/article/${article.slug}`}
         className="min-w-[8rem] w-32 h-32 overflow-hidden rounded-lg"
+        onClick={closeMenu}
       >
         <img
           src={article.thumbnailImg}
@@ -24,6 +32,7 @@ export default function MenuCard({ last, article }: Props) {
       <div className="content">
         <Link
           to={`/article/${article.slug}`}
+          onClick={closeMenu}
           className="bg-size text-gray-700 text-2xl font-medium capitalize leading-snug hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom"
         >
           {article.title}

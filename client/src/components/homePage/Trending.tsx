@@ -3,10 +3,12 @@ import { Navigation, Autoplay } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"
 import TrendingBox from "./TrendingBox"
-
-const blogs = ["1", "2", "3", "4", "5", "6"]
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
 
 export default function Trending() {
+  const { articles } = useSelector((state: RootState) => state.article)
+
   return (
     <section className="trending px-6 pt-8 h-[57rem]">
       <Swiper
@@ -16,13 +18,17 @@ export default function Trending() {
         loop={true}
         modules={[Navigation, Autoplay]}
         autoplay={{
-          delay: 3500,
+          delay: 3700,
           disableOnInteraction: false,
         }}
       >
-        {blogs.map((b, i) => (
+        {articles.slice(0, 8).map((a, i) => (
           <SwiperSlide key={i} className="bg-violet-500">
-            <TrendingBox />
+            <TrendingBox
+              title={a.title}
+              slug={a.slug}
+              thumbnail={a.thumbnailImg}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

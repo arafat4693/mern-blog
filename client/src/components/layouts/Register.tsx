@@ -9,10 +9,11 @@ import { toast } from "react-toastify"
 
 interface Props {
   move: boolean
+  closeAuth: boolean
   setMove: Dispatch<boolean>
 }
 
-export default function Register({ move, setMove }: Props) {
+export default function Register({ move, setMove, closeAuth }: Props) {
   const { register, handleSubmit, reset } = useForm<UserData>()
   const { userSuccess, userLoading } = useSelector(
     (state: RootState) => state.user
@@ -20,8 +21,8 @@ export default function Register({ move, setMove }: Props) {
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (userSuccess) reset()
-  }, [userSuccess, dispatch, reset])
+    if (userSuccess || closeAuth) reset()
+  }, [userSuccess, closeAuth, reset])
 
   const signUp: SubmitHandler<UserData> = (data) => {
     if (data.password.length < 4)

@@ -3,6 +3,8 @@ import Logo from "./Logo"
 import MenuCard from "./MenuCard"
 import { BsFacebook, BsTwitter, BsYoutube, BsInstagram } from "react-icons/bs"
 import { Dispatch } from "react"
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
 
 interface Props {
   closeMenu: boolean
@@ -10,6 +12,8 @@ interface Props {
 }
 
 export default function MenuLightBox({ closeMenu, setCloseMenu }: Props) {
+  const { articles } = useSelector((state: RootState) => state.article)
+
   function closeLbx(e: any): void {
     const lb = e.target.classList.contains("lightBox")
     if (!lb) return
@@ -35,10 +39,14 @@ export default function MenuLightBox({ closeMenu, setCloseMenu }: Props) {
 
         <Logo customStyle="text-6xl pb-10" />
 
-        {/* <MenuCard />
-        <MenuCard />
-        <MenuCard />
-        <MenuCard /> */}
+        {articles.slice(8, 12).map((a, idx) => (
+          <MenuCard
+            key={a._id}
+            article={a}
+            last={idx === 3}
+            setCloseMenu={setCloseMenu}
+          />
+        ))}
 
         <div className="flex gap-2 mt-20">
           <a

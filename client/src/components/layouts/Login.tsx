@@ -8,10 +8,17 @@ import Loader from "./Loader"
 
 interface Props {
   move: boolean
+  closeAuth: boolean
   setMove: Dispatch<boolean>
+  setCloseAuth: Dispatch<boolean>
 }
 
-export default function Login({ move, setMove }: Props) {
+export default function Login({
+  move,
+  setMove,
+  setCloseAuth,
+  closeAuth,
+}: Props) {
   const { register, handleSubmit, reset } = useForm<LoginData>()
   const { userSuccess, userLoading } = useSelector(
     (state: RootState) => state.user
@@ -19,8 +26,11 @@ export default function Login({ move, setMove }: Props) {
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (userSuccess) reset()
-  }, [userSuccess, dispatch, reset])
+    if (userSuccess || closeAuth) {
+      reset()
+      setCloseAuth(true)
+    }
+  }, [userSuccess, closeAuth, reset, setCloseAuth])
 
   const login: SubmitHandler<LoginData> = (data) => {
     dispatch(loginUser(data))
