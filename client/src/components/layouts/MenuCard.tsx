@@ -2,6 +2,7 @@ import { CalendarIcon } from "@heroicons/react/outline"
 import { Link } from "react-router-dom"
 import { MongoArticle } from "../../utils/types"
 import { Dispatch } from "react"
+import { formatDate } from "../../utils/utilFunctions"
 
 interface Props {
   last?: boolean
@@ -39,11 +40,7 @@ export default function MenuCard({ last, article, setCloseMenu }: Props) {
         </Link>
         <p className="flex gap-2 items-center text-xl text-gray-500 mt-4">
           <CalendarIcon className="w-6 h-6 stroke-gray-500" />
-          {new Date(article.createdAt).toLocaleDateString(undefined, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatDate(article.createdAt)}
         </p>
       </div>
     </div>

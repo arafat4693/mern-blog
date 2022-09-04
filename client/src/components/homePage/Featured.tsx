@@ -7,7 +7,6 @@ export default function Featured() {
   const { articles } = useSelector((state: RootState) => state.article)
   return (
     <div>
-      {/* **last** will get implemented soon */}
       <SideHeader title="featured posts" />
       {articles.slice(-5).map((a, idx) => (
         <MenuCard key={a._id} article={a} last={idx === 4} />

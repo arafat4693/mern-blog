@@ -5,6 +5,9 @@ import { getErrMsg } from "../utils/utilFunctions"
 
 interface State {
   articles: MongoArticle[] | []
+  // randomArticles: MongoArticle[] | []
+  // recentArticles: MongoArticle[] | []
+  // bookmarkedArticles: MongoArticle[] | []
   articleSuccess: boolean
   articleError: boolean
   articleLoading: boolean
@@ -25,6 +28,9 @@ interface deleteArticleAction {
 
 const initialState: State = {
   articles: [],
+  // randomArticles: [],
+  // recentArticles: [],
+  // bookmarkedArticles: [],
   articleSuccess: false,
   articleError: false,
   articleLoading: false,
@@ -56,6 +62,45 @@ export const getArticles = createAsyncThunk(
   async (_, thunkApi: any) => {
     try {
       return await articleServices.allArticles("/article/")
+    } catch (err: any) {
+      const message = getErrMsg(err)
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+)
+
+//get random articles
+export const getRandomArticles = createAsyncThunk(
+  "articleSlice/random",
+  async (_, thunkApi: any) => {
+    try {
+      return await articleServices.allArticles("/article/random")
+    } catch (err: any) {
+      const message = getErrMsg(err)
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+)
+
+//get recent articles
+export const getRecentArticles = createAsyncThunk(
+  "articleSlice/recent",
+  async (_, thunkApi: any) => {
+    try {
+      return await articleServices.allArticles("/article/recent")
+    } catch (err: any) {
+      const message = getErrMsg(err)
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+)
+
+//get most bookmarked articles
+export const getBookmarkedArticles = createAsyncThunk(
+  "articleSlice/mostBookmarked",
+  async (_, thunkApi: any) => {
+    try {
+      return await articleServices.allArticles("/article/mostBookmarked")
     } catch (err: any) {
       const message = getErrMsg(err)
       return thunkApi.rejectWithValue(message)
@@ -145,6 +190,12 @@ const articleSlice = createSlice({
           state.articleLoading = false
         }
       )
+      // .addCase(
+      //   getRandomArticles.fulfilled,
+      //   (state, action: PayloadAction<MongoArticle[]>) => {
+      //     state.randomArticles = action.payload
+      //   }
+      // )
       .addCase(deleteArticle.pending, (state) => {
         state.articleAction = "DELETE"
         state.articleLoading = true

@@ -6,6 +6,9 @@ import {
   getArticle,
   getArticles,
   getBookmarked,
+  mostBookmarked,
+  randomArticles,
+  recentArticles,
   updateArticle,
 } from "../controllers/articleController.js"
 import { verifyUser } from "../middlewares/authMiddleware.js"
@@ -18,6 +21,9 @@ router
   .put(verifyUser, updateArticle)
 
 router.get("/", getArticles)
+router.get("/random", randomArticles)
+router.get("/recent", recentArticles)
+router.get("/mostBookmarked", mostBookmarked)
 router.get("/:slug", getArticle)
 router.get("/:userId/usersBookmarked", verifyUser, getBookmarked)
 router.delete("/:userId/:articleId", verifyUser, deleteArticle)
