@@ -28,42 +28,12 @@ export const getArticles = asyncHandler(async (req, res) => {
   res.status(200).json([...articles[0], ...articles[1], ...articles[2]])
 })
 
-// @desc   get random articles
-// @route  GET article/random/
-// @access Public
-export const randomArticles = asyncHandler(async (req, res) => {
-  const random = await ArticleModel.aggregate([{ $sample: { size: 30 } }])
-  res.status(200).json(random)
-})
-
-// @desc   get recent articles
-// @route  GET article/recent/
-// @access Public
-export const recentArticles = asyncHandler(async (req, res) => {
-  const recent = await ArticleModel.find().sort({ createdAt: "desc" }).limit(8)
-  res.status(200).json(recent)
-})
-
-// @desc   get most bookmarked articles
-// @route  GET article/mostBookmarked/
-// @access Public
-export const mostBookmarked = asyncHandler(async (req, res) => {
-  const mostBookmarked = await ArticleModel.aggregate([
-    { $unwind: "$bookmarkedBy" },
-    {
-      $group: {
-        _id: "$_id",
-        slug: { $first: "$slug" },
-        thumbnailImg: { $first: "$thumbnailImg" },
-        title: { $first: "$title" },
-        createdAt: { $first: "$createdAt" },
-        count: { $sum: 1 },
-      },
-    },
-    { $sort: { count: -1, createdAt: -1 } },
-    { $limit: 5 },
-  ])
-  res.status(200).json(mostBookmarked)
+// @desc   get users articles
+// @route  GET article/:userId/user
+// @access Private
+export const userArticles = asyncHandler(async (req, res) => {
+  const articles = await ArticleModel.find({ writerId: req.params.userId })
+  res.status(200).json(articles)
 })
 
 // @desc   get one article
