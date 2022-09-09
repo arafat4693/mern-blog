@@ -7,13 +7,13 @@ import { getErrMsg } from "../utils/utilFunctions"
 export function useAuthGet<Type>(
   url: string,
   initialValue: any,
-  user: MongoUser | null
+  user: MongoUser | null | undefined
 ) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<Type>(initialValue)
 
   useEffect(() => {
-    if (user === null) return
+    if (!user) return
     fetchData(setLoading, setData, url)
   }, [setLoading, setData, url, user])
 

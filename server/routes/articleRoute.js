@@ -1,5 +1,6 @@
 import express from "express"
 import {
+  authorArticles,
   bookmarkArticle,
   createArticle,
   deleteArticle,
@@ -19,6 +20,7 @@ router
   .put(verifyUser, updateArticle)
 
 router.get("/", getArticles)
+router.get("/author/:authorId", authorArticles)
 router.get("/:userId/user", userArticles)
 router.get("/:slug", getArticle)
 router.get("/:userId/usersBookmarked", verifyUser, getBookmarked)

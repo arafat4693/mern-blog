@@ -5,8 +5,8 @@ import ErrMsg from "../layouts/ErrMsg"
 import Loader from "../layouts/Loader"
 import OverlapHeader from "../layouts/OverlapHeader"
 import RecentPost from "../layouts/PostCard"
-import { useState, useMemo } from "react"
-import { articlesWithPagination } from "../../utils/utilFunctions"
+import { useState } from "react"
+import usePagination from "../../hooks/usePagination"
 
 interface Props {
   userId: string
@@ -20,10 +20,7 @@ export default function RecentPosts({ userId }: Props) {
     []
   )
 
-  const paginationArticles = useMemo(() => {
-    if (!articles.length) return []
-    return articlesWithPagination(articles, 6)
-  }, [articles])
+  const paginationArticles = usePagination(articles, 6)
 
   return (
     <>
@@ -46,11 +43,13 @@ export default function RecentPosts({ userId }: Props) {
               />
             ))}
           </div>
-          <Pagination
-            page={page}
-            setPage={setPage}
-            pages={paginationArticles.length}
-          />
+          {paginationArticles.length > 1 && (
+            <Pagination
+              page={page}
+              setPage={setPage}
+              pages={paginationArticles.length}
+            />
+          )}
         </section>
       ) : (
         <ErrMsg msg="You didn't wrote any articles yet" />

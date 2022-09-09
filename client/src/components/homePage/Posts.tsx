@@ -2,14 +2,15 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../redux/store"
 import Pagination from "./Pagination"
 import Post from "./Post"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { MongoArticle } from "../../utils/types"
-import { articlesWithPagination } from "../../utils/utilFunctions"
+import usePagination from "../../hooks/usePagination"
 
 export default function Posts() {
   const { articles } = useSelector((state: RootState) => state.article)
   const [page, setPage] = useState<number>(0)
   const [randomArticles, setRandomArticles] = useState<MongoArticle[] | []>([])
+  const paginationArticles = usePagination(randomArticles, 6)
 
   useEffect(() => {
     const allArticles = [...articles]
@@ -18,13 +19,8 @@ export default function Posts() {
     setRandomArticles(allArticles)
   }, [articles])
 
-  const paginationArticles = useMemo(() => {
-    if (!randomArticles.length) return []
-    return articlesWithPagination(randomArticles, 6)
-  }, [randomArticles])
-
   return (
-    <div className="col-span-2">
+    <div className="col-span-2 sticky top-32 left-0 h-fit overflow-hidden">
       {paginationArticles.length &&
         paginationArticles[page].map((a) => <Post key={a._id} article={a} />)}
       <Pagination

@@ -49,7 +49,7 @@ export default function Post({ article }: Props) {
         </div>
 
         <p className="text-2xl text-gray-600 font-medium">
-          {article.description.slice(0, 55)}...
+          {article.description.slice(0, 65)}...
         </p>
 
         <Link

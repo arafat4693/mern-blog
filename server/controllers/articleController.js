@@ -28,6 +28,15 @@ export const getArticles = asyncHandler(async (req, res) => {
   res.status(200).json([...articles[0], ...articles[1], ...articles[2]])
 })
 
+// @desc   get authors articles
+// @route  GET article/author/:authorId
+// @access Public
+export const authorArticles = asyncHandler(async (req, res) => {
+  const { authorId } = req.params
+  const articles = await ArticleModel.find({ writerId: authorId })
+  res.status(200).json(articles)
+})
+
 // @desc   get users articles
 // @route  GET article/:userId/user
 // @access Private

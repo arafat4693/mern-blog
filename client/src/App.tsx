@@ -46,8 +46,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="search" element={<Search />} />
-            <Route path="author" element={<Author />} />
+            <Route path="search/:type/:query" element={<Search />} />
+            <Route path="author/:authorId" element={<Author />} />
             <Route path="write" element={<Write />} />
             <Route path="comments" element={<Comments />} />
             <Route path="bookmark" element={<Bookmark />} />

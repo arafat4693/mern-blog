@@ -8,7 +8,6 @@ export default function Navbar() {
         <NavItem title="About" location="/about" />
         <NavItem title="Write" location="/write" />
         <NavItem title="Authors" location="/authors" />
-        <NavItem title="Search" location="/search" />
         <NavItem title="Contact" location="/contact" />
       </div>
     </nav>

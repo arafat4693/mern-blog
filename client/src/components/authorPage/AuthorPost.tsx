@@ -1,17 +1,23 @@
 import { FiUser } from "react-icons/fi"
 import { Link } from "react-router-dom"
+import { MongoArticle } from "../../utils/types"
 
-export default function AuthorPost() {
+interface Props {
+  article: MongoArticle
+  authorName: string
+}
+
+export default function AuthorPost({ article, authorName }: Props) {
   return (
     <div
       className={`flex gap-6 items-center p-3.5 border border-gray-300 border-solid rounded-xl mt-6`}
     >
       <Link
-        to="/"
+        to={`/article/${article.slug}`}
         className="min-w-[10rem] w-40 h-40 overflow-hidden rounded-lg shadow-lg"
       >
         <img
-          src="/images/poster.jpg"
+          src={article.thumbnailImg}
           alt="poster"
           className="w-full h-full object-cover hover:scale-110 scale-100 transition-all duration-700 ease-in-out"
         />
@@ -19,14 +25,14 @@ export default function AuthorPost() {
 
       <div className="content">
         <Link
-          to="/"
+          to={`/article/${article.slug}`}
           className="bg-size text-gray-800 text-[1.6rem] font-semibold capitalize leading-snug hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom"
         >
-          It Really Have Good Feeling When You Enjoy Nature
+          {article.title}
         </Link>
         <p className="flex gap-2 items-center text-2xl text-gray-500 mt-4">
           <FiUser className="w-6 h-6 stroke-gray-500" />
-          Alice
+          {authorName}
         </p>
       </div>
     </div>

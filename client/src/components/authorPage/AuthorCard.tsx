@@ -15,7 +15,7 @@ export default function AuthorCard({ author }: Props) {
       />
       <div className="text-center">
         <Link
-          to="/author"
+          to={`/author/${author._id}`}
           className="text-2xl relative text-gray-800 font-semibold after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[0.2rem] after:bg-gray-800 after:transition-all after:duration-300 after:scale-x-0 hover:after:scale-x-100 origin-center"
         >
           {author.displayName}

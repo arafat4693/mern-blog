@@ -1,5 +1,6 @@
 import { SearchIcon, XIcon } from "@heroicons/react/outline"
-import { Dispatch } from "react"
+import { Dispatch, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
   closeSrc: boolean
@@ -7,9 +8,18 @@ interface Props {
 }
 
 export default function SrcLightBox({ closeSrc, setCloseSrc }: Props) {
+  const [search, setSearch] = useState<string>("")
+  const navigate = useNavigate()
+
   function closeLbx(e: any): void {
     const lb = e.target.classList.contains("lightBox")
     if (!lb) return
+    setCloseSrc(true)
+  }
+
+  function searchQuery(e: any) {
+    e.preventDefault()
+    navigate(`/search/title/${search}`)
     setCloseSrc(true)
   }
 
@@ -38,8 +48,10 @@ export default function SrcLightBox({ closeSrc, setCloseSrc }: Props) {
             Type and hit Enter to search
           </label>
 
-          <form className="relative">
+          <form className="relative" onSubmit={searchQuery}>
             <input
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
               type="text"
               id="src"
               className="w-[70rem] bg-gray-200/70 px-8 py-5 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"

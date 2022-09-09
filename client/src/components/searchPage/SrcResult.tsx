@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom"
-import { FaRegComment, FaRegHeart } from "react-icons/fa"
+import { FaRegComment } from "react-icons/fa"
+import { MongoArticle, MongoUser } from "../../utils/types"
+import { BiBookmarkAlt } from "react-icons/bi"
+import { formatDate } from "../../utils/utilFunctions"
 
-export default function SrcResult() {
+interface Props {
+  article: MongoArticle
+  author: MongoUser
+}
+
+export default function SrcResult({ article, author }: Props) {
   return (
     <div className="mb-24">
       <Link
-        to="/"
+        to={`/article/${article.slug}`}
         className="w-full h-[48rem] overflow-hidden rounded-3xl inline-block relative shadow-xl shadow-gray-300"
       >
         <img
-          src="/images/poster.jpg"
+          src={article.thumbnailImg}
           alt="poster"
           className="w-full h-full object-cover hover:scale-105 scale-100 transition-all duration-700 ease-in-out"
         />
@@ -20,7 +28,7 @@ export default function SrcResult() {
           </span>
 
           <span className="text-2xl text-white text-medium flex items-center gap-2">
-            <FaRegHeart /> 150
+            <BiBookmarkAlt /> {article.bookmarkedBy.length}
           </span>
         </div>
       </Link>
@@ -42,7 +50,7 @@ export default function SrcResult() {
 
       <div className="text-center">
         <Link
-          to="/"
+          to={`/article/${article.slug}`}
           className="bg-size text-gray-700 text-[2.5rem] leading-none font-medium capitalize hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom"
         >
           It Really Have Good Feeling When You Enjoy Nature
@@ -51,23 +59,22 @@ export default function SrcResult() {
 
       <div className="flex items-center gap-6 justify-center my-8">
         <img
-          src="/images/user.jpg"
+          src={author.imgUrl ? author.imgUrl : "/images/guest.jpg"}
           alt="user"
           className="w-16 h-16 rounded-full object-cover"
         />
         <p className="flex gap-3 items-end text-2xl text-gray-600">
-          By Alice <span className="text-3xl font-bold">.</span> November 18,
-          2021
+          By {author.displayName} <span className="text-3xl font-bold">.</span>{" "}
+          {formatDate(article.createdAt)}
         </p>
       </div>
 
-      <p className="text-2xl text-gray-500 leading-normal text-center">
-        Far far away, behind the word mountains, far from the countries Vokalia
-        and Consonantia, there live the blind texts. Separated they live in...
+      <p className="text-2xl text-gray-500 leading-normal text-center px-12">
+        {article.description.slice(0, 110)}...
       </p>
 
       <Link
-        to="/"
+        to={`/article/${article.slug}`}
         className="capitalize mx-auto mt-8 w-48 h-14 flex items-center justify-center rounded-full bg-violet-700 shadow-lg shadow-violet-300 hover:shadow-none hover:bg-gray-800 transition-all duration-300 text-white text-2xl font-medium"
       >
         read more
