@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom"
 import { FaRegComment } from "react-icons/fa"
-import { MongoArticle, MongoUser } from "../../utils/types"
+import { MongoArticle } from "../../utils/types"
 import { BiBookmarkAlt } from "react-icons/bi"
 import { formatDate } from "../../utils/utilFunctions"
 
 interface Props {
   article: MongoArticle
-  author: MongoUser
+  authorName: string
+  authorImg: string | undefined
 }
 
-export default function SrcResult({ article, author }: Props) {
+export default function SrcResult({ article, authorName, authorImg }: Props) {
   return (
     <div className="mb-24">
       <Link
@@ -24,7 +25,7 @@ export default function SrcResult({ article, author }: Props) {
 
         <div className="bg-violet-700 top-6 right-6 absolute flex gap-4 items-center py-2.5 px-4 rounded-full cursor-auto">
           <span className="text-2xl text-white text-medium flex items-center gap-2">
-            <FaRegComment /> 30
+            <FaRegComment /> {article.totalMessages}
           </span>
 
           <span className="text-2xl text-white text-medium flex items-center gap-2">
@@ -34,18 +35,15 @@ export default function SrcResult({ article, author }: Props) {
       </Link>
 
       <p className="text-2xl text-gray-500 capitalize text-center space-x-6 my-6">
-        <Link
-          to="/"
-          className="hover:text-gray-800 transition-all duration-500"
-        >
-          entertainment
-        </Link>
-        <Link
-          to="/"
-          className="hover:text-gray-800 transition-all duration-500"
-        >
-          life style
-        </Link>
+        {article.categories.map((c, i) => (
+          <Link
+            key={i}
+            to={`/search/categories/${c}`}
+            className="hover:text-gray-800 transition-all duration-500"
+          >
+            {c}
+          </Link>
+        ))}
       </p>
 
       <div className="text-center">
@@ -57,17 +55,20 @@ export default function SrcResult({ article, author }: Props) {
         </Link>
       </div>
 
-      <div className="flex items-center gap-6 justify-center my-8">
+      <Link
+        to={`/author/${article.writerId}`}
+        className="flex items-center gap-6 justify-center my-8"
+      >
         <img
-          src={author.imgUrl ? author.imgUrl : "/images/guest.jpg"}
+          src={authorImg ? authorImg : "/images/guest.jpg"}
           alt="user"
           className="w-16 h-16 rounded-full object-cover"
         />
         <p className="flex gap-3 items-end text-2xl text-gray-600">
-          By {author.displayName} <span className="text-3xl font-bold">.</span>{" "}
+          By {authorName} <span className="text-3xl font-bold">.</span>{" "}
           {formatDate(article.createdAt)}
         </p>
-      </div>
+      </Link>
 
       <p className="text-2xl text-gray-500 leading-normal text-center px-12">
         {article.description.slice(0, 110)}...

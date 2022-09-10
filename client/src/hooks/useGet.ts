@@ -20,13 +20,18 @@ export function useAuthGet<Type>(
   return { data, loading }
 }
 
-export function useGet<Type>(url: string, initialValue: any) {
+export function useGet<Type>(
+  url: string,
+  initialValue: any,
+  setPage?: Dispatch<number>
+) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<Type>(initialValue)
 
   useEffect(() => {
     fetchData(setLoading, setData, url)
-  }, [setLoading, setData, url])
+    if (setPage) setPage(0)
+  }, [setLoading, setData, url, setPage])
 
   return { data, loading }
 }

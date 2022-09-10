@@ -13,8 +13,8 @@ export default function AuthorTags({ authorTags }: Props) {
         {authorTags.map((t, i) => (
           <Link
             key={i}
-            to="/"
-            className="bg-gray-200/60 rounded-lg text-2xl text-gray-800 tracking-wide px-5 py-3 capitalize"
+            to={`/search/tags/${t}`}
+            className="bg-gray-200/60 rounded-lg text-2xl text-gray-800 tracking-wide px-5 py-3"
           >
             {t}
           </Link>

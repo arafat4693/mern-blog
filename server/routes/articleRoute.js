@@ -7,6 +7,8 @@ import {
   getArticle,
   getArticles,
   getBookmarked,
+  getByTagsOrCats,
+  searchArticles,
   updateArticle,
   userArticles,
 } from "../controllers/articleController.js"
@@ -20,6 +22,8 @@ router
   .put(verifyUser, updateArticle)
 
 router.get("/", getArticles)
+router.get("/search", searchArticles)
+router.get("/tagsOrCats/:type", getByTagsOrCats)
 router.get("/author/:authorId", authorArticles)
 router.get("/:userId/user", userArticles)
 router.get("/:slug", getArticle)

@@ -29,20 +29,23 @@ export interface MongoUser {
 
 export interface MongoArticle {
   _id: string
-  __v: number
-  writerId: string
+  __v: number | ""
+  writerId: string | ""
   title: string
   description: string
   thumbnailImg: string
-  thumbnailImgName: string
-  markdown: string
+  thumbnailImgName: string | ""
+  markdown: string | ""
   tags: string[] | []
   categories: string[]
   bookmarkedBy: string[] | []
   slug: string
-  convertedHtml: string
+  convertedHtml: string | ""
+  totalMessages: number | ""
+  displayName: string | ""
+  imgUrl: string | undefined
   createdAt: Date
-  updatedAt: Date
+  updatedAt: Date | ""
 }
 
 export interface ArticleData {
@@ -94,4 +97,17 @@ export interface ContactData {
   name: string
   email: string
   message: string
+}
+
+export interface AuthorArticle {
+  _id: string
+  title: string
+  description: string
+  thumbnailImg: string
+  tags: string[] | []
+  categories: string[]
+  bookmarkedBy: string[] | []
+  slug: string
+  totalMessage: number
+  createdAt: Date
 }

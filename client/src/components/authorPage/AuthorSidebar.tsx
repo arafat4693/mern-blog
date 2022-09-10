@@ -14,7 +14,7 @@ export default function AuthorSidebar({ author, articles }: Props) {
   const authorTags = useMemo(() => {
     const tags: string[] = []
     articles.forEach((a) => tags.push(...a.tags))
-    return tags
+    return Array.from(new Set(tags))
   }, [articles])
 
   return (

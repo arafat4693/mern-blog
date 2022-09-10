@@ -10,7 +10,7 @@ interface Props {
 export default function BlogTags({ tags, setTags }: Props) {
   function addTag(e: any) {
     if (e.key === "Enter") {
-      const tag = e.target.innerText.replace(/\s+/g, " ")
+      const tag = e.target.innerText.replace(/\s+/g, " ").trim()
       if (tags.includes(tag)) {
         toast("Tag already exists", { type: "info", autoClose: 2300 })
       } else {

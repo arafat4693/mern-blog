@@ -35,7 +35,11 @@ export default function Author() {
             {loading ? (
               <Loader />
             ) : articles.length ? (
-              <SrcResults articles={articles} author={author} />
+              <SrcResults
+                articles={articles}
+                authorName={author.displayName}
+                authorImg={author.imgUrl}
+              />
             ) : (
               <ErrMsg msg="no articles from this author yet!" />
             )}
