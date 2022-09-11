@@ -23,16 +23,15 @@ export default function RecentPosts({ userId }: Props) {
   const paginationArticles = usePagination(articles, 6)
 
   return (
-    <>
+    <section className="mt-44" id="posts">
+      <OverlapHeader
+        title="Recent posts"
+        overlapTitle="before:content-['creative']"
+      />
       {loading ? (
         <Loader />
       ) : paginationArticles.length ? (
-        <section className="mt-44" id="posts">
-          <OverlapHeader
-            title="Recent posts"
-            overlapTitle="before:content-['creative']"
-          />
-
+        <>
           <div className="posts grid grid-cols-3 gap-8 mt-28">
             {paginationArticles[page].map((a) => (
               <RecentPost
@@ -50,10 +49,10 @@ export default function RecentPosts({ userId }: Props) {
               pages={paginationArticles.length}
             />
           )}
-        </section>
+        </>
       ) : (
         <ErrMsg msg="You didn't wrote any articles yet" />
       )}
-    </>
+    </section>
   )
 }

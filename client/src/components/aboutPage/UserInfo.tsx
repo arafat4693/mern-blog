@@ -1,11 +1,22 @@
-export default function UserInfo() {
+import { MongoUser } from "../../utils/types"
+import { formateImg } from "../../utils/utilFunctions"
+
+interface Props {
+  user: MongoUser
+}
+
+export default function UserInfo({ user }: Props) {
+  const name = user.displayName.split(" ")
   return (
     <div className="h-[60rem] bg-violet-100/80 rounded-xl mt-64 px-24 relative">
-      <div className="name inline-flex flex-col mt-24 ml-10 relative before:content-['A'] before:absolute before:-top-[115%] before:-left-[62%] before:text-[30rem] before:font-semibold before:text-[#140C470F] before:leading-none">
+      <h1 className="absolute -top-16 -left-2 uppercase text-[30rem] font-semibold text-[#140C470F] leading-none">
+        {name[0][0]}
+      </h1>
+      <div className={`name inline-flex flex-col mt-24 ml-10 relative`}>
         <span className="text-violet-800 text-7xl font-medium inline-block">
-          Alice
+          {name[0]}
         </span>
-        <span className="text-gray-800 text-7xl font-medium">Qelvin</span>
+        <span className="text-gray-800 text-7xl font-medium">{name[1]}</span>
       </div>
 
       <p className="text-3xl text-gray-500 leading-relaxed max-w-[56rem] mt-10">
@@ -17,7 +28,7 @@ export default function UserInfo() {
       </p>
 
       <img
-        src="/images/user.jpg"
+        src={formateImg(user.imgUrl)}
         alt="user"
         className="absolute -top-32 right-20 object-cover w-[50rem] h-[60rem] rounded-xl"
       />

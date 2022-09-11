@@ -17,8 +17,8 @@ import CommentBox from "../components/articlePage/CommentBox"
 import ErrMsg from "../components/layouts/ErrMsg"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import axios from "../utils/axiosConfig"
-import { getErrMsg } from "../utils/utilFunctions"
-import { useGet } from "../hooks/useGet"
+import { formatDate, formateImg, getErrMsg } from "../utils/utilFunctions"
+import { useAuthGet, useGet } from "../hooks/useGet"
 import { MongoArticle } from "../utils/types"
 
 export default function Article() {
@@ -30,12 +30,24 @@ export default function Article() {
     undefined
   )
 
-  const { articleSuccess, articleError, articleMessage, articleAction } =
-    useSelector((state: RootState) => state.article)
+  const {
+    articles,
+    articleSuccess,
+    articleError,
+    articleMessage,
+    articleAction,
+  } = useSelector((state: RootState) => state.article)
   const totalComments = useSelector(
     (state: RootState) => state.message.messages.length
   )
   const articleUser = users.find((u) => u._id === article?.writerId)
+
+  const { data: authorArticles } = useAuthGet<[] | MongoArticle[]>(
+    `/article/author/${articleUser?._id}?limit=4`,
+    [],
+    articleUser
+  )
+
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const [bookmarkedUsers, setBookmarkedUsers] = useState<Set<string>>(new Set())
@@ -134,12 +146,13 @@ export default function Article() {
               <figcaption className="content absolute bottom-0 left-0 w-full mb-20">
                 <div className="categories flex gap-4 items-center justify-center">
                   {article.categories.map((c, i) => (
-                    <span
+                    <Link
                       key={i}
+                      to={`/search/categories/${c}`}
                       className="text-white pb-1 border-0 border-b-2 border-solid border-white text-2xl tracking-wide"
                     >
                       {c}
-                    </span>
+                    </Link>
                   ))}
                 </div>
                 <h1 className="text-5xl font-semibold text-white mt-12 mb-9 text-center">
@@ -147,29 +160,20 @@ export default function Article() {
                 </h1>
                 <div className="flex justify-center">
                   <figure className="flex items-center gap-3">
-                    <img
-                      src={
-                        articleUser?.imgUrl
-                          ? articleUser?.imgUrl
-                          : "/images/guest.jpg"
-                      }
-                      alt="user"
-                      className="w-16 h-16 object-cover rounded-full"
-                    />
+                    <Link to={`/author/${articleUser?._id}`}>
+                      <img
+                        src={formateImg(articleUser?.imgUrl)}
+                        alt="user"
+                        className="w-16 h-16 object-cover rounded-full"
+                      />
+                    </Link>
                     <div className="content flex items-center">
                       <span className="text-white text-xl">
                         {articleUser?.displayName}
                       </span>
                       <span className="text-white text-base mx-4">/</span>
                       <span className="text-white text-xl">
-                        {new Date(article.createdAt).toLocaleDateString(
-                          undefined,
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
-                        )}
+                        {formatDate(article.createdAt)}
                       </span>
                       <span className="text-white text-base mx-4">/</span>
                       <span className="text-white text-xl">
@@ -202,7 +206,7 @@ export default function Article() {
                   {article.tags.map((t, i) => (
                     <Link
                       key={i}
-                      to="/"
+                      to={`/search/tags/${t}`}
                       className="border border-solid border-gray-400 rounded-xl text-xl text-gray-600 px-4 py-2 transition-all duration-300 hover:border-gray-800 hover:text-gray-800"
                     >
                       {t}
@@ -219,54 +223,40 @@ export default function Article() {
               <h2 className="text-4xl mb-8 text-gray-800 capitalize font-semibold">
                 other articles
               </h2>
-              <div className="flex justify-between flex-wrap gap-6">
-                <figure className="flex items-center gap-6">
-                  <img
-                    src="/images/user.jpg"
-                    alt="user"
-                    className="w-48 h-48 object-cover rounded-xl"
-                  />
-                  <figcaption>
-                    <p className="text-2xl text-gray-500 mb-3">Recommended</p>
-                    <Link
-                      to="/"
-                      className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-3xl text-gray-800 font-semibold"
-                    >
-                      How Good Deeds Can Benefit Your Local Business
-                    </Link>
-                  </figcaption>
-                </figure>
-
-                <figure className="flex items-center gap-6">
-                  <img
-                    src="/images/user.jpg"
-                    alt="user"
-                    className="w-48 h-48 object-cover rounded-xl"
-                  />
-                  <figcaption>
-                    <p className="text-2xl text-gray-500 mb-3">Recommended</p>
-                    <Link
-                      to="/"
-                      className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-3xl text-gray-800 font-semibold"
-                    >
-                      How Good Deeds Can Benefit Your Local Business
-                    </Link>
-                  </figcaption>
-                </figure>
+              <div className="grid grid-cols-2 gap-6">
+                {articles.slice(9, 11).map((a) => (
+                  <figure key={a._id} className="flex items-center gap-6">
+                    <img
+                      src={a.thumbnailImg}
+                      alt="user"
+                      className="w-48 h-48 object-cover rounded-xl"
+                    />
+                    <figcaption>
+                      <p className="text-2xl text-gray-500 mb-3">Recommended</p>
+                      <Link
+                        to={`/article/${a.slug}`}
+                        className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-3xl text-gray-800 font-semibold"
+                      >
+                        {a.title}
+                      </Link>
+                    </figcaption>
+                  </figure>
+                ))}
               </div>
             </div>
 
             <CommentBox article={article} />
 
-            <div>
-              <UnderlineHeader title="related posts" />
-              <div className="grid grid-cols-4 gap-4 mt-8">
-                <RelatedPost />
-                <RelatedPost />
-                <RelatedPost />
-                <RelatedPost />
+            {authorArticles.length && articleUser && (
+              <div>
+                <UnderlineHeader title="related posts" />
+                <div className="grid grid-cols-4 gap-4 mt-8">
+                  {authorArticles.map((a) => (
+                    <RelatedPost key={a._id} article={a} author={articleUser} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </section>
         </main>
       ) : (

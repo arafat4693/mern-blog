@@ -12,7 +12,7 @@ export default function About() {
   return (
     <main>
       <section className="wrapper max-w-[1240px] mx-auto">
-        <UserInfo />
+        <UserInfo user={user} />
         <RecentPosts userId={user._id} />
       </section>
     </main>

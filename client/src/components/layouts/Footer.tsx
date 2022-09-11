@@ -39,15 +39,24 @@ export default function Footer() {
           <UnderlineHeader title="quick links" />
           <FooterLink title="Contact" location="/contact" />
           <FooterLink title="About" location="/about" />
-          <FooterLink title="Search" location="/search" />
+          <FooterLink title="Search" location="/search/title/s" />
         </div>
 
         <div className="categoryLinks">
           <UnderlineHeader title="category" />
-          <FooterLink title="entertainment" location="/search" />
-          <FooterLink title="illustration" location="/search" />
-          <FooterLink title="health" location="/search" />
-          <FooterLink title="life style" location="/search" />
+          <FooterLink
+            title="entertainment"
+            location="/search/categories/entertainment"
+          />
+          <FooterLink
+            title="illustration"
+            location="/search/categories/illustration"
+          />
+          <FooterLink title="health" location="/search/categories/health" />
+          <FooterLink
+            title="life style"
+            location="/search/categories/life style"
+          />
         </div>
 
         <div className="follow">

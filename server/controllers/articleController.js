@@ -59,6 +59,7 @@ export const authorArticles = asyncHandler(async (req, res) => {
         totalMessages: { $size: "$messages" },
       },
     },
+    { $limit: req.query.limit ? +req.query.limit : Number.MAX_SAFE_INTEGER },
   ])
 
   res.status(200).json(articles)

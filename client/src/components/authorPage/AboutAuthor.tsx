@@ -1,4 +1,5 @@
 import { MongoUser } from "../../utils/types"
+import { formateImg } from "../../utils/utilFunctions"
 import TooltipIcons from "../layouts/TooltipIcons"
 
 interface Props {
@@ -10,7 +11,7 @@ export default function AboutAuthor({ author, totalArticles }: Props) {
   return (
     <section className="border border-solid border-gray-300 rounded-3xl p-16 my-20 flex items-center gap-32">
       <img
-        src={author?.imgUrl ? author?.imgUrl : "/images/guest.jpg"}
+        src={formateImg(author.imgUrl)}
         alt="user"
         className="min-w-[13rem] w-52 h-52 object-cover rounded-full"
       />

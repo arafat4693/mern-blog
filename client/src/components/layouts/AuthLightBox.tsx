@@ -15,7 +15,7 @@ interface Props {
 
 export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
   const [move, setMove] = useState<boolean>(false)
-  const { userSuccess, userError, userMessage, userRedirect } = useSelector(
+  const { userSuccess, userError, userMessage, userAction } = useSelector(
     (state: RootState) => state.user
   )
   const dispatch = useDispatch()
@@ -23,9 +23,9 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
   useEffect(() => {
     if (userSuccess) toast(userMessage, { type: "success", autoClose: 2300 })
     if (userError) toast(userMessage, { type: "error", autoClose: 2300 })
-    if (userRedirect) setMove(false)
+    if (userSuccess && userAction === "REGISTER") setMove(false)
     dispatch(resetState())
-  }, [userSuccess, userError, userMessage, userRedirect, dispatch, setMove])
+  }, [userSuccess, userError, userMessage, userAction, dispatch, setMove])
 
   function closeLbx(e: any): void {
     const lb = e.target.classList.contains("lightBox")

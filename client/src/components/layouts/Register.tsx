@@ -15,14 +15,14 @@ interface Props {
 
 export default function Register({ move, setMove, closeAuth }: Props) {
   const { register, handleSubmit, reset } = useForm<UserData>()
-  const { userSuccess, userLoading } = useSelector(
+  const { userSuccess, userLoading, userAction } = useSelector(
     (state: RootState) => state.user
   )
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (userSuccess || closeAuth) reset()
-  }, [userSuccess, closeAuth, reset])
+    if ((userSuccess && userAction === "REGISTER") || closeAuth) reset()
+  }, [userSuccess, closeAuth, reset, userAction])
 
   const signUp: SubmitHandler<UserData> = (data) => {
     if (data.password.length < 4)

@@ -11,7 +11,7 @@ interface State {
   userError: boolean
   userLoading: boolean
   userMessage: string
-  userRedirect: boolean
+  userAction: "LOGIN" | "REGISTER" | "GET" | ""
 }
 
 const initialState: State = {
@@ -21,7 +21,7 @@ const initialState: State = {
   userError: false,
   userLoading: false,
   userMessage: "",
-  userRedirect: false,
+  userAction: "",
 }
 
 //register a user
@@ -75,7 +75,7 @@ const userSlice = createSlice({
       state.userError = false
       state.userLoading = false
       state.userMessage = ""
-      state.userRedirect = false
+      state.userAction = ""
     },
     followAuthor: (
       state,
@@ -93,16 +93,19 @@ const userSlice = createSlice({
     builder
       .addCase(getUsers.pending, (state) => {
         state.userLoading = true
+        state.userAction = "GET"
       })
       .addCase(
         getUsers.fulfilled,
         (state, action: PayloadAction<MongoUser[]>) => {
           state.userLoading = false
           state.users = action.payload
+          state.userAction = "GET"
         }
       )
       .addCase(registerUser.pending, (state) => {
         state.userLoading = true
+        state.userAction = "REGISTER"
       })
       .addCase(
         registerUser.fulfilled,
@@ -110,7 +113,7 @@ const userSlice = createSlice({
           state.userLoading = false
           state.userSuccess = true
           state.userMessage = action.payload.message
-          state.userRedirect = true
+          state.userAction = "REGISTER"
         }
       )
       .addCase(registerUser.rejected, (state, action: PayloadAction<any>) => {
@@ -120,12 +123,14 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.pending, (state) => {
         state.userLoading = true
+        state.userAction = "LOGIN"
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<any>) => {
         state.userLoading = false
         state.userSuccess = true
         state.user = action.payload.user
         state.userMessage = action.payload.message
+        state.userAction = "LOGIN"
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
         state.userError = true

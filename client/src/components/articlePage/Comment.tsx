@@ -16,6 +16,7 @@ import CommentForm from "./CommentForm"
 import Comments from "./Comments"
 import EditComment from "./EditComment"
 import moment from "moment"
+import { formateImg } from "../../utils/utilFunctions"
 
 interface Props {
   comment: MongoMessage
@@ -86,9 +87,7 @@ export default function Comment({ comment, replies, article }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img
-              src={
-                commentUser?.imgUrl ? commentUser?.imgUrl : "/images/guest.jpg"
-              }
+              src={formateImg(commentUser?.imgUrl)}
               alt="user"
               className="w-16 min-w-[4rem] h-16 object-cover rounded-full"
             />

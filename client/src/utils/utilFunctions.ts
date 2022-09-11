@@ -36,3 +36,7 @@ export function articlesWithPagination(
     .map((_, i) => articles.slice(quantity * i, quantity * (i + 1)))
   return articlesByPages
 }
+
+export function formateImg(url: string | undefined) {
+  return url ? url : "/images/guest.webp"
+}

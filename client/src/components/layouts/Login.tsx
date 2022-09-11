@@ -20,17 +20,17 @@ export default function Login({
   closeAuth,
 }: Props) {
   const { register, handleSubmit, reset } = useForm<LoginData>()
-  const { userSuccess, userLoading } = useSelector(
+  const { userSuccess, userLoading, userAction } = useSelector(
     (state: RootState) => state.user
   )
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (userSuccess || closeAuth) {
+    if ((userSuccess && userAction === "LOGIN") || closeAuth) {
       reset()
       setCloseAuth(true)
     }
-  }, [userSuccess, closeAuth, reset, setCloseAuth])
+  }, [userSuccess, closeAuth, reset, setCloseAuth, userAction])
 
   const login: SubmitHandler<LoginData> = (data) => {
     dispatch(loginUser(data))

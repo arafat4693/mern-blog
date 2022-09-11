@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { MongoUser } from "../../utils/types"
+import { formateImg } from "../../utils/utilFunctions"
 
 interface Props {
   author: MongoUser
@@ -9,7 +10,7 @@ export default function AuthorCard({ author }: Props) {
   return (
     <div className="px-3 py-5 bg-gray-200/70 rounded-lg">
       <img
-        src={author.imgUrl ? author.imgUrl : "/images/guest.jpg"}
+        src={formateImg(author.imgUrl)}
         alt="user"
         className="w-24 h-24 mb-2 mx-auto rounded-full object-cover"
       />

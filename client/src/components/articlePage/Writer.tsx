@@ -5,7 +5,7 @@ import { AppDispatch } from "../../redux/store"
 import { followAuthor } from "../../redux/userSlice"
 import axios from "../../utils/axiosConfig"
 import { MongoArticle, MongoUser } from "../../utils/types"
-import { getErrMsg } from "../../utils/utilFunctions"
+import { formateImg, getErrMsg } from "../../utils/utilFunctions"
 import TooltipIcons from "../layouts/TooltipIcons"
 
 interface Props {
@@ -49,7 +49,7 @@ export default function Writer({ articleUser, user, article }: Props) {
   return (
     <div className="py-20 flex items-center gap-16">
       <img
-        src={articleUser?.imgUrl ? articleUser?.imgUrl : "/images/guest.jpg"}
+        src={formateImg(articleUser?.imgUrl)}
         alt="user"
         className="min-w-[12rem] w-48 h-48 object-cover rounded-full shadow-xl"
       />

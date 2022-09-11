@@ -10,7 +10,7 @@ import { tabs } from "../utils/data"
 import { MongoUser } from "../utils/types"
 
 export default function Authors() {
-  const { user, users, userLoading } = useSelector(
+  const { user, users, userLoading, userAction } = useSelector(
     (state: RootState) => state.user
   )
 
@@ -97,7 +97,7 @@ export default function Authors() {
 
   return (
     <>
-      {userLoading ? (
+      {userLoading && userAction === "GET" ? (
         <Loader />
       ) : users.length ? (
         <main className="mt-40">

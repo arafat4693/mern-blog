@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { resetState } from "../../redux/messageSlice"
 import { AppDispatch, RootState } from "../../redux/store"
 import { toast } from "react-toastify"
-import { formatComment } from "../../utils/utilFunctions"
+import { formatComment, formateImg } from "../../utils/utilFunctions"
 
 interface Props {
   user: MongoUser | null
@@ -79,7 +79,7 @@ export default function CommentForm({
   return (
     <form className="flex mt-4 gap-6 p-10 rounded-xl justify-between items-start bg-[#f6f6f6]">
       <img
-        src={user?.imgUrl}
+        src={formateImg(user?.imgUrl)}
         alt="user"
         className="w-20 min-w-[5rem] h-20 object-cover rounded-full"
       />
