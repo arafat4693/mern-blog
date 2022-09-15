@@ -31,7 +31,7 @@ export default function SrcLightBox({ closeSrc, setCloseSrc }: Props) {
       onClick={closeLbx}
     >
       <div
-        className={`bg-white w-full h-[40rem] flex items-center justify-center relative transition-all ease-in duration-300 ${
+        className={`bg-white w-full h-[30rem] sm:h-[40rem] flex items-center justify-center relative transition-all ease-in duration-300 ${
           closeSrc ? "-translate-y-[110%]" : "translate-y-0"
         }`}
       >
@@ -40,10 +40,10 @@ export default function SrcLightBox({ closeSrc, setCloseSrc }: Props) {
           className="w-14 h-14 absolute stroke-gray-400 top-10 right-10 cursor-pointer transition-all duration-200 hover:rotate-180"
         />
 
-        <div>
+        <div className="max-w-[90%]">
           <label
             htmlFor="src"
-            className="text-gray-300 text-4xl font-medium mb-8 block text-center"
+            className="text-gray-300 text-3xl sm:text-4xl font-medium mb-8 block text-center"
           >
             Type and hit Enter to search
           </label>
@@ -54,7 +54,7 @@ export default function SrcLightBox({ closeSrc, setCloseSrc }: Props) {
               value={search}
               type="text"
               id="src"
-              className="w-[70rem] bg-gray-200/70 px-8 py-5 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
+              className="w-[70rem] max-w-full bg-gray-200/70 px-8 py-5 rounded-lg text-2xl text-gray-500 border border-transparent border-solid focus:border-gray-800 transition-all duration-200"
               placeholder="Search ..."
             />
             <button

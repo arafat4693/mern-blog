@@ -38,7 +38,7 @@ export default function MenuCard({ last, article, setCloseMenu }: Props) {
         >
           {article.title}
         </Link>
-        <p className="flex gap-2 items-center text-xl text-gray-500 mt-4">
+        <p className="hidden sm:flex gap-2 items-center text-xl text-gray-500 mt-4">
           <CalendarIcon className="w-6 h-6 stroke-gray-500" />
           {formatDate(article.createdAt)}
         </p>

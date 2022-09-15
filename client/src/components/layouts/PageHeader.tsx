@@ -40,10 +40,10 @@ export default function PageHeader() {
   }
 
   return (
-    <header className="py-14">
+    <header className="py-14 px-10 xl:px-0">
       <div className="wrapper max-w-[1240px] mx-auto flex items-center justify-between">
         <div
-          className="burgerMenu w-12 cursor-pointer"
+          className="burgerMenu sm:w-12 w-10 cursor-pointer"
           onClick={() => setCloseMenu(false)}
         >
           <div className="bar relative w-full h-[0.24rem] bg-gray-800"></div>
@@ -51,7 +51,7 @@ export default function PageHeader() {
           <div className="bar relative w-full h-[0.24rem] bg-gray-800 before:delay-150"></div>
         </div>
 
-        <Logo customStyle="text-6xl" />
+        <Logo customStyle="text-5xl sm:text-6xl" />
 
         <div className="flex gap-3">
           <button

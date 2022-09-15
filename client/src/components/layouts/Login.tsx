@@ -39,8 +39,8 @@ export default function Login({
   return (
     <form
       onSubmit={handleSubmit(login)}
-      className={`min-w-full transition-all duration-300 ${
-        move ? "-translate-x-[36.5rem]" : "translate-x-0"
+      className={`transition-all px-7 duration-300 w-1/2 ${
+        move ? "-ml-[50%]" : "ml-0"
       }`}
     >
       <div>

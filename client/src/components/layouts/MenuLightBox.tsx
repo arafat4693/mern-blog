@@ -28,7 +28,7 @@ export default function MenuLightBox({ closeMenu, setCloseMenu }: Props) {
       onClick={closeLbx}
     >
       <div
-        className={`bg-white w-[44rem] h-screen px-8 py-12 relative transition-all ease-in-out duration-300 overflow-scroll hideScrollBar ${
+        className={`bg-white w-[44rem] max-w-[90%] h-screen px-8 py-12 relative transition-all ease-in-out duration-300 overflow-scroll hideScrollBar ${
           closeMenu ? "-translate-x-[110%]" : "translate-x-0"
         }`}
       >

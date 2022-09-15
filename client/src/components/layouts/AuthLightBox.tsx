@@ -1,4 +1,4 @@
-import { Dispatch, useState } from "react"
+import { Dispatch, useRef, useState } from "react"
 import { BsGithub, BsGoogle, BsTwitter } from "react-icons/bs"
 import Login from "./Login"
 import Register from "./Register"
@@ -19,6 +19,7 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
     (state: RootState) => state.user
   )
   const dispatch = useDispatch()
+  const authDiv = useRef<any>()
 
   useEffect(() => {
     if (userSuccess) toast(userMessage, { type: "success", autoClose: 2300 })
@@ -50,11 +51,12 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
       }`}
     >
       <div
-        className={`bg-white h-auto max-h-[95vh] w-[40rem] rounded-lg transition-all ease-in-out duration-500 overflow-scroll hideScrollBar p-7 ${
+        ref={authDiv}
+        className={`bg-white h-auto max-h-[95vh] w-[40rem] max-w-[95%] rounded-lg transition-all ease-in-out duration-500 overflow-scroll hideScrollBar py-7 ${
           closeAuth ? "-translate-y-[10rem]" : "translate-y-0"
         }`}
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 px-7">
           <button
             onClick={googleLogin}
             className="bg-red-600 flex items-center gap-6 text-2xl text-white tracking-wide py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-red-300 transition-all duration-300"
@@ -77,12 +79,12 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
           </button>
         </div>
 
-        <h3 className="text-xl mt-6 mb-3 flex items-center gap-2 uppercase text-gray-800 font-medium tracking-wide before:content-[''] before:w-full before:h-1 before:rounded-lg before:bg-gray-700 after:content-[''] after:w-full after:h-1 after:rounded-lg after:bg-gray-700">
+        <h3 className="text-xl px-7 mt-6 mb-3 flex items-center gap-2 uppercase text-gray-800 font-medium tracking-wide before:content-[''] before:w-full before:h-1 before:rounded-lg before:bg-gray-700 after:content-[''] after:w-full after:h-1 after:rounded-lg after:bg-gray-700">
           or
         </h3>
 
         <div
-          className={`flex overflow-hidden translate-all duration-300 ${
+          className={`flex items-center translate-all duration-300 w-[200%] ${
             move ? "h-[38.65rem]" : "h-[22.65rem]"
           }`}
         >

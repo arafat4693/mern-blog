@@ -13,7 +13,7 @@ interface Props {
   setMove: Dispatch<boolean>
 }
 
-export default function Register({ move, setMove, closeAuth }: Props) {
+export default function Register({ setMove, closeAuth }: Props) {
   const { register, handleSubmit, reset } = useForm<UserData>()
   const { userSuccess, userLoading, userAction } = useSelector(
     (state: RootState) => state.user
@@ -36,9 +36,7 @@ export default function Register({ move, setMove, closeAuth }: Props) {
   return (
     <form
       onSubmit={handleSubmit(signUp)}
-      className={`min-w-full transition-all duration-300 ${
-        move ? "-translate-x-[36.5rem]" : "translate-x-0"
-      }`}
+      className="transition-all px-7 duration-300 w-1/2"
     >
       <div>
         <label
