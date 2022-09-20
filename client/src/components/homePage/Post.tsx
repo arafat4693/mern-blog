@@ -17,7 +17,7 @@ export default function Post({ article }: Props) {
   )
 
   return (
-    <div className="flex items-center gap-8 mb-8">
+    <div className="flex items-center gap-8 mb-8 flex-col justify-center sm:flex-row sm:justify-start">
       <Link
         to={`/article/${article.slug}`}
         className="min-w-[30rem] w-[30rem] h-[30rem] overflow-hidden rounded-3xl"
@@ -29,7 +29,7 @@ export default function Post({ article }: Props) {
         />
       </Link>
 
-      <div className="content">
+      <div className="content sm:block hidden">
         <Link
           to={`/article/${article.slug}`}
           className="bg-size text-gray-800 text-4xl font-medium capitalize leading-snug hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom"
@@ -42,7 +42,7 @@ export default function Post({ article }: Props) {
             <FiUser />
             {author?.displayName}
           </p>
-          <p className="flex gap-2 items-center text-2xl text-gray-600">
+          <p className="sm:flex gap-2 items-center text-2xl text-gray-600 hidden">
             <CalendarIcon className="w-6 h-6 stroke-gray-600" />
             {formatDate(article.createdAt)}
           </p>

@@ -5,9 +5,6 @@ import { getErrMsg } from "../utils/utilFunctions"
 
 interface State {
   articles: MongoArticle[] | []
-  // randomArticles: MongoArticle[] | []
-  // recentArticles: MongoArticle[] | []
-  // bookmarkedArticles: MongoArticle[] | []
   articleSuccess: boolean
   articleError: boolean
   articleLoading: boolean
@@ -28,9 +25,6 @@ interface deleteArticleAction {
 
 const initialState: State = {
   articles: [],
-  // randomArticles: [],
-  // recentArticles: [],
-  // bookmarkedArticles: [],
   articleSuccess: false,
   articleError: false,
   articleLoading: false,
@@ -190,12 +184,6 @@ const articleSlice = createSlice({
           state.articleLoading = false
         }
       )
-      // .addCase(
-      //   getRandomArticles.fulfilled,
-      //   (state, action: PayloadAction<MongoArticle[]>) => {
-      //     state.randomArticles = action.payload
-      //   }
-      // )
       .addCase(deleteArticle.pending, (state) => {
         state.articleAction = "DELETE"
         state.articleLoading = true

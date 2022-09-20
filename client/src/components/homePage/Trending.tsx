@@ -16,6 +16,7 @@ export default function Trending() {
         slidesPerView={4}
         navigation={true}
         loop={true}
+        breakpoints={breakpoints}
         modules={[Navigation, Autoplay]}
         autoplay={{
           delay: 3700,
@@ -34,4 +35,19 @@ export default function Trending() {
       </Swiper>
     </section>
   )
+}
+
+const breakpoints = {
+  0: {
+    slidesPerView: 1,
+  },
+  640: {
+    slidesPerView: 2,
+  },
+  768: {
+    slidesPerView: 3,
+  },
+  1050: {
+    slidesPerView: 4,
+  },
 }

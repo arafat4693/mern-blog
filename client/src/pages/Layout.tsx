@@ -11,11 +11,11 @@ export default function Layout() {
     <>
       <FixedHeader />
       <PageHeader />
-      {/* <Navbar />
+      <Navbar />
       <Outlet />
       <NewsLetter />
       <Footer />
-      <UpBtn /> */}
+      <UpBtn />
     </>
   )
 }

@@ -4,7 +4,7 @@ import Tags from "../homePage/Tags"
 
 export default function Sidebar() {
   return (
-    <aside className="sticky top-32 left-0 h-fit overflow-hidden">
+    <aside className="col-span-1 md:col-span-2 lg:col-span-1 lg:sticky lg:top-32 lg:left-0 h-fit lg:overflow-hidden">
       <Tags />
       <Banner />
       <Featured />

@@ -21,8 +21,8 @@ function FooterLink({ title, location }: Props) {
 
 export default function Footer() {
   return (
-    <footer className="pb-32">
-      <div className="wrapper max-w-[1240px] mx-auto grid grid-cols-4 gap-10">
+    <footer className="xl:pb-32 pb-20 px-14 xl:px-0">
+      <div className="wrapper max-w-[1240px] mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4">
         <div className="copyright">
           <Logo customStyle="text-5xl" />
           <p className="text-2xl text-gray-500 leading-normal my-7">

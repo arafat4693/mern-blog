@@ -20,7 +20,7 @@ export default function Posts() {
   }, [articles])
 
   return (
-    <div className="col-span-2 sticky top-32 left-0 h-fit overflow-hidden">
+    <div className="col-span-1 md:col-span-2 lg:sticky lg:top-32 lg:left-0 h-fit lg:overflow-hidden">
       {paginationArticles.length &&
         paginationArticles[page].map((a) => <Post key={a._id} article={a} />)}
       <Pagination

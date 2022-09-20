@@ -40,7 +40,7 @@ export default function PageHeader() {
   }
 
   return (
-    <header className="py-14 px-10 xl:px-0">
+    <header className="py-14 px-14 xl:px-0">
       <div className="wrapper max-w-[1240px] mx-auto flex items-center justify-between">
         <div
           className="burgerMenu sm:w-12 w-10 cursor-pointer"

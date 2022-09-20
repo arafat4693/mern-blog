@@ -1,6 +1,6 @@
 export default function Ad() {
   return (
-    <section className="my-24 h-96" id="posts">
+    <section className="my-24 h-96 px-14 xl:px-0" id="posts">
       <figure className="max-w-[1240px] h-full mx-auto rounded-xl overflow-hidden cursor-pointer group relative">
         <img
           src="/images/ad.jpg"
