@@ -24,7 +24,9 @@ export default function BlogTags({ tags, setTags }: Props) {
     <div className="mt-10">
       <label htmlFor="tags" className="flex gap-2 text-2xl text-gray-500 mb-2">
         Tags
-        <span className="text-lg text-gray-500 mt-1">(Maximum 5 tags)</span>
+        <span className="text-lg text-gray-500 mt-1 hidden sm:block">
+          (Maximum 5 tags)
+        </span>
       </label>
 
       <div className="tags flex items-center gap-2 flex-wrap bg-gray-200/70 rounded-lg py-6 px-6">

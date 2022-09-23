@@ -12,12 +12,12 @@ export default function Categories({ categories, setCategories }: Props) {
     <div className="cats mt-10">
       <div className="flex gap-2">
         <UnderlineHeader title="select categories" />
-        <span className="text-xl text-gray-500 mt-2">
+        <span className="text-xl text-gray-500 mt-2 sm:block hidden">
           (At least one is required)
         </span>
       </div>
 
-      <div className="allCats flex gap-1.5 flex-wrap mt-6">
+      <div className="allCats flex gap-2.5 sm:gap-1.5 flex-wrap mt-6">
         <Category
           name="entertainment"
           selectCategory={setCategories}

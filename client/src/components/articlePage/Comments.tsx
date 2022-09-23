@@ -20,7 +20,7 @@ export default function Comments({
     <div
       className={`${
         indentation &&
-        "ml-12 relative before:content-[''] before:absolute before:top-0 before:-left-4 before:min-h-full before:w-1.5 before:bg-gray-200 before:rounded-lg"
+        "sm:ml-12 ml-6 relative before:content-[''] before:absolute before:top-0 before:-left-4 before:min-h-full before:w-1.5 before:bg-gray-200 before:rounded-lg"
       } ${showReplies ? "block" : "hidden"}`}
     >
       {messages.map((m) => (

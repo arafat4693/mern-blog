@@ -25,42 +25,40 @@ export default function Search() {
   const paginationArticles = usePagination(articles, 6)
 
   return (
-    <main>
-      <section className="wrapper max-w-[1240px] mx-auto">
-        <SrcBox total={articles.length} query={query as string} />
+    <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
+      <SrcBox total={articles.length} query={query as string} />
 
-        <div className="grid grid-cols-3 gap-16 mb-20">
-          <section
-            className="col-span-2 sticky top-36 left-0 h-fit overflow-hidden"
-            id="posts"
-          >
-            {loading ? (
-              <Loader />
-            ) : articles.length ? (
-              paginationArticles[page].map((a) => (
-                <SrcResult
-                  key={a._id}
-                  article={a}
-                  authorName={a.displayName}
-                  authorImg={a.imgUrl}
-                />
-              ))
-            ) : (
-              <ErrMsg msg="no articles found!" />
-            )}
-
-            {paginationArticles.length > 1 && (
-              <Pagination
-                page={page}
-                setPage={setPage}
-                pages={paginationArticles.length}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-20">
+        <section
+          className="col-span-1 md:col-span-2 lg:sticky lg:top-32 lg:left-0 h-fit lg:overflow-hidden"
+          id="posts"
+        >
+          {loading ? (
+            <Loader />
+          ) : articles.length ? (
+            paginationArticles[page].map((a) => (
+              <SrcResult
+                key={a._id}
+                article={a}
+                authorName={a.displayName}
+                authorImg={a.imgUrl}
               />
-            )}
-          </section>
+            ))
+          ) : (
+            <ErrMsg msg="no articles found!" />
+          )}
 
-          <Sidebar />
-        </div>
-      </section>
-    </main>
+          {paginationArticles.length > 1 && (
+            <Pagination
+              page={page}
+              setPage={setPage}
+              pages={paginationArticles.length}
+            />
+          )}
+        </section>
+
+        <Sidebar />
+      </div>
+    </section>
   )
 }

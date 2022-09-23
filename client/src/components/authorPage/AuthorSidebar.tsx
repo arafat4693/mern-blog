@@ -19,7 +19,7 @@ export default function AuthorSidebar({ author, articles }: Props) {
   }, [articles])
 
   return (
-    <aside className="sticky top-32 left-0 h-fit">
+    <aside className="col-span-1 md:col-span-2 lg:col-span-1 lg:sticky lg:top-32 lg:left-0 h-fit lg:overflow-hidden">
       <AuthorImage
         authorName={author.displayName}
         authorImage={formateImg(author.imgUrl)}

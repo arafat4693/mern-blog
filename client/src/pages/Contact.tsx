@@ -30,17 +30,17 @@ export default function Contact() {
   }
 
   return (
-    <main className="mt-40">
-      <section className="wrapper max-w-[1240px] mx-auto">
+    <main className="sm:mt-40 mt-24">
+      <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
         <OverlapHeader
           title="Get In Touch With Us"
           overlapTitle="before:content-['contact']"
         />
         <form
           onSubmit={handleSubmit(contact)}
-          className="w-[75rem] mx-auto mt-24"
+          className="w-[75rem] max-w-full mx-auto sm:mt-24 mt-16"
         >
-          <div className="grid grid-cols-2 gap-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
             <div>
               <label
                 htmlFor="name"

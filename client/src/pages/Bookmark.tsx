@@ -22,14 +22,14 @@ export default function Bookmark() {
       {loading ? (
         <Loader />
       ) : bookmarkedArticles.length ? (
-        <main className="mt-40">
-          <section className="wrapper max-w-[1240px] mx-auto">
+        <main className="sm:mt-40 mt-24">
+          <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
             <OverlapHeader
               title="Your favorites"
               overlapTitle="before:content-['bookmarks']"
             />
 
-            <div className="grid grid-cols-3 gap-8 mt-28">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-14 sm:mt-28">
               {bookmarkedArticles.map((b) => (
                 <BookmarkPost
                   key={b._id}

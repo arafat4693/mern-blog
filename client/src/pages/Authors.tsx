@@ -100,15 +100,15 @@ export default function Authors() {
       {userLoading && userAction === "GET" ? (
         <Loader />
       ) : users.length ? (
-        <main className="mt-40">
-          <section className="wrapper max-w-[1240px] mx-auto">
+        <main className="sm:mt-40 mt-24">
+          <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
             <OverlapHeader
               title="All authors"
               overlapTitle="before:content-['authors']"
             />
 
-            <section className="mt-24">
-              <div className="header flex justify-between items-center">
+            <section className="sm:mt-24 mt-12">
+              <div className="header flex sm:flex-row sm:justify-between items-center justify-center flex-col-reverse">
                 <nav className="flex gap-2">
                   {tabs.map((tab) => (
                     <Tab
@@ -121,13 +121,16 @@ export default function Authors() {
                   ))}
                 </nav>
 
-                <form className="flex items-center" onSubmit={searchAuthor}>
+                <form
+                  className="flex items-center sm:mb-0 mb-10 w-[30rem] max-w-full"
+                  onSubmit={searchAuthor}
+                >
                   <input
                     type="text"
                     placeholder="Search author"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="text-xl bg-gray-200/70 text-gray-700 p-4 w-[25rem]"
+                    className="text-xl bg-gray-200/70 text-gray-700 p-4 w-full"
                   />
                   <input
                     type="submit"
@@ -138,7 +141,7 @@ export default function Authors() {
               </div>
 
               {authors.length ? (
-                <div className="grid grid-cols-6 gap-6 mt-8">
+                <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 gap-6 mt-8">
                   {authors.map((a) => (
                     <AuthorCard key={a._id} author={a} />
                   ))}

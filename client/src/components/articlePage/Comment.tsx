@@ -84,14 +84,14 @@ export default function Comment({ comment, replies, article }: Props) {
   return (
     <>
       <div className="mt-6 py-8 px-12 rounded-xl bg-[#f3f3f3]">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap sm:gap-0 gap-4">
           <div className="flex items-center gap-4">
             <img
               src={formateImg(commentUser?.imgUrl)}
               alt="user"
               className="w-16 min-w-[4rem] h-16 object-cover rounded-full"
             />
-            <h3 className="text-2xl text-gray-800 font-semibold">
+            <h3 className="text-2xl text-gray-800 font-semibold hidden sm:block">
               {commentUser?.displayName}
             </h3>
             {user?._id === comment.senderId && (
@@ -125,7 +125,7 @@ export default function Comment({ comment, replies, article }: Props) {
                   } flex items-center gap-1.5 text-2xl font-semibold transition-all`}
                 >
                   <MdDelete />
-                  Delete
+                  <span className="hidden sm:block">Delete</span>
                 </button>
               )}
             {user && user._id === comment.senderId ? (
@@ -134,7 +134,7 @@ export default function Comment({ comment, replies, article }: Props) {
                 className="flex items-center gap-1.5 text-2xl font-semibold text-violet-700 hover:text-violet-400 transition-all"
               >
                 <MdEdit />
-                Edit
+                <span className="hidden sm:block">Edit</span>
               </button>
             ) : user && user._id !== comment.senderId ? (
               reply ? (
@@ -143,7 +143,7 @@ export default function Comment({ comment, replies, article }: Props) {
                   className="flex items-center gap-1.5 text-2xl font-semibold text-red-600 hover:text-red-400 transition-all"
                 >
                   <IoMdClose />
-                  Cancel
+                  <span className="hidden sm:block">Cancel</span>
                 </button>
               ) : (
                 <button
@@ -151,7 +151,7 @@ export default function Comment({ comment, replies, article }: Props) {
                   className="flex items-center gap-1.5 text-2xl font-semibold text-violet-700 hover:text-violet-400 transition-all"
                 >
                   <BsReplyFill />
-                  Reply
+                  <span className="hidden sm:block">Reply</span>
                 </button>
               )
             ) : null}

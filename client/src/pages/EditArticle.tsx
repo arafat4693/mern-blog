@@ -91,14 +91,14 @@ export default function EditArticle() {
       {loading ? (
         <Loader />
       ) : article ? (
-        <main className="mt-40">
-          <section className="wrapper max-w-[1240px] mx-auto">
+        <main className="sm:mt-40 mt-24">
+          <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
             <OverlapHeader
               title="Edit your blog"
               overlapTitle="before:content-['update']"
             />
             <form
-              className="w-[75rem] mx-auto mt-24"
+              className="w-[75rem] max-w-full mx-auto mt-24"
               onSubmit={handleSubmit(onArticleUpdate)}
             >
               <div>
@@ -176,16 +176,16 @@ export default function EditArticle() {
                   />
                 </div>
               ) : (
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 mt-8 sm:mt-14">
                   <input
                     type="submit"
                     value="update"
-                    className="text-white bg-violet-700 hover:bg-gray-700 transition-all duration-300 mt-14 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
+                    className="text-white w-full sm:w-auto bg-violet-700 hover:bg-gray-700 transition-all duration-300 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
                   />
                   <button
                     type="button"
                     onClick={() => navigate(`/article/${slug}`)}
-                    className="text-white bg-green-600 hover:bg-gray-700 transition-all duration-300 mt-14 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
+                    className="text-white w-full sm:w-auto bg-green-600 hover:bg-gray-700 transition-all duration-300 cursor-pointer rounded-lg py-4 px-12 text-2xl uppercase font-semibold"
                   >
                     go back
                   </button>

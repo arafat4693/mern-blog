@@ -47,7 +47,7 @@ export default function Writer({ articleUser, user, article }: Props) {
   }, [user, article, dispatch, userFollowing])
 
   return (
-    <div className="py-20 flex items-center gap-16">
+    <div className="py-20 flex flex-col sm:flex-row items-center gap-16">
       <img
         src={formateImg(articleUser?.imgUrl)}
         alt="user"

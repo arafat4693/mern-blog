@@ -8,7 +8,7 @@ interface Props {
 export default function UserInfo({ user }: Props) {
   const name = user.displayName.split(" ")
   return (
-    <div className="h-[60rem] bg-violet-100/80 rounded-xl mt-64 px-24 relative">
+    <div className="lg:h-[60rem] lg:py-0 pb-24 bg-violet-100/80 rounded-xl mt-20 sm:mt-64 px-24 relative">
       <h1 className="absolute -top-16 -left-2 uppercase text-[30rem] font-semibold text-[#140C470F] leading-none">
         {name[0][0]}
       </h1>
@@ -30,7 +30,7 @@ export default function UserInfo({ user }: Props) {
       <img
         src={formateImg(user.imgUrl)}
         alt="user"
-        className="absolute -top-32 right-20 object-cover w-[50rem] h-[60rem] rounded-xl"
+        className="absolute -top-32 right-20 object-cover w-[50rem] h-[60rem] rounded-xl lg:block hidden"
       />
     </div>
   )

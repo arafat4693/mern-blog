@@ -77,7 +77,7 @@ export default function CommentForm({
   }
 
   return (
-    <form className="flex mt-4 gap-6 p-10 rounded-xl justify-between items-start bg-[#f6f6f6]">
+    <form className="flex sm:flex-row flex-col mt-4 gap-6 p-10 rounded-xl justify-between items-start bg-[#f6f6f6]">
       <img
         src={formateImg(user?.imgUrl)}
         alt="user"

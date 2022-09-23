@@ -50,7 +50,7 @@ export default function Share({ article }: Props) {
         share article
       </h1>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-wrap">
         <FacebookShareButton quote={TITLE} url={URL} className={STYLE}>
           <FacebookIcon size={SIZE} round={true} />
         </FacebookShareButton>
@@ -90,7 +90,7 @@ export default function Share({ article }: Props) {
         </RedditShareButton>
       </div>
 
-      <div className="max-w-[50rem] w-[50rem] flex gap-4 items-center py-4 px-6 rounded-lg bg-gray-200/40 mt-2">
+      <div className="max-w-full w-[50rem] flex gap-4 items-center py-4 px-6 rounded-lg bg-gray-200/40 mt-2">
         <input
           ref={inputRef}
           type="text"

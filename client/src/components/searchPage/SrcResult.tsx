@@ -64,7 +64,7 @@ export default function SrcResult({ article, authorName, authorImg }: Props) {
           alt="user"
           className="w-16 h-16 rounded-full object-cover"
         />
-        <p className="flex gap-3 items-end text-2xl text-gray-600">
+        <p className="gap-3 items-end text-2xl text-gray-600 sm:flex hidden">
           By {authorName} <span className="text-3xl font-bold">.</span>{" "}
           {formatDate(article.createdAt)}
         </p>

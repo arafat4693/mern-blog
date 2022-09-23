@@ -9,7 +9,7 @@ interface Props {
 
 export default function AboutAuthor({ author, totalArticles }: Props) {
   return (
-    <section className="border border-solid border-gray-300 rounded-3xl p-16 my-20 flex items-center gap-32">
+    <section className="border border-solid border-gray-300 rounded-3xl p-16 my-20 flex flex-col sm:flex-row items-center md:gap-24 gap-16">
       <img
         src={formateImg(author.imgUrl)}
         alt="user"
@@ -27,9 +27,9 @@ export default function AboutAuthor({ author, totalArticles }: Props) {
           at the present moment; and yet I feel that I never was a greater
           artist than now.
         </p>
-        <div className="flex justify-between items-center">
+        <div className="flex sm:flex-row flex-col-reverse justify-between items-center">
           <TooltipIcons />
-          <span className="block text-right text-xl text-gray-500 capitalize">
+          <span className="block text-right text-xl text-gray-500 capitalize mb-4 sm:mb-0">
             {totalArticles} articles
           </span>
         </div>

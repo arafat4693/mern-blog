@@ -59,7 +59,7 @@ export default function CommentBox({ article }: Props) {
         {user ? (
           <CommentForm user={user} actionType="ROOT" actionFn={createMessage} />
         ) : (
-          <h1 className="bg-violet-700 mt-8 text-white text-4xl capitalize font-semibold text-center py-16">
+          <h1 className="bg-violet-700 mt-8 text-white text-3xl sm:text-4xl capitalize font-semibold text-center py-16">
             Login to comment
           </h1>
         )}

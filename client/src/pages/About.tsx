@@ -10,11 +10,9 @@ export default function About() {
   if (user === null) return <ErrMsg msg="Login to see your about page" />
 
   return (
-    <main>
-      <section className="wrapper max-w-[1240px] mx-auto">
-        <UserInfo user={user} />
-        <RecentPosts userId={user._id} />
-      </section>
-    </main>
+    <section className="wrapper max-w-[1240px] mx-auto px-14 xl:px-0">
+      <UserInfo user={user} />
+      <RecentPosts userId={user._id} />
+    </section>
   )
 }

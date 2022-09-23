@@ -10,7 +10,7 @@ export default function Trending() {
   const { articles } = useSelector((state: RootState) => state.article)
 
   return (
-    <section className="trending px-6 pt-8 h-[57rem]">
+    <section className="trending xl:px-6 pt-8 h-[57rem]">
       <Swiper
         spaceBetween={20}
         slidesPerView={4}

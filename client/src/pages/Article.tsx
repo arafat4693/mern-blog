@@ -116,7 +116,7 @@ export default function Article() {
         <Loader />
       ) : article ? (
         <main className="mt-24">
-          <section className="wrapper max-w-[1240px] mx-auto">
+          <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
             <figure className="shadow-xl rounded-[2rem] overflow-hidden mb-20 relative">
               <img
                 src={article.thumbnailImg}
@@ -144,7 +144,7 @@ export default function Article() {
                 </span>
               </div>
               <figcaption className="content absolute bottom-0 left-0 w-full mb-20">
-                <div className="categories flex gap-4 items-center justify-center">
+                <div className="categories flex flex-wrap gap-4 items-center justify-center">
                   {article.categories.map((c, i) => (
                     <Link
                       key={i}
@@ -155,10 +155,10 @@ export default function Article() {
                     </Link>
                   ))}
                 </div>
-                <h1 className="text-5xl font-semibold text-white mt-12 mb-9 text-center">
+                <h1 className="md:text-5xl text-4xl mx-4 sm:mx-0 font-semibold text-white mt-12 mb-9 text-center">
                   {article.title}
                 </h1>
-                <div className="flex justify-center">
+                <div className="sm:flex hidden justify-center">
                   <figure className="flex items-center gap-3">
                     <Link to={`/author/${articleUser?._id}`}>
                       <img
@@ -202,7 +202,7 @@ export default function Article() {
             {article.tags.length ? (
               <div className="mt-12 pb-16">
                 <h1 className="text-gray-800 text-3xl font-semibold">Tags:</h1>
-                <div className="tags flex gap-4 mt-6">
+                <div className="tags flex flex-wrap gap-4 mt-6">
                   {article.tags.map((t, i) => (
                     <Link
                       key={i}
@@ -223,7 +223,7 @@ export default function Article() {
               <h2 className="text-4xl mb-8 text-gray-800 capitalize font-semibold">
                 other articles
               </h2>
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {articles.slice(9, 11).map((a) => (
                   <figure key={a._id} className="flex items-center gap-6">
                     <img
@@ -235,7 +235,7 @@ export default function Article() {
                       <p className="text-2xl text-gray-500 mb-3">Recommended</p>
                       <Link
                         to={`/article/${a.slug}`}
-                        className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-3xl text-gray-800 font-semibold"
+                        className="bg-size hover:text-violet-700 transition-all duration-300 inline bg-gradient-to-r from-violet-700 to-violet-700 bg-no-repeat bg-left-bottom text-2xl sm:text-3xl text-gray-800 font-semibold"
                       >
                         {a.title}
                       </Link>
@@ -250,7 +250,7 @@ export default function Article() {
             {authorArticles.length && articleUser && (
               <div>
                 <UnderlineHeader title="related posts" />
-                <div className="grid grid-cols-4 gap-4 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 sm:gap-8 mt-8">
                   {authorArticles.map((a) => (
                     <RelatedPost key={a._id} article={a} author={articleUser} />
                   ))}

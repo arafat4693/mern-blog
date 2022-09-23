@@ -67,14 +67,14 @@ export default function Write() {
   }
 
   return (
-    <main className="mt-40">
-      <section className="wrapper max-w-[1240px] mx-auto">
+    <main className="sm:mt-40 mt-24">
+      <section className="wrapper max-w-[1240px] mx-auto xl:px-0 px-14">
         <OverlapHeader
           title="Write your blog"
           overlapTitle="before:content-['create']"
         />
         <form
-          className="w-[75rem] mx-auto mt-24"
+          className="w-[75rem] max-w-full mx-auto mt-24"
           onSubmit={handleSubmit(createBlog)}
         >
           <div>
