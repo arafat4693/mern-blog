@@ -34,13 +34,13 @@ export default function AuthLightBox({ closeAuth, setCloseAuth }: Props) {
     setCloseAuth(true)
   }
   function githubLogin() {
-    window.open("http://localhost:5000/auth/github", "_self")
+    window.open("https://mern-blog-server.onrender.com/auth/github", "_self")
   }
   function googleLogin() {
-    window.open("http://localhost:5000/auth/google", "_self")
+    window.open("https://mern-blog-server.onrender.com/auth/google", "_self")
   }
   function twitterLogin() {
-    window.open("http://localhost:5000/auth/twitter", "_self")
+    window.open("https://mern-blog-server.onrender.com/auth/twitter", "_self")
   }
 
   return (
